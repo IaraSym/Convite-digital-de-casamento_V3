@@ -30,6 +30,7 @@ a:hover{color:#D3684B}
 .iaj-scroll::-webkit-scrollbar{display:none}
 .iaj-scroll{scrollbar-width:none}
 .iaj-rise{animation:iaj-rise .7s ease both}
+section[id]{scroll-margin-top:86px}
 @media (min-width:860px){[data-nav-desktop]{display:flex !important}[data-nav-burger]{display:none !important}}
 @media (max-width:859px){[data-iaj-dock]{bottom:calc(66px + env(safe-area-inset-bottom,0px)) !important}
 [data-iaj-nav]{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:#FBF1E7 !important}}
@@ -43,7 +44,7 @@ a:hover{color:#D3684B}
 </style>
 </helmet>
 
-<div data-vw="{{ vw }}" style="position:relative;width:100%;min-height:100vh;overflow:hidden;background:#FBF1E7">
+<div data-vw="{{ vw }}" style="position:relative;width:100%;min-height:100dvh;overflow:hidden;background:#FBF1E7">
 
 <div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(60% 40% at 8% 6%,rgba(110,122,97,.16),transparent 70%),radial-gradient(55% 45% at 96% 30%,rgba(140,180,196,.20),transparent 72%),radial-gradient(50% 35% at 4% 62%,rgba(240,199,160,.22),transparent 70%),radial-gradient(70% 45% at 92% 92%,rgba(140,180,196,.18),transparent 72%),radial-gradient(45% 30% at 18% 98%,rgba(110,122,97,.14),transparent 70%)"></div>
 
@@ -67,7 +68,7 @@ a:hover{color:#D3684B}
 <div style="position:absolute;left:53%;top:20%;width:21%;height:60%;background:#4A5550;border-radius:4px"></div>
 <div style="position:absolute;left:12%;top:16%;width:62%;height:9%;background:#4A5550"></div>
 <div style="position:absolute;left:12%;bottom:16%;width:62%;height:9%;background:#4A5550"></div>
-<img src="assets/carro-puma.svg" alt="" style="position:relative;width:100%;height:100%;display:block;filter:drop-shadow(0 3px 6px rgba(62,58,47,.35))"/>
+<img src="assets/carro-puma.svg" alt="" width="54" height="28" style="position:relative;width:100%;height:100%;display:block;filter:drop-shadow(0 3px 6px rgba(62,58,47,.35))"/>
 </div>
 
 <sc-if value="{{ envelopeOn }}" hint-placeholder-val="{{ true }}">
@@ -102,6 +103,7 @@ a:hover{color:#D3684B}
       <a href="#mapa" style="color:#3E3A2F;text-decoration:none;opacity:.78">mapa</a>
       <a href="#local" style="color:#3E3A2F;text-decoration:none;opacity:.78">onde</a>
       <a href="#percurso" style="color:#3E3A2F;text-decoration:none;opacity:.78">percurso</a>
+      <a href="#fotos" style="color:#3E3A2F;text-decoration:none;opacity:.78">álbum</a>
       <a href="#notas" style="color:#3E3A2F;text-decoration:none;opacity:.78">notas</a>
     </div>
     <div style="display:flex;align-items:center;gap:10px">
@@ -120,6 +122,7 @@ a:hover{color:#D3684B}
       <a href="#local" onClick="{{ closeMenu }}" style="padding:13px 2px;border-bottom:1px solid rgba(62,58,47,.08);color:#3E3A2F;text-decoration:none;font-size:clamp(15px,4vw,15.5px)">Onde vai ser</a>
       <a href="#percurso" onClick="{{ closeMenu }}" style="padding:13px 2px;border-bottom:1px solid rgba(62,58,47,.08);color:#3E3A2F;text-decoration:none;font-size:clamp(15px,4vw,15.5px)">O percurso do dia</a>
       <a href="#memorias" onClick="{{ closeMenu }}" style="padding:13px 2px;border-bottom:1px solid rgba(62,58,47,.08);color:#3E3A2F;text-decoration:none;font-size:clamp(15px,4vw,15.5px)">Memórias</a>
+      <a href="#fotos" onClick="{{ closeMenu }}" style="padding:13px 2px;border-bottom:1px solid rgba(62,58,47,.08);color:#3E3A2F;text-decoration:none;font-size:clamp(15px,4vw,15.5px)">Álbum de fotos</a>
       <a href="#notas" onClick="{{ closeMenu }}" style="padding:13px 2px;border-bottom:1px solid rgba(62,58,47,.08);color:#3E3A2F;text-decoration:none;font-size:clamp(15px,4vw,15.5px)">Duas ou três notas</a>
       <a href="#rsvp" onClick="{{ closeMenu }}" style="padding:13px 2px;color:#AE4B32;text-decoration:none;font-size:clamp(15px,4vw,15.5px);font-weight:600">Confirmar presença</a>
     </div>
@@ -166,7 +169,7 @@ a:hover{color:#D3684B}
     <div style="text-align:center;margin-bottom:26px">
       <div style="font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:#6E7A61">a nossa</div>
       <h2 style="margin:4px 0 0;font-family:'Amatic SC',cursive;font-weight:700;letter-spacing:.02em;font-size:clamp(46px,11vw,66px);line-height:1;color:#AE4B32">História</h2>
-      <div style="margin-top:6px;color:#D3684B;font-size:clamp(15px,4vw,15.5px)">♥</div>
+      <div style="margin-top:6px;color:#D3684B;font-size:clamp(15px,4vw,15.5px)"><svg viewBox="0 0 24 22" width=".95em" height=".95em" aria-hidden="true" style="display:inline-block;vertical-align:.02em;fill:currentColor"><path d="M12 21.5C12 21.5 1.5 14.8 1.5 7.9 1.5 4.2 4.4 1.5 7.8 1.5c2 0 3.5 1 4.2 2.2C12.7 2.5 14.2 1.5 16.2 1.5c3.4 0 6.3 2.7 6.3 6.4 0 6.9-10.5 13.6-10.5 13.6z"></path></svg></div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:clamp(20px,4vw,48px);align-items:center;max-width:860px;margin:0 auto">
       <div style="position:relative;width:min(70vw,290px);margin:0 auto;padding:9px 9px 40px;background:#FFF9F0;box-shadow:0 20px 40px -22px rgba(62,58,47,.5);transform:rotate(1.6deg)">
@@ -200,13 +203,13 @@ a:hover{color:#D3684B}
     <div style="max-width:880px;margin:0 auto;text-align:center">
       <div style="font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:#6E7A61">a próxima paragem</div>
       <h2 style="margin:6px 0 0;font-family:'Amatic SC',cursive;font-weight:700;font-size:clamp(42px,9vw,62px);letter-spacing:.03em;color:#AE4B32">Quinta do Coração</h2>
-      <p style="margin:8px 0 0;font-size:clamp(15.5px,4.2vw,16.5px);line-height:1.7;color:#6b6252">Vila Franca de Xira · cerimónia e festa no mesmo lugar</p>
+      <p style="margin:8px 0 0;font-size:clamp(15.5px,4.2vw,16.5px);line-height:1.7;color:#6b6252">Vila Franca de Xira · Cerimónia e festa no mesmo lugar</p>
       <div style="position:relative;isolation:isolate;margin:6px -20px 0;width:calc(100% + 40px)">
-        <img src="assets/quinta.png" alt="Ilustração da cerimónia na Quinta do Coração" style="position:relative;display:block;width:min(100%,980px);margin:0 auto;mix-blend-mode:multiply;clip-path:inset(0 0 12% 0)"/>
+        <img src="assets/quinta.png" alt="Ilustração da cerimónia na Quinta do Coração" width="1264" height="842" style="position:relative;display:block;aspect-ratio:1264/842;width:min(100%,980px);height:auto;margin:0 auto;mix-blend-mode:multiply;clip-path:inset(0 0 12% 0)"/>
       </div>
       <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:2px">
-        <a href="https://www.google.com/maps/search/?api=1&amp;query=Quinta+do+Cora%C3%A7%C3%A3o+Vila+Franca+de+Xira" target="_blank" rel="noopener" style="display:inline-block;padding:13px 22px;background:#AE4B32;color:#FFF6EA;border-radius:999px;font-size:13.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase">Traçar caminho</a>
-        <button type="button" onClick="{{ openCal }}" style="display:inline-block;padding:13px 22px;background:none;border:1px solid rgba(174,75,50,.45);color:#AE4B32;border-radius:999px;font-family:'Work Sans',sans-serif;font-size:13.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">+ Calendário</button>
+        <a href="https://www.google.com/maps/search/?api=1&amp;query=Quinta+do+Cora%C3%A7%C3%A3o+Vila+Franca+de+Xira" target="_blank" rel="noopener" style="display:inline-block;padding:13px 22px;background:#AE4B32;color:#FFF6EA;border-radius:999px;font-size:13.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase">Como chegar</a>
+        <button type="button" onClick="{{ openCal }}" style="display:inline-block;padding:13px 22px;background:#F6E3D2;border:1px solid #D9A57F;color:#8E3A24;border-radius:999px;font-family:'Work Sans',sans-serif;font-size:13.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">Guardar a data</button>
       </div>
     </div>
   </section>
@@ -298,7 +301,7 @@ a:hover{color:#D3684B}
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px;max-width:900px;margin:0 auto">
       <div style="padding:22px;background:#FFF9F0;border:1px solid rgba(62,58,47,.12)">
-        <h3 style="margin:0 0 8px;font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(20px,5.5vw,23px);color:#AE4B32">Traje</h3>
+        <h3 style="margin:0 0 8px;font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(20px,5.5vw,23px);color:#AE4B32">Como vestir</h3>
         <p style="margin:0;font-size:clamp(15px,4vw,15.5px);line-height:1.7;color:#6b6252">Pedimos que evitem estas três — são as cores do cortejo. Nos restantes tons, fiquem à vontade:</p>
         <div style="display:flex;align-items:center;gap:14px;margin-top:14px">
           <div style="display:flex;gap:8px">
@@ -370,9 +373,9 @@ a:hover{color:#D3684B}
               </div>
               <div style="margin:10px 0 9px;font-size:13px;color:#6E7A61;text-align:center">aviso a {{ remindDate }}</div>
               <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px">
-                <a href="{{ remindGcal }}" target="_blank" rel="noopener" style="padding:11px 4px;background:#FFF9F0;border:1px solid rgba(62,58,47,.14);color:#6b6252;font-size:12.5px;text-align:center;white-space:nowrap">Google</a>
-                <a href="{{ remindIcsHref }}" download="lembrar-convite.ics" style="padding:11px 4px;background:#FFF9F0;border:1px solid rgba(62,58,47,.14);color:#6b6252;font-size:12.5px;text-align:center;white-space:nowrap">iPhone</a>
-                <a href="{{ remindOutlook }}" target="_blank" rel="noopener" style="padding:11px 4px;background:#FFF9F0;border:1px solid rgba(62,58,47,.14);color:#6b6252;font-size:12.5px;text-align:center;white-space:nowrap">Outlook</a>
+                <a href="{{ remindGcal }}" target="_blank" rel="noopener" style="padding:12px 4px;border-radius:12px;background:#FFF9F0;border:1px solid rgba(62,58,47,.14);color:#6b6252;font-size:12.5px;text-align:center;white-space:nowrap">Google</a>
+                <a href="{{ remindIcsHref }}" onClick="{{ openRemindIcs }}" style="padding:12px 4px;border-radius:12px;background:#FFF9F0;border:1px solid rgba(62,58,47,.14);color:#6b6252;font-size:12.5px;text-align:center;white-space:nowrap">iPhone</a>
+                <a href="{{ remindOutlook }}" target="_blank" rel="noopener" style="padding:12px 4px;border-radius:12px;background:#FFF9F0;border:1px solid rgba(62,58,47,.14);color:#6b6252;font-size:12.5px;text-align:center;white-space:nowrap">Outlook</a>
               </div>
             </div>
           </div>
@@ -478,7 +481,7 @@ a:hover{color:#D3684B}
 
       <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
         <div class="iaj-rise" style="text-align:center;padding:16px 0 4px">
-          <div style="font-size:clamp(24px,7vw,31px);color:#D3684B">♥</div>
+          <div style="font-size:clamp(24px,7vw,31px);color:#D3684B"><svg viewBox="0 0 24 22" width=".9em" height=".9em" aria-hidden="true" style="display:inline-block;vertical-align:.02em;fill:currentColor"><path d="M12 21.5C12 21.5 1.5 14.8 1.5 7.9 1.5 4.2 4.4 1.5 7.8 1.5c2 0 3.5 1 4.2 2.2C12.7 2.5 14.2 1.5 16.2 1.5c3.4 0 6.3 2.7 6.3 6.4 0 6.9-10.5 13.6-10.5 13.6z"></path></svg></div>
           <h3 style="margin:8px 0 0;font-family:'Dancing Script',cursive;font-weight:700;font-size:clamp(24px,7vw,31px);color:#AE4B32">{{ doneTitle }}</h3>
           <p style="margin:10px auto 0;max-width:36ch;font-size:clamp(15px,4.1vw,16px);line-height:1.7;color:#6b6252">{{ doneText }}</p>
           <button type="button" onClick="{{ reset }}" style="margin-top:20px;padding:12px 22px;background:none;border:1px solid rgba(174,75,50,.4);color:#AE4B32;font-family:'Work Sans',sans-serif;font-size:13px;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;cursor:pointer">Alterar resposta</button>
@@ -539,9 +542,12 @@ a:hover{color:#D3684B}
   <div style="position:relative;width:min(90vw,340px);padding:26px 22px;background:#FFF9F0;border:1px solid rgba(62,58,47,.14);box-shadow:0 30px 60px -24px rgba(62,58,47,.6);text-align:center">
     <h3 style="margin:0 0 16px;font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(19px,5.3vw,22px);color:#AE4B32">Adicionar ao calendário</h3>
     <div style="display:flex;flex-direction:column;gap:9px">
-      <a href="{{ gcalHref }}" target="_blank" rel="noopener" style="padding:13px;background:#F0C7A0;color:#3E3A2F;font-size:clamp(15px,4vw,15.5px);font-weight:600">Google Calendar</a>
-      <a href="{{ icsHref }}" download="casamento-iara-joao.ics" style="padding:13px;background:#F0C7A0;color:#3E3A2F;font-size:clamp(15px,4vw,15.5px);font-weight:600">Apple Calendar</a>
-      <a href="{{ outlookHref }}" target="_blank" rel="noopener" style="padding:13px;background:#F0C7A0;color:#3E3A2F;font-size:clamp(15px,4vw,15.5px);font-weight:600">Outlook</a>
+      <a href="casamento-iara-joao.ics" style="padding:14px;border-radius:12px;background:#AE4B32;color:#FFF6EA;font-size:clamp(15px,4vw,15.5px);font-weight:600;text-align:center">Adicionar ao meu calendário</a>
+      <div style="margin-top:2px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6E7A61;text-align:center">ou diretamente em</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
+        <a href="{{ gcalHref }}" target="_blank" rel="noopener" style="padding:12px;border-radius:12px;background:#F6E3D2;border:1px solid #D9A57F;color:#8E3A24;font-size:13.5px;font-weight:600;text-align:center">Google</a>
+        <a href="{{ outlookHref }}" target="_blank" rel="noopener" style="padding:12px;border-radius:12px;background:#F6E3D2;border:1px solid #D9A57F;color:#8E3A24;font-size:13.5px;font-weight:600;text-align:center">Outlook</a>
+      </div>
     </div>
     <button type="button" onClick="{{ closeCal }}" style="margin-top:16px;background:none;border:none;font-family:'Work Sans',sans-serif;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#6b6252;cursor:pointer">Fechar</button>
   </div>
@@ -622,6 +628,32 @@ class Component extends DCLogic {
         }
       });
     };
+    this.onAnchor = (ev) => {
+      const link = ev.target && ev.target.closest ? ev.target.closest('a[href^="#"]') : null;
+      if (!link) return;
+      const id = link.getAttribute('href').slice(1);
+      if (!id) return;
+      const target = document.getElementById(id);
+      if (!target) return;
+      ev.preventDefault();
+      const go = (smooth) => {
+        const nav = document.querySelector('nav');
+        const off = (nav ? nav.getBoundingClientRect().height : 56) + 14;
+        const y = target.getBoundingClientRect().top + window.scrollY - off;
+        window.scrollTo({ top: Math.max(0, y), behavior: smooth ? 'smooth' : 'auto' });
+      };
+      go(true);
+      clearInterval(this.anchorFix);
+      const t0 = Date.now();
+      this.anchorFix = setInterval(() => {
+        const nav = document.querySelector('nav');
+        const off = (nav ? nav.getBoundingClientRect().height : 56) + 14;
+        const delta = target.getBoundingClientRect().top - off;
+        if (Math.abs(delta) > 2) window.scrollBy({ top: delta, behavior: 'auto' });
+        if (Date.now() - t0 > 2600) clearInterval(this.anchorFix);
+      }, 90);
+    };
+    document.addEventListener('click', this.onAnchor);
     window.addEventListener('scroll', this.onScroll, { passive: true });
     window.addEventListener('resize', this.onScroll);
     setTimeout(this.onScroll, 300);
@@ -666,6 +698,8 @@ class Component extends DCLogic {
     clearInterval(this.timer);
     window.removeEventListener('scroll', this.onScroll);
     window.removeEventListener('resize', this.onScroll);
+    document.removeEventListener('click', this.onAnchor);
+    clearInterval(this.anchorFix);
   }
 
   pad(n) { return String(n).padStart(2, '0'); }
@@ -782,21 +816,33 @@ class Component extends DCLogic {
   openCal = () => this.setState({ cal: true });
   closeCal = () => this.setState({ cal: false });
 
+  openRemindIcs = (e) => {
+    const txt = this.remindIcsText(this.state.remindDays);
+    try {
+      const url = URL.createObjectURL(new Blob([txt], { type: 'text/calendar;charset=utf-8' }));
+      e.preventDefault();
+      const a = document.createElement('a');
+      a.href = url; a.download = 'lembrar-convite.ics'; a.rel = 'noopener';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+    } catch (err) {}
+  };
   toggleRemind = () => this.setState(s => ({ remind: !s.remind }));
   setRemindDays = (e) => this.setState({ remindDays: Number(e.currentTarget.dataset.d) });
-  remindIcs = (days) => {
+  remindIcsText = (days) => {
     const d = new Date(Date.now() + days * 864e5);
     d.setHours(19, 0, 0, 0);
     const p = (n) => String(n).padStart(2, '0');
     const fmt = (x) => x.getFullYear() + p(x.getMonth() + 1) + p(x.getDate()) + 'T' + p(x.getHours()) + p(x.getMinutes()) + '00';
     const end = new Date(d.getTime() + 18e5);
     const ics = ['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT','UID:iaj-lembrete-' + days + '@convite','DTSTAMP:' + fmt(new Date()),'DTSTART:' + fmt(d),'DTEND:' + fmt(end),'SUMMARY:Responder ao convite de casamento da Iara e do João','DESCRIPTION:Falta confirmar a presença no casamento de 2 de outubro de 2027. Prazo: 31 de julho de 2027.','BEGIN:VALARM','TRIGGER:-PT15M','ACTION:DISPLAY','DESCRIPTION:Responder ao convite','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
-    return 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+    return ics;
   };
+  remindIcs = (days) => 'data:text/calendar;charset=utf-8,' + encodeURIComponent(this.remindIcsText(days));
   rdStyle = (d) => {
     const on = (this.state.remindDays || 30) === d;
-    return 'padding:11px 4px;border:1px ' + (on ? 'solid #AE4B32' : 'dashed rgba(110,122,97,.6)') + ';background:' + (on ? '#AE4B32' : '#FFF9F0')
-      + ';color:' + (on ? '#FFF6EA' : '#6b6252') + ";font-family:'Work Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:background .2s,color .2s";
+    return 'padding:12px 6px;border-radius:999px;border:1px solid ' + (on ? '#AE4B32' : 'rgba(110,122,97,.35)') + ';background:' + (on ? '#AE4B32' : '#FBF1E7')
+      + ';color:' + (on ? '#FFF6EA' : '#6b6252') + ";font-family:'Work Sans',sans-serif;font-size:13px;font-weight:600;letter-spacing:.01em;cursor:pointer;box-shadow:" + (on ? '0 6px 14px -8px rgba(174,75,50,.8)' : 'none') + ';transition:background .2s,color .2s,border-color .2s';
   };
   copyIt = (e) => {
     const el = e.currentTarget, v = el.dataset.copy, label = el.dataset.label || '';
@@ -966,7 +1012,7 @@ class Component extends DCLogic {
       vw: ({ 'Mobile': 'mobile', 'Desktop': 'desktop' })[this.props.viewMode] || 'auto',
       roadRef: this.roadRef, roadDoneRef: this.roadDoneRef, pinRef: this.pinRef, clipRef: this.clipRef,
       envelopeOn: envOn,
-      envStyle: 'position:fixed;inset:0;z-index:999;display:flex;align-items:center;justify-content:center;overflow:hidden;' + (opening ? 'pointer-events:none;' : ''),
+      envStyle: 'position:fixed;inset:0;height:100dvh;z-index:999;display:flex;align-items:center;justify-content:center;overflow:hidden;' + (opening ? 'pointer-events:none;' : ''),
       envLeft: opening ? 'translateX(-100%)' : 'translateX(0)',
       envRight: opening ? 'translateX(100%)' : 'translateX(0)',
       envCardStyle: 'position:relative;z-index:1;cursor:pointer;text-align:center;transition:transform .8s cubic-bezier(.65,0,.35,1),opacity .6s ease;' + (opening ? 'transform:translateY(-50px) scale(.86);opacity:0;' : 'transform:none;opacity:1;'),
@@ -1016,10 +1062,10 @@ class Component extends DCLogic {
       calStyle: 'position:fixed;inset:0;z-index:950;display:flex;align-items:center;justify-content:center;transition:opacity .25s ease;' + (s.cal ? 'opacity:1;' : 'opacity:0;pointer-events:none;'),
       openCal: this.openCal, closeCal: this.closeCal,
       openMap: this.openMap, closeMap: this.closeMap,
-      mapSrc: s.map ? 'mapa-destinos.html' : 'about:blank',
+      mapSrc: s.map ? 'mapa-destinos.html?v=pt' : 'about:blank',
       mapModalStyle: 'position:fixed;inset:0;z-index:940;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;transition:opacity .25s ease;' + (s.map ? 'opacity:1;' : 'opacity:0;pointer-events:none;'),
       copyIt: this.copyIt, copiedMsg: s.copied,
-      toggleRemind: this.toggleRemind,
+      toggleRemind: this.toggleRemind, openRemindIcs: this.openRemindIcs,
       remindStyle: 'overflow:hidden;transition:max-height .35s ease,opacity .3s ease;max-height:' + (s.remind ? '330px' : '0px') + ';opacity:' + (s.remind ? '1' : '0'),
       setRemindDays: this.setRemindDays,
       remindOutlook: (() => {
