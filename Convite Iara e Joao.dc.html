@@ -31,6 +31,8 @@ a:hover{color:#D3684B}
 .iaj-scroll{scrollbar-width:none}
 .iaj-rise{animation:iaj-rise .7s ease both}
 @media (min-width:860px){[data-nav-desktop]{display:flex !important}[data-nav-burger]{display:none !important}}
+@media (max-width:859px){[data-iaj-dock]{bottom:calc(66px + env(safe-area-inset-bottom,0px)) !important}
+[data-iaj-nav]{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:#FBF1E7 !important}}
 [data-vw="mobile"]{max-width:430px !important;margin:0 auto !important;box-shadow:0 0 0 1px rgba(62,58,47,.14),0 30px 70px -34px rgba(62,58,47,.45) !important}
 [data-vw="mobile"] [data-nav-desktop]{display:none !important}
 [data-vw="mobile"] [data-nav-burger]{display:flex !important}
@@ -78,7 +80,7 @@ a:hover{color:#D3684B}
       <div style="font-family:'Dancing Script',cursive;font-size:clamp(18px,4.9vw,20px);color:#6E7A61">um convite especial</div>
       <div style="font-family:'Playfair Display',serif;font-size:clamp(22px,6.2vw,27px);letter-spacing:.14em;color:#AE4B32;margin:8px 0 2px">IARA &amp; JOÃO</div>
       <div style="width:44px;height:1px;background:rgba(62,58,47,.2);margin:12px auto"></div>
-      <p style="margin:16px 0 0;font-family:'Dancing Script',cursive;font-size:clamp(18px,4.9vw,20px);color:#D3684B;animation:iaj-pulse 2.4s ease-in-out infinite">toque para abrir ♥</p>
+      <p style="margin:16px 0 0;font-family:'Dancing Script',cursive;font-size:clamp(18px,4.9vw,20px);color:#D3684B;animation:iaj-pulse 2.4s ease-in-out infinite">toque para abrir <span style="font-family:'Playfair Display',serif;font-size:.62em;vertical-align:.1em">&#9829;&#65038;</span></p>
     </div>
     <div style="position:relative;width:min(66vw,272px);aspect-ratio:1/1;margin:-10px auto 0">
       <img src="assets/bawi/part4.png" alt="O Bawi, o nosso cão, com um convite" style="position:absolute;inset:0;width:100%;height:100%;display:block"/>
@@ -92,7 +94,7 @@ a:hover{color:#D3684B}
 </div>
 </sc-if>
 
-<nav style="position:sticky;top:0;z-index:60;background:rgba(251,241,231,.9);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid rgba(62,58,47,.1)">
+<nav data-iaj-nav="1" style="position:sticky;top:0;z-index:60;background:rgba(251,241,231,.9);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid rgba(62,58,47,.1)">
   <div style="max-width:1080px;margin:0 auto;padding:11px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px">
     <a href="#topo" style="font-family:'Playfair Display',serif;font-size:clamp(14px,3.8vw,14.5px);letter-spacing:.2em;color:#AE4B32;text-decoration:none;white-space:nowrap">I &amp; J</a>
     <div style="display:none;gap:22px;align-items:center;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:500" data-nav-desktop="true">
@@ -505,7 +507,7 @@ a:hover{color:#D3684B}
   </footer>
 </div>
 
-<div style="position:fixed;right:18px;bottom:18px;z-index:800;display:flex;align-items:center;gap:11px">
+<div data-iaj-dock="1" style="position:fixed;right:18px;bottom:18px;z-index:800;display:flex;align-items:center;gap:11px">
   <button type="button" onClick="{{ restart }}" title="Ver o convite desde o início" aria-label="Recomeçar" style="display:flex;align-items:center;justify-content:center;width:42px;height:42px;padding:0;background:rgba(255,249,240,.94);border:1px solid rgba(174,75,50,.35);border-radius:999px;box-shadow:0 12px 26px -14px rgba(62,58,47,.5);font-size:clamp(17px,4.7vw,19px);line-height:1;color:#AE4B32;cursor:pointer;backdrop-filter:blur(6px)" style-hover="background:#FFF9F0;color:#D3684B">↻</button>
   <button type="button" data-iaj-vinyl="1" onClick="{{ toggleMusic }}" title="{{ musicTitle }}" aria-label="{{ musicTitle }}" style="{{ vinylStyle }}">
     <span style="position:absolute;inset:0;border-radius:999px;background:conic-gradient(from -18deg, rgba(255,249,240,0) 0deg, rgba(255,249,240,.85) 16deg, rgba(255,249,240,.15) 40deg, rgba(255,249,240,0) 70deg, rgba(255,249,240,0) 180deg, rgba(255,249,240,.45) 196deg, rgba(255,249,240,0) 226deg, rgba(255,249,240,0) 360deg)"></span>
@@ -600,7 +602,8 @@ class Component extends DCLogic {
         this.raf = null;
         const max = document.documentElement.scrollHeight - window.innerHeight;
         const f = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
-        if (this.clipRef.current) this.clipRef.current.setAttribute('height', String(f));
+        const step = Math.round(f * 160) / 160;
+        if (this.clipRef.current && step !== this.lastStep) { this.lastStep = step; this.clipRef.current.setAttribute('height', String(step)); }
         const pin = this.pinRef.current;
         if (pin && this.samples.length) {
           const host = pin.parentElement;
