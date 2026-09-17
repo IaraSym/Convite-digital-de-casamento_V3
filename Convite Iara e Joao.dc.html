@@ -13,7 +13,8 @@
 <style>
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:#FBF1E7 url('assets/fundo-aquarela.png') repeat top left;background-size:860px auto;background-attachment:fixed;color:#3E3A2F;font-family:'Work Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:-1;background:#FBF1E7 url('assets/fundo-aquarela.png') repeat top left;background-size:860px auto;transform:translateZ(0);will-change:transform;pointer-events:none}
+body{margin:0;background:#FBF1E7;color:#3E3A2F;font-family:'Work Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:#AE4B32;text-decoration:none}
 a:hover{color:#D3684B}
 ::selection{background:#F0C7A0;color:#3E3A2F}
@@ -59,7 +60,7 @@ a:hover{color:#D3684B}
 </g>
 </svg>
 
-<div ref="{{ pinRef }}" aria-hidden="true" style="position:absolute;top:0;left:50%;z-index:1;width:54px;height:28px;margin:-14px 0 0 -27px;pointer-events:none;opacity:1;transition:opacity .4s ease">
+<div ref="{{ pinRef }}" aria-hidden="true" style="position:absolute;top:0;left:0;z-index:1;width:54px;height:28px;margin:-14px 0 0 -27px;pointer-events:none;opacity:1;transition:opacity .4s ease;will-change:transform;backface-visibility:hidden">
 <div style="position:absolute;left:35%;top:24%;width:16%;height:52%;background:#2B2A26;border-radius:3px"></div>
 <div style="position:absolute;left:53%;top:20%;width:21%;height:60%;background:#4A5550;border-radius:4px"></div>
 <div style="position:absolute;left:12%;top:16%;width:62%;height:9%;background:#4A5550"></div>
@@ -608,12 +609,13 @@ class Component extends DCLogic {
           while (minI < this.samples.length - 1 && this.samples[minI].y / 1000 * host.scrollHeight < minTop) minI++;
           const idx = Math.max(minI, Math.round(f * (this.samples.length - 1)));
           const s = this.samples[idx];
-          pin.style.left = (s.x / 100 * host.clientWidth) + 'px';
-          pin.style.top = (s.y / 1000 * host.scrollHeight) + 'px';
-          pin.style.opacity = '1';
+          const px = s.x / 100 * host.clientWidth, py = s.y / 1000 * host.scrollHeight;
           const a = this.samples[Math.max(0, idx - 2)], b = this.samples[Math.min(this.samples.length - 1, idx + 2)];
           const dx = (b.x - a.x) / 100 * host.clientWidth, dy = (b.y - a.y) / 1000 * host.scrollHeight;
-          if (dx || dy) pin.style.transform = 'rotate(' + (Math.atan2(dy, dx) * 180 / Math.PI) + 'deg)';
+          const ang = (dx || dy) ? Math.atan2(dy, dx) * 180 / Math.PI : this.pinAng || 0;
+          this.pinAng = ang;
+          pin.style.transform = 'translate3d(' + px + 'px,' + py + 'px,0) rotate(' + ang + 'deg)';
+          pin.style.opacity = '1';
         }
       });
     };
