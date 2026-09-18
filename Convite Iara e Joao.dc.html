@@ -32,14 +32,13 @@ a:hover{color:#D3684B}
 @keyframes bawi-earR{0%,100%{transform:rotate(0deg)}45%{transform:rotate(3deg) translateY(-1px)}80%{transform:rotate(-1.5deg)}}
 @keyframes bawi-blink{0%,92%,100%{transform:translateY(-102%)}95.5%,96.5%{transform:translateY(0%)}}
 .iaj-scroll::-webkit-scrollbar{display:none}
-.iaj-scroll{scrollbar-width:none}
+.iaj-scroll{scrollbar-width:none;touch-action:pan-x pan-y;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
 .iaj-rise{animation:iaj-rise .7s ease both}
 section[id]{scroll-margin-top:86px}
 @media (min-width:860px){[data-nav-desktop]{display:flex !important}[data-nav-burger]{display:none !important}}
 @media (max-width:859px){[data-iaj-dock]{bottom:calc(16px + env(safe-area-inset-bottom,0px)) !important}
 [data-iaj-mapbox]{aspect-ratio:auto !important;height:min(74vh,680px) !important;max-height:none !important}
-[data-iaj-nav]{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:#FBF1E7 !important}
-[data-iaj-pin]{margin-top:-62px !important}}
+[data-iaj-nav]{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:#FBF1E7 !important}}
 [data-vw="mobile"]{max-width:430px !important;margin:0 auto !important;box-shadow:0 0 0 1px rgba(62,58,47,.14),0 30px 70px -34px rgba(62,58,47,.45) !important}
 [data-vw="mobile"] [data-nav-desktop]{display:none !important}
 [data-vw="mobile"] [data-nav-burger]{display:flex !important}
@@ -114,6 +113,9 @@ section[id]{scroll-margin-top:86px}
       <a href="#percurso" style="color:#3E3A2F;text-decoration:none;opacity:.78">percurso</a>
       <a href="#fotos" style="color:#3E3A2F;text-decoration:none;opacity:.78">álbum</a>
       <a href="#notas" style="color:#3E3A2F;text-decoration:none;opacity:.78">notas</a>
+      <sc-if value="{{ painelOn }}" hint-placeholder-val="{{ false }}">
+        <a href="/painel.html" style="color:#6E7A61;text-decoration:none;opacity:.78">painel</a>
+      </sc-if>
     </div>
     <div style="display:flex;align-items:center;gap:10px">
       <button type="button" aria-label="Menu" onClick="{{ toggleMenu }}" style="display:flex;flex-direction:column;justify-content:center;gap:4px;width:38px;height:38px;padding:0 9px;background:none;border:1px solid rgba(62,58,47,.16);border-radius:10px;cursor:pointer" data-nav-burger="true">
@@ -133,6 +135,9 @@ section[id]{scroll-margin-top:86px}
       <a href="#fotos" onClick="{{ closeMenu }}" style="padding:13px 2px;border-bottom:1px solid rgba(62,58,47,.08);color:#3E3A2F;text-decoration:none;font-size:clamp(15px,4vw,15.5px)">Álbum de fotos</a>
       <a href="#notas" onClick="{{ closeMenu }}" style="padding:13px 2px;border-bottom:1px solid rgba(62,58,47,.08);color:#3E3A2F;text-decoration:none;font-size:clamp(15px,4vw,15.5px)">Duas ou três notas</a>
       <a href="#rsvp" onClick="{{ closeMenu }}" style="padding:13px 2px;color:#AE4B32;text-decoration:none;font-size:clamp(15px,4vw,15.5px);font-weight:600">Confirmar presença</a>
+      <sc-if value="{{ painelOn }}" hint-placeholder-val="{{ false }}">
+        <a href="/painel.html" style="margin-top:6px;padding:11px 2px;border-top:1px solid rgba(62,58,47,.08);color:#6E7A61;text-decoration:none;font-size:13px;letter-spacing:.06em">Painel dos noivos</a>
+      </sc-if>
     </div>
   </div>
 </nav>
@@ -260,12 +265,12 @@ section[id]{scroll-margin-top:86px}
       <div style="position:relative;padding-bottom:26px">
         <div style="position:absolute;left:-38px;top:2px;width:21px;height:21px;border-radius:50% 50% 50% 0;background:#AE4B32;transform:rotate(-45deg);box-shadow:0 2px 5px rgba(0,0,0,.18)"></div>
         <div style="font-family:'Fraunces',serif;font-weight:700;font-size:clamp(21px,5.9vw,25px);letter-spacing:.01em;color:#AE4B32">21:30</div>
-        <div style="margin-top:2px;font-size:clamp(15.5px,4.2vw,16.5px);color:#6b6252">Começa a festa</div>
+        <div style="margin-top:2px;font-size:clamp(15.5px,4.2vw,16.5px);color:#6b6252">Pista de dança</div>
       </div>
       <div style="position:relative">
-        <div style="position:absolute;left:-38px;top:2px;width:21px;height:21px;border-radius:50% 50% 50% 0;background:#6E7A61;transform:rotate(-45deg);box-shadow:0 2px 5px rgba(0,0,0,.18)"></div>
-        <div style="font-family:'Fraunces',serif;font-weight:700;font-size:clamp(21px,5.9vw,25px);letter-spacing:.01em;color:#6E7A61">04:00</div>
-        <div style="margin-top:2px;font-size:clamp(15.5px,4.2vw,16.5px);color:#6b6252">Fim da festa</div>
+        <div style="position:absolute;left:-38px;top:2px;width:21px;height:21px;border-radius:50% 50% 50% 0;background:#AE4B32;transform:rotate(-45deg);box-shadow:0 2px 5px rgba(0,0,0,.18)"></div>
+        <div style="font-family:'Fraunces',serif;font-weight:700;font-size:clamp(21px,5.9vw,25px);letter-spacing:.01em;color:#AE4B32">04:00</div>
+        <div style="margin-top:2px;font-size:clamp(15.5px,4.2vw,16.5px);color:#6b6252">Fim</div>
       </div>
     </div>
     <p style="max-width:34ch;margin:26px auto 0;text-align:center;font-size:clamp(14.5px,3.9vw,15px);line-height:1.7;color:#6b6252">Gostaríamos que chegassem com 15 minutos de antecedência.</p>
@@ -277,8 +282,8 @@ section[id]{scroll-margin-top:86px}
       <h2 style="margin:4px 0 0;font-family:'Amatic SC',cursive;font-weight:700;letter-spacing:.02em;font-size:clamp(46px,11vw,66px);line-height:1;color:#AE4B32">Memórias</h2>
     </div>
     <div style="position:relative">
-      <button type="button" onClick="{{ shotPrev }}" aria-label="Ver fotografias anteriores" style="{{ arrowPrevStyle }}"><span style="display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:999px;background:rgba(255,249,240,.6);border:1px solid rgba(174,75,50,.25);font-size:clamp(24px,7vw,31px);line-height:1;color:#AE4B32">‹</span></button>
-      <button type="button" onClick="{{ shotNext }}" aria-label="Ver mais fotografias" style="{{ arrowNextStyle }}"><span style="display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:999px;background:rgba(255,249,240,.6);border:1px solid rgba(174,75,50,.25);font-size:clamp(24px,7vw,31px);line-height:1;color:#AE4B32">›</span></button>
+      <button type="button" onClick="{{ shotPrev }}" aria-label="Ver fotografias anteriores" style="{{ arrowPrevStyle }}"><span style="pointer-events:auto;display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:999px;background:rgba(255,249,240,.85);border:1px solid rgba(174,75,50,.25);font-size:clamp(24px,7vw,31px);line-height:1;color:#AE4B32">‹</span></button>
+      <button type="button" onClick="{{ shotNext }}" aria-label="Ver mais fotografias" style="{{ arrowNextStyle }}"><span style="pointer-events:auto;display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:999px;background:rgba(255,249,240,.85);border:1px solid rgba(174,75,50,.25);font-size:clamp(24px,7vw,31px);line-height:1;color:#AE4B32">›</span></button>
     <div class="iaj-scroll" ref="{{ railRef }}" onScroll="{{ onRail }}" style="display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 4px 20px">
       <figure data-i="1" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(-1.4deg);cursor:pointer">
         <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-5deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
@@ -423,14 +428,14 @@ section[id]{scroll-margin-top:86px}
         <div class="iaj-rise" style="padding-top:14px">
           <div style="padding:16px;background:#FBF1E7;border:1px solid rgba(62,58,47,.1)">
             <div style="font-family:'Dancing Script',cursive;font-size:clamp(18px,4.9vw,20px);color:#6E7A61;margin-bottom:8px">Tu</div>
-            <label style="display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6252;margin-bottom:8px">Tens alguma restrição alimentar?</label>
+            <label style="display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6252;margin-bottom:8px">Têm alguma restrição alimentar?</label>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
               <button type="button" data-v="sim" onClick="{{ setMyDiet }}" style="{{ myDietYes }}">Sim</button>
               <button type="button" data-v="nao" onClick="{{ setMyDiet }}" style="{{ myDietNo }}">Não</button>
             </div>
             <sc-if value="{{ myDietOn }}" hint-placeholder-val="{{ false }}">
               <div style="margin-top:12px">
-                <div style="font-size:12.5px;line-height:1.6;color:#6b6252;margin-bottom:8px">Escolhe o que se aplica:</div>
+                <div style="font-size:12.5px;line-height:1.6;color:#6b6252;margin-bottom:8px">O que não come:</div>
                 <div style="display:flex;flex-wrap:wrap;gap:7px">
                   <sc-for list="{{ myDietOpts }}" as="o" hint-placeholder-count="6">
                     <button type="button" data-t="{{ o.id }}" onClick="{{ toggleMyTag }}" style="{{ o.style }}">{{ o.label }}</button>
@@ -461,7 +466,7 @@ section[id]{scroll-margin-top:86px}
 
       <sc-if value="{{ isStep4 }}" hint-placeholder-val="{{ false }}">
         <div class="iaj-rise" style="padding-top:14px">
-          <label style="display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6252;margin-bottom:12px">Quem vem consigo?</label>
+          <label style="display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6252;margin-bottom:12px">Quem vem convosco?</label>
           <div style="display:flex;flex-direction:column;gap:12px">
             <sc-for list="{{ guests }}" as="g" hint-placeholder-count="2">
               <div style="padding:16px;background:#FBF1E7;border:1px solid rgba(62,58,47,.1)">
@@ -480,7 +485,7 @@ section[id]{scroll-margin-top:86px}
                 </div>
                 <sc-if value="{{ g.dietOn }}" hint-placeholder-val="{{ false }}">
                   <div style="margin-top:12px">
-                    <div style="font-size:12.5px;line-height:1.6;color:#6b6252;margin-bottom:8px">Escolham o que se aplica:</div>
+                    <div style="font-size:12.5px;line-height:1.6;color:#6b6252;margin-bottom:8px">O que não come:</div>
                     <div style="display:flex;flex-wrap:wrap;gap:7px">
                       <sc-for list="{{ g.dietOpts }}" as="o" hint-placeholder-count="6">
                         <button type="button" data-i="{{ o.gi }}" data-t="{{ o.id }}" onClick="{{ toggleGuestTag }}" style="{{ o.style }}">{{ o.label }}</button>
@@ -502,7 +507,21 @@ section[id]{scroll-margin-top:86px}
 
       <sc-if value="{{ isStep5 }}" hint-placeholder-val="{{ false }}">
         <div class="iaj-rise" style="padding-top:14px">
-          <div style="padding:14px 16px;background:#FBF1E7;border:1px solid rgba(62,58,47,.1);font-size:clamp(14px,3.8vw,14.5px);line-height:1.7;color:#6b6252">{{ summary }}</div>
+          <div style="padding:16px;background:#FBF1E7;border:1px solid rgba(62,58,47,.1)">
+            <div style="font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#6E7A61">{{ resumoTitulo }}</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px">
+              <sc-for list="{{ resumoPessoas }}" as="p" hint-placeholder-count="2">
+                <div style="display:flex;gap:10px;align-items:baseline">
+                  <span style="flex:0 0 auto;width:6px;height:6px;margin-top:7px;border-radius:50%;background:#AE4B32"></span>
+                  <div>
+                    <div style="font-size:clamp(14.5px,3.9vw,15px);color:#3E3A2F"><strong style="font-weight:600">{{ p.nome }}</strong> · {{ p.idade }}</div>
+                    <div style="font-size:13.5px;line-height:1.6;color:{{ p.cor }}">{{ p.restricao }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(62,58,47,.1);font-size:13px;color:#6b6252">{{ resumoNota }}</div>
+          </div>
           <label style="display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6252;margin:18px 0 8px">Mensagem para o casal <span style="text-transform:none;letter-spacing:0;opacity:.7">(opcional)</span></label>
           <textarea value="{{ note }}" onInput="{{ onNote }}" rows="4" placeholder="Um recado, uma música que não pode faltar…" style="width:100%;padding:14px;background:#FBF1E7;border:1px solid rgba(62,58,47,.18);font-family:'Work Sans',sans-serif;font-size:clamp(15px,4.1vw,16px);line-height:1.6;color:#3E3A2F;outline:none;resize:vertical"></textarea>
           <div style="min-height:18px;margin-top:8px;font-size:13px;color:#AE4B32">{{ error }}</div>
@@ -546,7 +565,7 @@ section[id]{scroll-margin-top:86px}
       <div style="margin-top:22px;font-family:'Work Sans',sans-serif;font-size:11px;letter-spacing:.12em;color:#6b6252;opacity:.5">{{ versaoTxt }}</div>
     </sc-if>
     <sc-if value="{{ painelOn }}" hint-placeholder-val="{{ false }}">
-      <a href="Painel de Convidados.dc.html" style="display:inline-block;margin-top:18px;padding:9px 16px;border:1px dashed rgba(110,122,97,.5);border-radius:999px;font-family:'Work Sans',sans-serif;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#6E7A61;text-decoration:none">painel de respostas</a>
+      <a href="Painel de Convidados.dc.html" style="display:inline-block;margin-top:18px;padding:9px 16px;border:1px dashed rgba(110,122,97,.5);border-radius:999px;font-family:'Work Sans',sans-serif;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#6E7A61;text-decoration:none">painel dos noivos</a>
     </sc-if>
   </footer>
 </div>
@@ -612,12 +631,14 @@ const familiaDoLink = () => {
 };
 const SHOTS = ['assets/foto02.jpg','assets/foto03.jpg','assets/foto04.jpg','assets/foto05.jpg','assets/foto06.jpg','assets/foto07.jpg'];
 const DIETAS = [
-  { id: 'carne', label: 'Não come carne' },
-  { id: 'peixe', label: 'Não come peixe nem marisco' },
-  { id: 'animal', label: 'Nada de origem animal' },
-  { id: 'gluten', label: 'Sem glúten' },
-  { id: 'lactose', label: 'Sem lactose' },
-  { id: 'frutos', label: 'Alergia a frutos secos' }
+  { id: 'lactose', label: 'Lactose' },
+  { id: 'gluten', label: 'Glúten' },
+  { id: 'frutos', label: 'Frutos secos' },
+  { id: 'peixe', label: 'Peixe' },
+  { id: 'marisco', label: 'Marisco' },
+  { id: 'camarao', label: 'Camarão' },
+  { id: 'carne', label: 'Carne' },
+  { id: 'animal', label: 'Nada de origem animal' }
 ];
 const DIETA_LABEL = (id) => (DIETAS.find(d => d.id === id) || {}).label || '';
 const dietaTexto = (tags, outro) => (tags || []).map(DIETA_LABEL).filter(Boolean).concat((outro || '').trim() ? [outro.trim()] : []).join(', ');
@@ -687,7 +708,7 @@ class Component extends DCLogic {
           const ang = (dx || dy) ? Math.atan2(dy, dx) * 180 / Math.PI : this.pinAng || 0;
           this.pinAng = ang;
           pin.style.transform = 'translate3d(' + px + 'px,' + py + 'px,0) rotate(' + ang + 'deg)';
-          pin.style.opacity = '1';
+          pin.style.opacity = (window.innerWidth < 860 && window.scrollY < 150) ? '0' : '1';
         }
       });
     };
@@ -890,8 +911,8 @@ class Component extends DCLogic {
   envKey = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.openEnvelope(); } };
   toggleMenu = () => this.setState(s => ({ menu: !s.menu }));
   closeMenu = () => this.setState({ menu: false });
-  openShot = (e) => this.setState({ shot: Number(e.currentTarget.dataset.i) - 1 });
-  closeShot = () => this.setState({ shot: -1 });
+  openShot = (e) => { this.lockScroll(true); this.setState({ shot: Number(e.currentTarget.dataset.i) - 1 }); };
+  closeShot = () => { this.lockScroll(false); this.setState({ shot: -1 }); };
   openMap = () => this.setState({ map: true });
   closeMap = () => this.setState({ map: false });
   openCal = () => this.setState({ cal: true });
@@ -1082,7 +1103,7 @@ class Component extends DCLogic {
       ? 'background:#6E7A61;color:#FFF6EA;border:1px solid #6E7A61;'
       : 'background:#FBF1E7;color:#6b6252;border:1px solid ' + (bad ? '#D3684B' : 'rgba(62,58,47,.18)') + ';');
     const chip = (on) => "padding:9px 13px;border-radius:999px;font-family:'Work Sans',sans-serif;font-size:12.5px;line-height:1.2;text-align:left;cursor:pointer;transition:background .2s,color .2s,border-color .2s;border:1px solid "
-      + (on ? '#6E7A61;background:#6E7A61;color:#FFF6EA;' : 'rgba(110,122,97,.35);background:#FFF9F0;color:#6b6252;');
+      + (on ? '#5A6450;background:#5A6450;color:#FFF6EA;' : 'rgba(110,122,97,.35);background:#FFF9F0;color:#6b6252;');
     const outroField = (bad) => 'width:100%;margin-top:9px;padding:12px 13px;background:#FBF1E7;border:1px solid ' + (bad ? '#D3684B' : 'rgba(62,58,47,.18)')
       + ";border-radius:10px;font-family:'Work Sans',sans-serif;font-size:15px;color:#3E3A2F";
     const field = (bad) => 'width:100%;padding:14px;background:#FFF9F0;border:1px solid ' + (bad ? '#D3684B' : 'rgba(62,58,47,.18)') + ';font-family:\'Work Sans\',sans-serif;font-size:clamp(15.5px,4.2vw,16.5px);line-height:1.55;color:#3E3A2F;outline:none;resize:vertical;';
@@ -1142,8 +1163,27 @@ class Component extends DCLogic {
       setGuestAge: this.setGuestAge,
       onGuestName: this.onGuestName, onGuestDietText: this.onGuestDietText, setGuestDiet: this.setGuestDiet,
       setMyDiet: this.setMyDiet, onMyDietText: this.onMyDietText, blurName: this.blurName,
-      summary: total + (total === 1 ? ' pessoa: ' : ' pessoas: ') + names.join(', ') + '.' + (diets.length ? ' Restrições — ' + diets.join('; ') + '.' : ' Sem restrições alimentares.'),
-      doneTitle: s.going === 'nao' ? 'Vamos sentir a vossa falta' : 'Que bom, contamos consigo!',
+      resumoTitulo: s.going === 'nao' ? 'a vossa resposta' : (total === 1 ? 'vai 1 pessoa' : 'vão ' + total + ' pessoas'),
+      resumoPessoas: (() => {
+        const eu = {
+          nome: s.name.trim() || 'Sem nome',
+          idade: 'Adulto',
+          restricao: s.myDiet === 'sim' ? (dietaTexto(s.myDietTags, s.myDietText) || 'Restrição por indicar') : 'Sem restrições',
+          cor: s.myDiet === 'sim' ? '#AE4B32' : '#6b6252'
+        };
+        if (s.going === 'nao') return [eu];
+        const outros = s.guests.slice(0, s.party).map(g => ({
+          nome: g.name.trim() || 'Acompanhante sem nome',
+          idade: AGE_LABEL[g.age] || 'Idade por indicar',
+          restricao: g.diet === 'sim' ? (dietaTexto(g.dietTags, g.dietText) || 'Restrição por indicar') : 'Sem restrições',
+          cor: g.diet === 'sim' ? '#AE4B32' : '#6b6252'
+        }));
+        return [eu].concat(outros);
+      })(),
+      resumoNota: s.going === 'nao'
+        ? 'Resposta: não vamos poder estar presentes.'
+        : (diets.length ? diets.length + (diets.length === 1 ? ' pessoa com restrição alimentar — avisamos a cozinha.' : ' pessoas com restrições alimentares — avisamos a cozinha.') : 'Ninguém com restrições alimentares.'),
+      doneTitle: s.going === 'nao' ? 'Vamos sentir a vossa falta' : 'Que bom, contamos convosco!',
       doneText: s.going === 'nao'
         ? 'Obrigado por nos dizerem, ' + (s.name.trim().split(' ')[0] || '') + '. Guardamos um brinde para a próxima paragem.'
         : 'Resposta guardada para ' + total + (total === 1 ? ' pessoa' : ' pessoas') + (diets.length ? ', com as restrições anotadas' : '') + '. Vemo-nos a 2 de outubro na Quinta do Coração!',
@@ -1161,9 +1201,9 @@ class Component extends DCLogic {
       onShotTouchStart: this.onShotTouchStart, onShotTouchMove: this.onShotTouchMove, onShotTouchEnd: this.onShotTouchEnd,
       shotHint: 'deslizem ou usem as setas · toque para fechar',
       railRef: this.railRef, onRail: this.onRail, shotPrev: this.shotPrev, shotNext: this.shotNext,
-      arrowPrevStyle: 'position:absolute;left:0;top:0;bottom:24px;z-index:3;display:flex;align-items:center;justify-content:flex-start;width:58px;padding:0 0 0 4px;border:0;background:linear-gradient(90deg, rgba(251,241,231,.75), rgba(251,241,231,0));cursor:pointer;transition:opacity .25s ease;'
+      arrowPrevStyle: 'position:absolute;left:0;top:0;bottom:24px;z-index:3;pointer-events:none;display:flex;align-items:center;justify-content:flex-start;width:58px;padding:0 0 0 4px;border:0;background:linear-gradient(90deg, rgba(251,241,231,.75), rgba(251,241,231,0));cursor:pointer;transition:opacity .25s ease;'
         + ((s.railStart ?? true) ? 'opacity:0;pointer-events:none;' : 'opacity:1;'),
-      arrowNextStyle: 'position:absolute;right:0;top:0;bottom:24px;z-index:3;display:flex;align-items:center;justify-content:flex-end;width:58px;padding:0 4px 0 0;border:0;background:linear-gradient(270deg, rgba(251,241,231,.75), rgba(251,241,231,0));cursor:pointer;transition:opacity .25s ease;'
+      arrowNextStyle: 'position:absolute;right:0;top:0;bottom:24px;z-index:3;pointer-events:none;display:flex;align-items:center;justify-content:flex-end;width:58px;padding:0 4px 0 0;border:0;background:linear-gradient(270deg, rgba(251,241,231,.75), rgba(251,241,231,0));cursor:pointer;transition:opacity .25s ease;'
         + ((s.railEnd ?? false) ? 'opacity:0;pointer-events:none;' : 'opacity:1;'),
       lightboxStyle: 'position:fixed;inset:0;z-index:900;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(40,36,30,.86);cursor:zoom-out;touch-action:none;overscroll-behavior:contain;transition:opacity .28s ease;' + (s.shot >= 0 ? 'opacity:1;' : 'opacity:0;pointer-events:none;'),
       calStyle: 'position:fixed;inset:0;z-index:950;display:flex;align-items:center;justify-content:center;transition:opacity .25s ease;' + (s.cal ? 'opacity:1;' : 'opacity:0;pointer-events:none;'),

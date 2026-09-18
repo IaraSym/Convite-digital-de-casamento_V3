@@ -36,6 +36,7 @@ input,button,textarea{font-family:'Work Sans',system-ui,sans-serif}
     <sc-if value="{{ unlocked }}" hint-placeholder-val="{{ true }}">
       <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px;border-bottom:1px solid rgba(62,58,47,.14);padding-bottom:18px">
         <div>
+          <a href="/" style="display:inline-block;margin-bottom:8px;font-size:12.5px;letter-spacing:.08em;color:#6E7A61;text-decoration:none">← voltar ao convite</a>
           <div style="font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:#6E7A61">confirmações de presença</div>
           <h1 style="margin:2px 0 0;font-family:'Amatic SC',cursive;font-weight:700;font-size:clamp(36px,8vw,62px);line-height:1;color:#AE4B32">Quem vem ao casamento</h1>
         </div>
@@ -183,7 +184,7 @@ input,button,textarea{font-family:'Work Sans',system-ui,sans-serif}
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1040,&quot;height&quot;:900},&quot;codigo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;0210&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Acesso&quot;},&quot;sheetUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://docs.google.com/spreadsheets/d/1lp0MNbJgo4k9wQzLmmzajxxuzQ09zbLrHzXurQ0j_tg/edit&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Dados&quot;},&quot;sheetName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Convidados&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Dados&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1040,&quot;height&quot;:900},&quot;codigo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;0910&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Acesso&quot;},&quot;sheetUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://docs.google.com/spreadsheets/d/1lp0MNbJgo4k9wQzLmmzajxxuzQ09zbLrHzXurQ0j_tg/edit&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Dados&quot;},&quot;sheetName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Convidados&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Dados&quot;}}">
 const SHEET = 'https://docs.google.com/spreadsheets/d/1lp0MNbJgo4k9wQzLmmzajxxuzQ09zbLrHzXurQ0j_tg/edit';
 const OK = 'iaj-painel-ok';
 const UNIR = 'iaj-painel-unir';
@@ -196,7 +197,7 @@ class Component extends DCLogic {
   state = { raw: null, err: '', loading: false, filter: 'todos', busca: '', open: false, pinDraft: '', pinError: '', unidos: ler(UNIR), separados: ler(SEP) };
 
   componentDidMount() {
-    const code = String(this.props.codigo ?? '0210');
+    const code = String(this.props.codigo ?? '0910');
     let url = '';
     try { url = new URLSearchParams(window.location.search).get('k') || ''; } catch (e) {}
     let saved = '';
@@ -208,7 +209,7 @@ class Component extends DCLogic {
   }
 
   tryPin = () => {
-    const code = String(this.props.codigo ?? '0210');
+    const code = String(this.props.codigo ?? '0910');
     if (this.state.pinDraft.trim() === code) {
       try { sessionStorage.setItem(OK, code); } catch (e) {}
       this.setState({ open: true, pinError: '' });
@@ -436,13 +437,20 @@ class Component extends DCLogic {
       + 'ul{margin:4px 0 0;padding-left:16px}li{margin:3px 0}'
       + 'blockquote{margin:6px 0 10px;padding-left:10px;border-left:2px solid #D9CFBE;font-family:"Fraunces",serif;font-style:italic;color:#3E3A2F}'
       + '.pe{margin-top:26px;font-size:8pt;color:#6b6252}';
-    const w = window.open('', '_blank');
-    if (!w) return;
-    const d = w.document;
+    const antigo = document.getElementById('iaj-print');
+    if (antigo) antigo.remove();
+    const fr = document.createElement('iframe');
+    fr.id = 'iaj-print';
+    fr.setAttribute('aria-hidden', 'true');
+    fr.style.cssText = 'position:fixed;left:-10000px;top:0;width:794px;height:1123px;border:0;visibility:hidden';
+    document.body.appendChild(fr);
+    const d = fr.contentDocument;
     d.open();
     d.write('<!DOCTYPE html><html lang="pt"><head><meta charset="utf-8"></head><body></body></html>');
     d.close();
     d.title = titulo;
+    const antesTitulo = document.title;
+    document.title = titulo;
     const link = d.createElement('link');
     link.rel = 'stylesheet';
     link.href = 'https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Work+Sans:wght@300;400;600&display=swap';
@@ -451,7 +459,10 @@ class Component extends DCLogic {
     st.textContent = css;
     d.head.appendChild(st);
     d.body.innerHTML = corpo;
-    setTimeout(() => { try { w.focus(); w.print(); } catch (err) {} }, 800);
+    setTimeout(() => {
+      try { fr.contentWindow.focus(); fr.contentWindow.print(); } catch (err) {}
+      setTimeout(() => { document.title = antesTitulo; }, 1500);
+    }, 900);
   };
 
   exportPdfTudo = () => {
