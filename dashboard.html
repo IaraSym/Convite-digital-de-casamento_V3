@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="../support.js"></script>
+<script src="./support.js"></script>
 </head>
 <body>
 <x-dc>
@@ -41,8 +41,8 @@ input,button,textarea{font-family:'Work Sans',system-ui,sans-serif}
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:8px">
           <button type="button" onClick="{{ reload }}" style="padding:11px 18px;background:#AE4B32;border:none;border-radius:999px;color:#FFF6EA;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">{{ reloadLabel }}</button>
-          <button type="button" onClick="{{ exportQuinta }}" style="padding:11px 18px;background:#F6E3D2;border:1px solid #D9A57F;border-radius:999px;color:#8E3A24;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">Ficheiro p/ a quinta</button>
-          <button type="button" onClick="{{ exportTudo }}" style="padding:11px 18px;background:none;border:1px solid rgba(110,122,97,.4);border-radius:999px;color:#6E7A61;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">Exportar tudo</button>
+          <button type="button" onClick="{{ exportPdf }}" style="padding:11px 18px;background:#F6E3D2;border:1px solid #D9A57F;border-radius:999px;color:#8E3A24;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">PDF p/ a quinta</button>
+          <button type="button" onClick="{{ exportPdfTudo }}" style="padding:11px 18px;background:none;border:1px solid rgba(110,122,97,.4);border-radius:999px;color:#6E7A61;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">PDF completo</button>
         </div>
       </div>
 
@@ -82,7 +82,7 @@ input,button,textarea{font-family:'Work Sans',system-ui,sans-serif}
           <div style="padding:20px;background:#FFF9F0;border:1px solid rgba(62,58,47,.12)">
             <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
               <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6E7A61">restrições alimentares</div>
-              <button type="button" onClick="{{ exportQuinta }}" style="background:none;border:none;padding:0;font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#AE4B32;cursor:pointer">exportar</button>
+              <button type="button" onClick="{{ exportPdf }}" style="background:none;border:none;padding:0;font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#AE4B32;cursor:pointer">exportar</button>
             </div>
             <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
               <sc-for list="{{ diets }}" as="d" hint-placeholder-count="3">
@@ -95,6 +95,31 @@ input,button,textarea{font-family:'Work Sans',system-ui,sans-serif}
             <div style="margin-top:12px;font-size:13px;color:#6b6252">{{ dietsNote }}</div>
           </div>
         </div>
+
+        <sc-if value="{{ temDuplicados }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:22px;padding:20px;background:#FFF9F0;border:1px solid #D9A57F;border-left:4px solid #D3684B">
+            <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8E3A24">possíveis duplicados</div>
+            <p style="margin:6px 0 14px;font-size:14px;line-height:1.65;color:#6b6252">Nomes parecidos que <strong style="font-weight:600">não</strong> juntei. Vê se é a mesma pessoa.</p>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ duplicados }}" as="d" hint-placeholder-count="1">
+                <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:14px;background:#FBF1E7;border:1px solid rgba(62,58,47,.12)">
+                  <div style="flex:1 1 180px;min-width:0">
+                    <div style="font-family:'Fraunces',serif;font-weight:600;font-size:15.5px;color:#3E3A2F">{{ d.aNome }}</div>
+                    <div style="font-size:12.5px;color:#6b6252">{{ d.aEstado }} · {{ d.aQuando }}</div>
+                  </div>
+                  <div style="flex:1 1 180px;min-width:0">
+                    <div style="font-family:'Fraunces',serif;font-weight:600;font-size:15.5px;color:#3E3A2F">{{ d.bNome }}</div>
+                    <div style="font-size:12.5px;color:#6b6252">{{ d.bEstado }} · {{ d.bQuando }}</div>
+                  </div>
+                  <div style="display:flex;gap:8px;flex:0 0 auto">
+                    <button type="button" data-p="{{ d.p }}" onClick="{{ unir }}" style="padding:10px 16px;background:#AE4B32;border:none;border-radius:999px;color:#FFF6EA;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">É a mesma</button>
+                    <button type="button" data-p="{{ d.p }}" onClick="{{ separar }}" style="padding:10px 16px;background:none;border:1px solid rgba(110,122,97,.4);border-radius:999px;color:#6E7A61;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">São diferentes</button>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
 
         <sc-if value="{{ temMensagens }}" hint-placeholder-val="{{ true }}">
           <div style="margin-top:34px">
@@ -145,7 +170,12 @@ input,button,textarea{font-family:'Work Sans',system-ui,sans-serif}
           </sc-for>
         </div>
 
-        <div style="margin-top:20px;font-size:12.5px;color:#6b6252">{{ footer }}</div>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-top:20px;font-size:12.5px;color:#6b6252">
+          <span>{{ footer }}</span>
+          <sc-if value="{{ temUnioes }}" hint-placeholder-val="{{ false }}">
+            <button type="button" onClick="{{ desfazerUnioes }}" style="background:none;border:none;padding:0;font-size:12.5px;color:#AE4B32;text-decoration:underline;text-underline-offset:3px;cursor:pointer">anular as minhas uniões</button>
+          </sc-if>
+        </div>
       </sc-if>
     </sc-if>
 
@@ -156,9 +186,14 @@ input,button,textarea{font-family:'Work Sans',system-ui,sans-serif}
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1040,&quot;height&quot;:900},&quot;codigo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;0210&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Acesso&quot;},&quot;sheetUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://docs.google.com/spreadsheets/d/1lp0MNbJgo4k9wQzLmmzajxxuzQ09zbLrHzXurQ0j_tg/edit&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Dados&quot;},&quot;sheetName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Convidados&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Dados&quot;}}">
 const SHEET = 'https://docs.google.com/spreadsheets/d/1lp0MNbJgo4k9wQzLmmzajxxuzQ09zbLrHzXurQ0j_tg/edit';
 const OK = 'iaj-painel-ok';
+const UNIR = 'iaj-painel-unir';
+const SEP = 'iaj-painel-separados';
+const ler = (k) => { try { return JSON.parse(localStorage.getItem(k) || '[]'); } catch (e) { return []; } };
+const gravar = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+const par = (a, b) => [a, b].sort().join('||');
 
 class Component extends DCLogic {
-  state = { raw: null, err: '', loading: false, filter: 'todos', busca: '', open: false, pinDraft: '', pinError: '' };
+  state = { raw: null, err: '', loading: false, filter: 'todos', busca: '', open: false, pinDraft: '', pinError: '', unidos: ler(UNIR), separados: ler(SEP) };
 
   componentDidMount() {
     const code = String(this.props.codigo ?? '0210');
@@ -249,14 +284,58 @@ class Component extends DCLogic {
     }).filter(r => r.nome);
     const grupos = new Map();
     all.forEach(r => { const g = grupos.get(r.chave) || []; g.push(r); grupos.set(r.chave, g); });
+
+    // junta grafias diferentes da mesma pessoa (ex. "Iara Simões" e "Iara simoed")
+    const blocos = [];
+    grupos.forEach((g, chave) => blocos.push({ chave, itens: g }));
+    const unidos = this.state.unidos || [];
+    const ligado = (x, y) => unidos.indexOf(par(x, y)) >= 0;
+    const fundidos = [];
+    blocos.forEach(b => {
+      const alvo = fundidos.find(f => f.chaves.some(c => this.mesmaPessoa(c, b.chave) || ligado(c, b.chave)));
+      if (alvo) { alvo.itens = alvo.itens.concat(b.itens); alvo.chaves.push(b.chave); }
+      else fundidos.push({ chave: b.chave, chaves: [b.chave], itens: b.itens.slice() });
+    });
+
     const out = [];
-    grupos.forEach(g => {
-      g.sort((a, b) => (a.ts - b.ts) || (a.i - b.i));
-      out.push(Object.assign({}, g[g.length - 1], { versoes: g.length }));
+    fundidos.forEach(f => {
+      const g = f.itens.slice().sort((a, b) => (a.ts - b.ts) || (a.i - b.i));
+      const nomes = [];
+      g.forEach(r => { if (nomes.indexOf(r.nome) < 0) nomes.push(r.nome); });
+      out.push(Object.assign({}, g[g.length - 1], { versoes: g.length, grafias: nomes, chaves: f.chaves }));
     });
     return out.sort((a, b) => b.ts - a.ts);
   };
 
+  dist = (a, b) => {
+    if (a === b) return 0;
+    const m = a.length, n = b.length;
+    if (!m || !n) return m || n;
+    let prev = Array.from({ length: n + 1 }, (_, j) => j);
+    for (let i = 1; i <= m; i++) {
+      const cur = [i];
+      for (let j = 1; j <= n; j++) {
+        cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      }
+      prev = cur;
+    }
+    return prev[n];
+  };
+  parecido = (a, b) => {
+    if (!a || !b) return false;
+    const d = this.dist(a, b), len = Math.max(a.length, b.length);
+    return 1 - d / len >= 0.8;
+  };
+  mesmaPessoa = (a, b) => {
+    if (a === b) return true;
+    const pa = a.split(' ').filter(Boolean), pb = b.split(' ').filter(Boolean);
+    if (!pa.length || !pb.length) return false;
+    // primeiro nome tem de bater exatamente (Maria/Mario são pessoas diferentes)
+    if (pa[0] !== pb[0]) return false;
+    if (pa.length === 1 || pb.length === 1) return true;
+    const resA = pa.slice(1), resB = pb.slice(1);
+    return resA.some(x => resB.some(y => this.parecido(x, y)));
+  };
   vemList = () => this.respostas().filter(r => r.confirma === 'sim');
 
   pessoasConfirmadas = () => {
@@ -286,7 +365,121 @@ class Component extends DCLogic {
     linhas.push([]);
     linhas.push(['Total de pessoas', pessoas.length]);
     linhas.push(['Com restrições', pessoas.filter(p => p.diet).length]);
-    this.baixar('casamento-iara-joao-quinta.csv', linhas);
+    this.baixar('Confirmações de presença e restrições para quinta.csv', linhas);
+  };
+
+  esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  exportPdf = () => {
+    const reps = this.respostas();
+    const pessoas = this.pessoasConfirmadas();
+    const vem = reps.filter(r => r.confirma === 'sim');
+    const nao = reps.filter(r => r.confirma === 'nao' || r.confirma === 'não');
+    const k = (x) => this.norm(x);
+    const adultos = pessoas.filter(p => !p.idade || k(p.idade).indexOf('adulto') === 0).length;
+    const criancas = pessoas.filter(p => k(p.idade).indexOf('crianca') === 0).length;
+    const bebes = pessoas.filter(p => k(p.idade).indexOf('bebe') === 0).length;
+    const dietas = pessoas.filter(p => p.diet);
+    const e = this.esc;
+    const hoje = new Date().toLocaleDateString('pt-PT', { day: '2-digit', month: 'long', year: 'numeric' });
+
+    const linhas = pessoas.map(p => '<tr><td>' + e(p.nome || p.de) + '</td><td>' + e(p.idade || 'Adulto')
+      + '</td><td>' + (p.diet ? '<strong>' + e(p.diet) + '</strong>' : '—') + '</td><td class="nota">' + e(p.de) + '</td></tr>').join('');
+
+    const css = '@page{size:A4;margin:16mm}'
+      + '*{box-sizing:border-box}body{margin:0;font-family:"Work Sans",system-ui,sans-serif;color:#3E3A2F;font-size:10.5pt;line-height:1.5}'
+      + 'h1{font-family:"Amatic SC",cursive;font-size:32pt;line-height:1.05;color:#AE4B32;margin:0}'
+      + '.sub{font-size:8pt;letter-spacing:.2em;text-transform:uppercase;color:#6E7A61}'
+      + 'h2{font-family:"Fraunces",serif;font-size:13pt;color:#AE4B32;margin:22px 0 8px;page-break-after:avoid}'
+      + '.kpis{display:flex;gap:10px;margin-top:14px}'
+      + '.kpi{flex:1;padding:10px 12px;border:1px solid #E0D6C6;background:#FFF9F0}'
+      + '.kpi b{display:block;font-family:"Fraunces",serif;font-size:19pt;line-height:1.1;color:#AE4B32}'
+      + '.kpi span{font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:#6E7A61}'
+      + 'table{width:100%;border-collapse:collapse;margin-top:6px}'
+      + 'th{text-align:left;font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:#6E7A61;border-bottom:1px solid #D9CFBE;padding:6px 8px 6px 0}'
+      + 'td{vertical-align:top;padding:7px 8px 7px 0;border-bottom:1px solid #EFE6D8}'
+      + 'tr{page-break-inside:avoid}.nota{font-size:8.5pt;color:#6b6252}'
+      + 'ul{margin:4px 0 0;padding-left:16px}li{margin:3px 0}'
+      + '.pe{margin-top:26px;font-size:8pt;color:#6b6252}';
+
+    const corpo = '<div class="sub">casamento de 2 de outubro de 2027</div>'
+      + '<h1>Confirmações de presença<br/>e restrições alimentares</h1>'
+      + '<div class="kpis"><div class="kpi"><b>' + pessoas.length + '</b><span>pessoas à mesa</span></div>'
+      + '<div class="kpi"><b>' + adultos + '</b><span>adultos</span></div>'
+      + '<div class="kpi"><b>' + criancas + '</b><span>crianças 4-9</span></div>'
+      + '<div class="kpi"><b>' + bebes + '</b><span>bebés 0-3</span></div>'
+      + '<div class="kpi"><b>' + dietas.length + '</b><span>com restrições</span></div></div>'
+      + (dietas.length ? '<h2>Restrições alimentares</h2><ul>'
+          + dietas.map(p => '<li><strong>' + e(p.nome || p.de) + '</strong> (' + e(p.idade || 'Adulto') + ') — ' + e(p.diet) + '</li>').join('')
+          + '</ul>' : '<h2>Restrições alimentares</h2><p class="nota">Nenhum convidado indicou restrições.</p>')
+      + '<h2>Lista de pessoas confirmadas (' + pessoas.length + ')</h2>'
+      + '<table><thead><tr><th>Nome</th><th>Idade</th><th>Restrição alimentar</th><th>Resposta de</th></tr></thead><tbody>'
+      + linhas + '</tbody></table>'
+      + '<div class="pe">Documento gerado a ' + e(hoje) + ' · ' + vem.length + ' respostas afirmativas · ' + nao.length + ' não podem ir</div>';
+
+    this.imprimir('Confirmações de presença e restrições para quinta', corpo);
+  };
+
+  imprimir = (titulo, corpo) => {
+    const css = '@page{size:A4;margin:16mm}'
+      + '*{box-sizing:border-box}body{margin:0;font-family:"Work Sans",system-ui,sans-serif;color:#3E3A2F;font-size:10.5pt;line-height:1.5}'
+      + 'h1{font-family:"Amatic SC",cursive;font-size:32pt;line-height:1.05;color:#AE4B32;margin:0}'
+      + '.sub{font-size:8pt;letter-spacing:.2em;text-transform:uppercase;color:#6E7A61}'
+      + 'h2{font-family:"Fraunces",serif;font-size:13pt;color:#AE4B32;margin:22px 0 8px;page-break-after:avoid}'
+      + '.kpis{display:flex;gap:10px;margin-top:14px}'
+      + '.kpi{flex:1;padding:10px 12px;border:1px solid #E0D6C6;background:#FFF9F0}'
+      + '.kpi b{display:block;font-family:"Fraunces",serif;font-size:19pt;line-height:1.1;color:#AE4B32}'
+      + '.kpi span{font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:#6E7A61}'
+      + 'table{width:100%;border-collapse:collapse;margin-top:6px}'
+      + 'th{text-align:left;font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:#6E7A61;border-bottom:1px solid #D9CFBE;padding:6px 8px 6px 0}'
+      + 'td{vertical-align:top;padding:7px 8px 7px 0;border-bottom:1px solid #EFE6D8}'
+      + 'tr{page-break-inside:avoid}.nota{font-size:8.5pt;color:#6b6252}'
+      + 'ul{margin:4px 0 0;padding-left:16px}li{margin:3px 0}'
+      + 'blockquote{margin:6px 0 10px;padding-left:10px;border-left:2px solid #D9CFBE;font-family:"Fraunces",serif;font-style:italic;color:#3E3A2F}'
+      + '.pe{margin-top:26px;font-size:8pt;color:#6b6252}';
+    const w = window.open('', '_blank');
+    if (!w) return;
+    const d = w.document;
+    d.open();
+    d.write('<!DOCTYPE html><html lang="pt"><head><meta charset="utf-8"></head><body></body></html>');
+    d.close();
+    d.title = titulo;
+    const link = d.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Work+Sans:wght@300;400;600&display=swap';
+    d.head.appendChild(link);
+    const st = d.createElement('style');
+    st.textContent = css;
+    d.head.appendChild(st);
+    d.body.innerHTML = corpo;
+    setTimeout(() => { try { w.focus(); w.print(); } catch (err) {} }, 800);
+  };
+
+  exportPdfTudo = () => {
+    const reps = this.respostas();
+    const pessoas = this.pessoasConfirmadas();
+    const vem = reps.filter(r => r.confirma === 'sim');
+    const nao = reps.filter(r => r.confirma === 'nao' || r.confirma === 'não');
+    const outros = reps.filter(r => ['sim', 'nao', 'não'].indexOf(r.confirma) < 0);
+    const e = this.esc;
+    const hoje = new Date().toLocaleDateString('pt-PT', { day: '2-digit', month: 'long', year: 'numeric' });
+    const linhas = reps.map(r => {
+      const estado = r.confirma === 'sim' ? 'Vem' : (r.confirma === 'nao' || r.confirma === 'não') ? 'Não vem' : 'Sem resposta';
+      return '<tr><td>' + e(r.nome) + (r.versoes > 1 ? '<div class="nota">' + r.versoes + ' respostas · mostro a última</div>' : '')
+        + '</td><td>' + estado + '</td><td class="nota">' + e(r.quando) + '</td><td>'
+        + (r.pessoas.length ? r.pessoas.map(p => e(p.nome) + ' <span class="nota">' + e(p.idade || 'Adulto') + (p.diet ? ' · ' + e(p.diet) : '') + '</span>').join('<br/>') : '—')
+        + '</td><td>' + (r.mensagem ? '<em>' + e(r.mensagem) + '</em>' : '—') + '</td></tr>';
+    }).join('');
+    const msgs = reps.filter(r => r.mensagem);
+    const corpo = '<div class="sub">uso interno · Iara e João</div><h1>Confirmações de presença<br/>informação completa</h1>'
+      + '<div class="kpis"><div class="kpi"><b>' + pessoas.length + '</b><span>pessoas confirmadas</span></div>'
+      + '<div class="kpi"><b>' + vem.length + '</b><span>respostas sim</span></div>'
+      + '<div class="kpi"><b>' + nao.length + '</b><span>não vêm</span></div>'
+      + '<div class="kpi"><b>' + outros.length + '</b><span>por responder</span></div></div>'
+      + '<h2>Todas as respostas (' + reps.length + ')</h2>'
+      + '<table><thead><tr><th>Quem respondeu</th><th>Estado</th><th>Enviado</th><th>Pessoas</th><th>Mensagem</th></tr></thead><tbody>' + linhas + '</tbody></table>'
+      + (msgs.length ? '<h2>Mensagens</h2>' + msgs.map(r => '<blockquote>' + e(r.mensagem) + '</blockquote><div class="nota">— ' + e(r.nome) + '</div>').join('') : '')
+      + '<div class="pe">Documento gerado a ' + e(hoje) + '</div>';
+    this.imprimir('Confirmações de presença_totalInfo', corpo);
   };
 
   exportTudo = () => {
@@ -300,8 +493,43 @@ class Component extends DCLogic {
       r.pessoas.filter(p => p.diet).map(p => p.nome + ': ' + p.diet).join(' | '),
       r.mensagem, r.versoes
     ]));
-    this.baixar('casamento-iara-joao-respostas.csv', linhas);
+    this.baixar('Confirmações de presença_totalInfo.csv', linhas);
   };
+
+  duplicados = () => {
+    const reps = this.respostas();
+    const sep = this.state.separados || [];
+    const out = [];
+    for (let i = 0; i < reps.length; i++) {
+      for (let j = i + 1; j < reps.length; j++) {
+        const a = reps[i], b = reps[j];
+        const p = par(a.chave, b.chave);
+        if (sep.indexOf(p) >= 0) continue;
+        const pa = a.chave.split(' ').filter(Boolean), pb = b.chave.split(' ').filter(Boolean);
+        const mesmoApelido = pa.length > 1 && pb.length > 1
+          && pa.slice(1).some(x => pb.slice(1).some(y => this.parecido(x, y)));
+        const perto = this.parecido(a.chave, b.chave)
+          || (mesmoApelido && this.parecido(pa[0], pb[0]))
+          || (pa[0] === pb[0] && (pa.length === 1 || pb.length === 1));
+        if (perto) out.push({ p, a, b });
+      }
+    }
+    return out;
+  };
+  unir = (e) => {
+    const p = e.currentTarget.dataset.p;
+    const [a, b] = p.split('||');
+    const unidos = (this.state.unidos || []).concat([par(a, b)]);
+    gravar(UNIR, unidos);
+    this.setState({ unidos });
+  };
+  separar = (e) => {
+    const p = e.currentTarget.dataset.p;
+    const separados = (this.state.separados || []).concat([p]);
+    gravar(SEP, separados);
+    this.setState({ separados });
+  };
+  desfazerUnioes = () => { gravar(UNIR, []); gravar(SEP, []); this.setState({ unidos: [], separados: [] }); };
 
   setFilter = (e) => this.setState({ filter: e.currentTarget.dataset.f });
   onBusca = (e) => this.setState({ busca: e.target.value });
@@ -324,6 +552,7 @@ class Component extends DCLogic {
     const total = pessoas.length || 1;
     const dietas = pessoas.filter(p => p.diet).map(p => ({ nome: p.nome || p.de, texto: p.diet }));
     const mensagens = reps.filter(r => r.mensagem).map(r => ({ texto: r.mensagem, autor: r.nome + (r.confirma === 'sim' ? ' · vem' : '') }));
+    const dups = this.duplicados();
 
     const q = this.norm(s.busca);
     const base = s.filter === 'sim' ? vem : s.filter === 'nao' ? nao : reps;
@@ -334,7 +563,7 @@ class Component extends DCLogic {
       pinDraft: s.pinDraft, pinError: s.pinError,
       onPin: this.onPin, pinKey: this.pinKey, tryPin: this.tryPin,
       reload: this.reload, reloadLabel: s.loading ? 'A carregar…' : 'Atualizar',
-      exportQuinta: this.exportQuinta, exportTudo: this.exportTudo,
+      exportQuinta: this.exportQuinta, exportTudo: this.exportTudo, exportPdf: this.exportPdf, exportPdfTudo: this.exportPdfTudo,
       hasError: !!s.err, errorMsg: s.err,
       hasData: !!s.raw && !s.err,
       kpis: [
@@ -351,6 +580,15 @@ class Component extends DCLogic {
       diets: dietas,
       dietsNote: dietas.length ? '' : 'Nenhum convidado indicou restrições.',
       temMensagens: mensagens.length > 0, mensagens,
+      temDuplicados: dups.length > 0,
+      duplicados: dups.map(d => ({
+        p: d.p,
+        aNome: d.a.nome, aEstado: d.a.confirma === 'sim' ? 'vem' : (d.a.confirma === 'nao' || d.a.confirma === 'não') ? 'não vem' : (d.a.confirma || 'sem resposta'), aQuando: d.a.quando,
+        bNome: d.b.nome, bEstado: d.b.confirma === 'sim' ? 'vem' : (d.b.confirma === 'nao' || d.b.confirma === 'não') ? 'não vem' : (d.b.confirma || 'sem resposta'), bQuando: d.b.quando
+      })),
+      unir: this.unir, separar: this.separar,
+      temUnioes: (s.unidos || []).length > 0 || (s.separados || []).length > 0,
+      desfazerUnioes: this.desfazerUnioes,
       busca: s.busca, onBusca: this.onBusca,
       filters: [
         { id: 'todos', label: 'Todas (' + reps.length + ')', style: this.pill(s.filter === 'todos') },
@@ -368,7 +606,8 @@ class Component extends DCLogic {
           accent: sim ? '#6E7A61' : '#D9A57F',
           quando: r.quando,
           repetida: r.versoes > 1,
-          repetidaTxt: r.versoes + ' respostas · mostro a última',
+          repetidaTxt: r.versoes + ' respostas · mostro a última'
+            + (r.grafias && r.grafias.length > 1 ? ' (' + r.grafias.join(' / ') + ')' : ''),
           temPessoas: r.pessoas.length > 0,
           pessoas: r.pessoas.map(p => {
             const k = this.norm(p.idade);

@@ -38,7 +38,8 @@ section[id]{scroll-margin-top:86px}
 @media (min-width:860px){[data-nav-desktop]{display:flex !important}[data-nav-burger]{display:none !important}}
 @media (max-width:859px){[data-iaj-dock]{bottom:calc(16px + env(safe-area-inset-bottom,0px)) !important}
 [data-iaj-mapbox]{aspect-ratio:auto !important;height:min(74vh,680px) !important;max-height:none !important}
-[data-iaj-nav]{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:#FBF1E7 !important}}
+[data-iaj-nav]{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:#FBF1E7 !important}
+[data-iaj-pin]{margin-top:-62px !important}}
 [data-vw="mobile"]{max-width:430px !important;margin:0 auto !important;box-shadow:0 0 0 1px rgba(62,58,47,.14),0 30px 70px -34px rgba(62,58,47,.45) !important}
 [data-vw="mobile"] [data-nav-desktop]{display:none !important}
 [data-vw="mobile"] [data-nav-burger]{display:flex !important}
@@ -68,7 +69,7 @@ section[id]{scroll-margin-top:86px}
 </g>
 </svg>
 
-<div ref="{{ pinRef }}" aria-hidden="true" style="position:absolute;top:0;left:0;z-index:1;width:54px;height:28px;margin:-14px 0 0 -27px;pointer-events:none;opacity:1;transition:opacity .4s ease;will-change:transform;backface-visibility:hidden">
+<div ref="{{ pinRef }}" data-iaj-pin="1" aria-hidden="true" style="position:absolute;top:0;left:0;z-index:1;width:54px;height:28px;margin:-14px 0 0 -27px;pointer-events:none;opacity:1;transition:opacity .4s ease;will-change:transform;backface-visibility:hidden">
 <div style="position:absolute;left:35%;top:24%;width:16%;height:52%;background:#2B2A26;border-radius:3px"></div>
 <div style="position:absolute;left:53%;top:20%;width:21%;height:60%;background:#4A5550;border-radius:4px"></div>
 <div style="position:absolute;left:12%;top:16%;width:62%;height:9%;background:#4A5550"></div>
@@ -251,10 +252,20 @@ section[id]{scroll-margin-top:86px}
         <div style="font-family:'Fraunces',serif;font-weight:700;font-size:clamp(21px,5.9vw,25px);letter-spacing:.01em;color:#AE4B32">20:15</div>
         <div style="margin-top:2px;font-size:clamp(15.5px,4.2vw,16.5px);color:#6b6252">Bolo de casamento</div>
       </div>
-      <div style="position:relative">
+      <div style="position:relative;padding-bottom:26px">
         <div style="position:absolute;left:-38px;top:2px;width:21px;height:21px;border-radius:50% 50% 50% 0;background:#AE4B32;transform:rotate(-45deg);box-shadow:0 2px 5px rgba(0,0,0,.18)"></div>
         <div style="font-family:'Fraunces',serif;font-weight:700;font-size:clamp(21px,5.9vw,25px);letter-spacing:.01em;color:#AE4B32">20:45</div>
         <div style="margin-top:2px;font-size:clamp(15.5px,4.2vw,16.5px);color:#6b6252">Buffet</div>
+      </div>
+      <div style="position:relative;padding-bottom:26px">
+        <div style="position:absolute;left:-38px;top:2px;width:21px;height:21px;border-radius:50% 50% 50% 0;background:#AE4B32;transform:rotate(-45deg);box-shadow:0 2px 5px rgba(0,0,0,.18)"></div>
+        <div style="font-family:'Fraunces',serif;font-weight:700;font-size:clamp(21px,5.9vw,25px);letter-spacing:.01em;color:#AE4B32">21:30</div>
+        <div style="margin-top:2px;font-size:clamp(15.5px,4.2vw,16.5px);color:#6b6252">Começa a festa</div>
+      </div>
+      <div style="position:relative">
+        <div style="position:absolute;left:-38px;top:2px;width:21px;height:21px;border-radius:50% 50% 50% 0;background:#6E7A61;transform:rotate(-45deg);box-shadow:0 2px 5px rgba(0,0,0,.18)"></div>
+        <div style="font-family:'Fraunces',serif;font-weight:700;font-size:clamp(21px,5.9vw,25px);letter-spacing:.01em;color:#6E7A61">04:00</div>
+        <div style="margin-top:2px;font-size:clamp(15.5px,4.2vw,16.5px);color:#6b6252">Fim da festa</div>
       </div>
     </div>
     <p style="max-width:34ch;margin:26px auto 0;text-align:center;font-size:clamp(14.5px,3.9vw,15px);line-height:1.7;color:#6b6252">Gostaríamos que chegassem com 15 minutos de antecedência.</p>
@@ -312,12 +323,13 @@ section[id]{scroll-margin-top:86px}
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px;max-width:900px;margin:0 auto">
       <div style="padding:22px;background:#FFF9F0;border:1px solid rgba(62,58,47,.12)">
         <h3 style="margin:0 0 8px;font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(20px,5.5vw,23px);color:#AE4B32">Como vestir</h3>
-        <p style="margin:0;font-size:clamp(15px,4vw,15.5px);line-height:1.7;color:#6b6252">Pedimos que evitem estas três — são as cores do cortejo. Nos restantes tons, fiquem à vontade:</p>
+        <p style="margin:0;font-size:clamp(15px,4vw,15.5px);line-height:1.7;color:#6b6252">Pedimos que evitem estas cores — são as do cortejo. Nos restantes tons, fiquem à vontade:</p>
         <div style="display:flex;align-items:center;gap:14px;margin-top:14px">
           <div style="display:flex;gap:8px">
             <span title="Branco" style="width:26px;height:26px;border-radius:50%;background:#FFFFFF;box-shadow:0 0 0 2px #FFF9F0,0 0 0 3px rgba(62,58,47,.2)"></span>
             <span title="Bege" style="width:26px;height:26px;border-radius:50%;background:#E4D6BE;box-shadow:0 0 0 2px #FFF9F0,0 0 0 3px rgba(62,58,47,.2)"></span>
             <span title="Verde sage" style="width:26px;height:26px;border-radius:50%;background:#A9B79C;box-shadow:0 0 0 2px #FFF9F0,0 0 0 3px rgba(62,58,47,.2)"></span>
+            <span title="Verde escuro" style="width:26px;height:26px;border-radius:50%;background:#4F6B52;box-shadow:0 0 0 2px #FFF9F0,0 0 0 3px rgba(62,58,47,.2)"></span>
           </div>
           <span style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#AE4B32">a evitar</span>
         </div>
@@ -375,7 +387,7 @@ section[id]{scroll-margin-top:86px}
           <div style="margin-top:18px;padding-top:16px;border-top:1px solid rgba(62,58,47,.1)">
             <button type="button" onClick="{{ toggleRemind }}" style="display:block;width:100%;padding:0;background:none;border:none;font-family:'Work Sans',sans-serif;font-size:13.5px;color:#6E7A61;text-decoration:underline;text-underline-offset:3px;cursor:pointer;text-align:center">Ainda não sei — lembrem-me de responder</button>
             <div style="{{ remindStyle }}">
-              <p style="margin:14px 0 10px;font-size:clamp(13.5px,3.7vw,14px);line-height:1.65;color:#6b6252;text-align:center">Daqui a quanto tempo querem o aviso?</p>
+              <p style="margin:14px 0 10px;font-size:clamp(13.5px,3.7vw,14px);line-height:1.65;color:#6b6252;text-align:center">Daqui a quanto tempo querem o aviso? Não é preciso preencher o nome.</p>
               <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px">
                 <button type="button" data-d="14" onClick="{{ setRemindDays }}" style="{{ rd14 }}">2 semanas</button>
                 <button type="button" data-d="30" onClick="{{ setRemindDays }}" style="{{ rd30 }}">1 mês</button>
@@ -417,8 +429,14 @@ section[id]{scroll-margin-top:86px}
               <button type="button" data-v="nao" onClick="{{ setMyDiet }}" style="{{ myDietNo }}">Não</button>
             </div>
             <sc-if value="{{ myDietOn }}" hint-placeholder-val="{{ false }}">
-              <div style="margin-top:10px">
-                <textarea value="{{ myDietText }}" onInput="{{ onMyDietText }}" rows="2" placeholder="ex: vegetariano, sem glúten, alergia a frutos secos…" style="{{ myDietFieldStyle }}"></textarea>
+              <div style="margin-top:12px">
+                <div style="font-size:12.5px;line-height:1.6;color:#6b6252;margin-bottom:8px">Escolhe o que se aplica:</div>
+                <div style="display:flex;flex-wrap:wrap;gap:7px">
+                  <sc-for list="{{ myDietOpts }}" as="o" hint-placeholder-count="6">
+                    <button type="button" data-t="{{ o.id }}" onClick="{{ toggleMyTag }}" style="{{ o.style }}">{{ o.label }}</button>
+                  </sc-for>
+                </div>
+                <input value="{{ myDietText }}" onInput="{{ onMyDietText }}" placeholder="outra — qual?" style="{{ myDietFieldStyle }}"/>
               </div>
             </sc-if>
           </div>
@@ -461,8 +479,14 @@ section[id]{scroll-margin-top:86px}
                   <button type="button" data-i="{{ g.i }}" data-v="nao" onClick="{{ setGuestDiet }}" style="{{ g.noStyle }}">Não</button>
                 </div>
                 <sc-if value="{{ g.dietOn }}" hint-placeholder-val="{{ false }}">
-                  <div style="margin-top:10px">
-                    <textarea value="{{ g.dietText }}" data-i="{{ g.i }}" onInput="{{ onGuestDietText }}" rows="2" placeholder="Qual restrição?" style="{{ g.dietFieldStyle }}"></textarea>
+                  <div style="margin-top:12px">
+                    <div style="font-size:12.5px;line-height:1.6;color:#6b6252;margin-bottom:8px">Escolham o que se aplica:</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:7px">
+                      <sc-for list="{{ g.dietOpts }}" as="o" hint-placeholder-count="6">
+                        <button type="button" data-i="{{ o.gi }}" data-t="{{ o.id }}" onClick="{{ toggleGuestTag }}" style="{{ o.style }}">{{ o.label }}</button>
+                      </sc-for>
+                    </div>
+                    <input value="{{ g.dietText }}" data-i="{{ g.i }}" onInput="{{ onGuestDietText }}" placeholder="outra — qual?" style="{{ g.dietFieldStyle }}"/>
                   </div>
                 </sc-if>
               </div>
@@ -518,6 +542,9 @@ section[id]{scroll-margin-top:86px}
     <svg viewBox="0 0 24 24" fill="#6E7A61" aria-hidden="true" style="width:40px;opacity:.65"><circle cx="6" cy="9" r="2.1"></circle><circle cx="12" cy="6.5" r="2.1"></circle><circle cx="18" cy="9" r="2.1"></circle><path d="M12 11c-3.6 0-6.4 2.4-6.4 5.3 0 1.9 1.6 3 3.4 2.2.9-.4 1.9-.6 3-.6s2.1.2 3 .6c1.8.8 3.4-.3 3.4-2.2 0-2.9-2.8-5.3-6.4-5.3Z"></path></svg>
     <div style="margin-top:6px;font-family:'Dancing Script',cursive;font-size:clamp(20.5px,5.7vw,24px);color:#AE4B32">até 2 de outubro</div>
     <div style="margin-top:10px;font-family:'Chewy',cursive;font-size:clamp(16px,4.4vw,17.5px);letter-spacing:.04em;color:#6b6252;opacity:.85">Iara &amp; João</div>
+    <sc-if value="{{ versaoOn }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top:22px;font-family:'Work Sans',sans-serif;font-size:11px;letter-spacing:.12em;color:#6b6252;opacity:.5">{{ versaoTxt }}</div>
+    </sc-if>
     <sc-if value="{{ painelOn }}" hint-placeholder-val="{{ false }}">
       <a href="Painel de Convidados.dc.html" style="display:inline-block;margin-top:18px;padding:9px 16px;border:1px dashed rgba(110,122,97,.5);border-radius:999px;font-family:'Work Sans',sans-serif;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#6E7A61;text-decoration:none">painel de respostas</a>
     </sc-if>
@@ -544,7 +571,7 @@ section[id]{scroll-margin-top:86px}
   <button type="button" onClick="{{ closeMap }}" style="position:relative;margin-top:14px;padding:11px 20px;background:rgba(255,249,240,.95);border:none;border-radius:999px;font-family:'Work Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#AE4B32;cursor:pointer">Fechar mapa</button>
 </div>
 
-<div style="{{ lightboxStyle }}" onClick="{{ closeShot }}" onTouchStart="{{ onShotTouchStart }}" onTouchEnd="{{ onShotTouchEnd }}">
+<div style="{{ lightboxStyle }}" onClick="{{ closeShot }}" onTouchStart="{{ onShotTouchStart }}" onTouchMove="{{ onShotTouchMove }}" onTouchEnd="{{ onShotTouchEnd }}">
   <button type="button" onClick="{{ shotBack }}" aria-label="Fotografia anterior" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);z-index:2;display:flex;align-items:center;justify-content:center;width:52px;height:52px;padding:0;border:1px solid rgba(255,246,234,.35);border-radius:999px;background:rgba(40,36,30,.35);font-size:clamp(23px,6.5vw,28px);line-height:1;color:#FFF6EA;cursor:pointer" style-hover="background:rgba(40,36,30,.6)">‹</button>
   <button type="button" onClick="{{ shotFwd }}" aria-label="Fotografia seguinte" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);z-index:2;display:flex;align-items:center;justify-content:center;width:52px;height:52px;padding:0;border:1px solid rgba(255,246,234,.35);border-radius:999px;background:rgba(40,36,30,.35);font-size:clamp(23px,6.5vw,28px);line-height:1;color:#FFF6EA;cursor:pointer" style-hover="background:rgba(40,36,30,.6)">›</button>
   <img src="assets/foto02.jpg" data-src="{{ shotSrc }}" ref="{{ shotRef }}" alt="" style="max-width:min(92vw,720px);max-height:82vh;object-fit:contain;background:#FFF9F0;padding:10px;box-shadow:0 30px 60px -20px rgba(0,0,0,.6)"/>
@@ -569,7 +596,8 @@ section[id]{scroll-margin-top:86px}
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showEnvelope&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;viewMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Auto&quot;,&quot;Mobile&quot;,&quot;Desktop&quot;],&quot;default&quot;:&quot;Auto&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;paraDemo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;mostrarPainel&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Apresentação&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showEnvelope&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;viewMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Auto&quot;,&quot;Mobile&quot;,&quot;Desktop&quot;],&quot;default&quot;:&quot;Auto&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;paraDemo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;mostrarPainel&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;mostrarVersao&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Apresentação&quot;}}">
+const VERSAO = '1.12 · 18 set 2026';
 const DATE = new Date('2027-10-02T14:30:00');
 const FAMILIAS = {
   'claudio-patricia': ['Cláudio', 'Patrícia', 'Eva', 'Bea']
@@ -583,6 +611,16 @@ const familiaDoLink = () => {
   } catch (e) { return null; }
 };
 const SHOTS = ['assets/foto02.jpg','assets/foto03.jpg','assets/foto04.jpg','assets/foto05.jpg','assets/foto06.jpg','assets/foto07.jpg'];
+const DIETAS = [
+  { id: 'carne', label: 'Não come carne' },
+  { id: 'peixe', label: 'Não come peixe nem marisco' },
+  { id: 'animal', label: 'Nada de origem animal' },
+  { id: 'gluten', label: 'Sem glúten' },
+  { id: 'lactose', label: 'Sem lactose' },
+  { id: 'frutos', label: 'Alergia a frutos secos' }
+];
+const DIETA_LABEL = (id) => (DIETAS.find(d => d.id === id) || {}).label || '';
+const dietaTexto = (tags, outro) => (tags || []).map(DIETA_LABEL).filter(Boolean).concat((outro || '').trim() ? [outro.trim()] : []).join(', ');
 const AGE_LABEL = { adulto: 'Adulto', crianca: 'Criança 4-9', bebe: 'Bebé 0-3' };
 const PILL = 'padding:14px 10px;border-radius:14px;font-family:\'Work Sans\',sans-serif;font-size:clamp(14.5px,3.9vw,15px);font-weight:600;cursor:pointer;transition:background .2s,color .2s;';
 
@@ -591,8 +629,8 @@ class Component extends DCLogic {
     env: 'closed', menu: false, now: Date.now(),
     railStart: true, railEnd: false,
     step: 1, name: '', going: null, party: 0, note: '', error: '',
-    myDiet: 'nao', myDietText: '',
-    guests: [0,1,2,3,4].map(() => ({ name: '', age: '', diet: 'nao', dietText: '' })),
+    myDiet: 'nao', myDietText: '', myDietTags: [],
+    guests: [0,1,2,3,4].map(() => ({ name: '', age: '', diet: 'nao', dietText: '', dietTags: [] })),
     badName: false, badGuests: [],
     shot: -1, cal: false, copied: '', remind: false, remindDays: 30
   };
@@ -691,6 +729,7 @@ class Component extends DCLogic {
     setTimeout(this.onScroll, 300);
   }
 
+  onShotTouchMove = (e) => { if (e.cancelable) e.preventDefault(); };
   shotRef = React.createRef();
   stepShot = (d) => this.setState(s => ({ shot: s.shot < 0 ? 0 : (s.shot + d + SHOTS.length) % SHOTS.length }));
   shotBack = (e) => { if (e) e.stopPropagation(); this.stepShot(-1); };
@@ -763,6 +802,7 @@ class Component extends DCLogic {
     try { localStorage.setItem('iaj-opened', '1'); } catch (e) {}
     setTimeout(() => this.setState({ env: 'gone' }), 1000);
   };
+  onShotTouchMove = (e) => { if (e.cancelable) e.preventDefault(); };
   shotRef = React.createRef();
   stepShot = (d) => this.setState(s => ({ shot: s.shot < 0 ? 0 : (s.shot + d + SHOTS.length) % SHOTS.length }));
   shotBack = (e) => { if (e) e.stopPropagation(); this.stepShot(-1); };
@@ -842,8 +882,8 @@ class Component extends DCLogic {
     this.lockScroll(true);
     this.setState({
       env: 'closed', menu: false, shot: -1, cal: false, step: 1, error: '',
-      name: '', going: null, party: 0, note: '', myDiet: 'nao', myDietText: '',
-      guests: this.state.guests.map(() => ({ name: '', age: '', diet: 'nao', dietText: '' })),
+      name: '', going: null, party: 0, note: '', myDiet: 'nao', myDietText: '', myDietTags: [],
+      guests: this.state.guests.map(() => ({ name: '', age: '', diet: 'nao', dietText: '', dietTags: [] })),
       badName: false, badGuests: []
     });
   };
@@ -924,6 +964,20 @@ class Component extends DCLogic {
   setParty = (e) => this.setState({ party: Number(e.currentTarget.dataset.n), error: '', badGuests: [] });
   setGuestAge = (e) => this.patchGuest(Number(e.currentTarget.dataset.i), { age: e.currentTarget.dataset.v });
   setMyDiet = (e) => this.setState({ myDiet: e.currentTarget.dataset.v, error: '' });
+  toggleMyTag = (e) => {
+    const t = e.currentTarget.dataset.t;
+    const tags = this.state.myDietTags.slice();
+    const i = tags.indexOf(t);
+    if (i >= 0) tags.splice(i, 1); else tags.push(t);
+    this.setState({ myDietTags: tags, error: '' });
+  };
+  toggleGuestTag = (e) => {
+    const i = Number(e.currentTarget.dataset.i), t = e.currentTarget.dataset.t;
+    const tags = (this.state.guests[i].dietTags || []).slice();
+    const k = tags.indexOf(t);
+    if (k >= 0) tags.splice(k, 1); else tags.push(t);
+    this.patchGuest(i, { dietTags: tags });
+  };
   onMyDietText = (e) => this.setState({ myDietText: e.target.value.slice(0, 200), error: '' });
 
   patchGuest(i, patch) {
@@ -949,7 +1003,7 @@ class Component extends DCLogic {
       return this.setState({ step: 3, error: '' });
     }
     if (s.step === 3) {
-      if (s.myDiet === 'sim' && s.myDietText.trim().length < 3) return this.setState({ error: 'Digam-nos qual é a restrição, para avisarmos a cozinha.' });
+      if (s.myDiet === 'sim' && !s.myDietTags.length && s.myDietText.trim().length < 3) return this.setState({ error: 'Escolham uma opção ou escrevam a restrição, para avisarmos a cozinha.' });
       return this.setState({ step: s.party > 0 ? 4 : 5, error: '' });
     }
     if (s.step === 4) {
@@ -964,7 +1018,7 @@ class Component extends DCLogic {
         else if (seen.indexOf(key) >= 0) { bad.push(i); msg = msg || 'Há nomes repetidos na lista.'; }
         else seen.push(key);
         if (!err && !g.age) { bad.push(i); msg = msg || 'Escolham a idade de cada acompanhante.'; }
-        if (!err && g.diet === 'sim' && g.dietText.trim().length < 3) { bad.push(i); msg = msg || 'Indiquem a restrição alimentar de cada acompanhante.'; }
+        if (!err && g.diet === 'sim' && !(g.dietTags || []).length && g.dietText.trim().length < 3) { bad.push(i); msg = msg || 'Indiquem a restrição alimentar de cada acompanhante.'; }
       }
       if (bad.length) return this.setState({ error: msg, badGuests: bad });
       return this.setState({ step: 5, error: '', badGuests: [] });
@@ -976,9 +1030,9 @@ class Component extends DCLogic {
     const s = this.state;
     if (this.sending) return;
     this.sending = true;
-    const pessoas = [{ nome: s.name.trim(), idade: 'Adulto', restricao: s.myDiet === 'sim' ? s.myDietText.trim() : '' }];
+    const pessoas = [{ nome: s.name.trim(), idade: 'Adulto', restricao: s.myDiet === 'sim' ? dietaTexto(s.myDietTags, s.myDietText) : '' }];
     if (s.going === 'sim') for (let i = 0; i < s.party; i++) {
-      pessoas.push({ nome: s.guests[i].name.trim(), idade: AGE_LABEL[s.guests[i].age] || '', restricao: s.guests[i].diet === 'sim' ? s.guests[i].dietText.trim() : '' });
+      pessoas.push({ nome: s.guests[i].name.trim(), idade: AGE_LABEL[s.guests[i].age] || '', restricao: s.guests[i].diet === 'sim' ? dietaTexto(s.guests[i].dietTags, s.guests[i].dietText) : '' });
     }
     const payload = {
       nome: s.name.trim(),
@@ -1027,6 +1081,10 @@ class Component extends DCLogic {
     const agePill = (on, bad) => PILL + 'padding:11px 6px;line-height:1.25;text-align:center;' + (on
       ? 'background:#6E7A61;color:#FFF6EA;border:1px solid #6E7A61;'
       : 'background:#FBF1E7;color:#6b6252;border:1px solid ' + (bad ? '#D3684B' : 'rgba(62,58,47,.18)') + ';');
+    const chip = (on) => "padding:9px 13px;border-radius:999px;font-family:'Work Sans',sans-serif;font-size:12.5px;line-height:1.2;text-align:left;cursor:pointer;transition:background .2s,color .2s,border-color .2s;border:1px solid "
+      + (on ? '#6E7A61;background:#6E7A61;color:#FFF6EA;' : 'rgba(110,122,97,.35);background:#FFF9F0;color:#6b6252;');
+    const outroField = (bad) => 'width:100%;margin-top:9px;padding:12px 13px;background:#FBF1E7;border:1px solid ' + (bad ? '#D3684B' : 'rgba(62,58,47,.18)')
+      + ";border-radius:10px;font-family:'Work Sans',sans-serif;font-size:15px;color:#3E3A2F";
     const field = (bad) => 'width:100%;padding:14px;background:#FFF9F0;border:1px solid ' + (bad ? '#D3684B' : 'rgba(62,58,47,.18)') + ';font-family:\'Work Sans\',sans-serif;font-size:clamp(15.5px,4.2vw,16.5px);line-height:1.55;color:#3E3A2F;outline:none;resize:vertical;';
     const done = s.step === 6;
     const c = this.cal();
@@ -1037,8 +1095,9 @@ class Component extends DCLogic {
       guests.push({
         i: i, label: 'Acompanhante ' + (i + 1), name: g.name,
         dietOn: g.diet === 'sim', dietText: g.dietText,
+        dietOpts: DIETAS.map(d => ({ id: d.id, gi: i, label: d.label, style: chip((g.dietTags || []).indexOf(d.id) >= 0) })),
         fieldStyle: field(bad && !!this.fullName(g.name)),
-        dietFieldStyle: field(bad && g.diet === 'sim' && g.dietText.trim().length < 3),
+        dietFieldStyle: outroField(bad && g.diet === 'sim' && !(g.dietTags || []).length && g.dietText.trim().length < 3),
         yesStyle: pill(g.diet === 'sim'), noStyle: pill(g.diet === 'nao'),
         ageAdulto: agePill(g.age === 'adulto', bad && !g.age), ageCrianca: agePill(g.age === 'crianca', bad && !g.age), ageBebe: agePill(g.age === 'bebe', bad && !g.age)
       });
@@ -1046,13 +1105,15 @@ class Component extends DCLogic {
     const total = 1 + (s.going === 'sim' ? s.party : 0);
     const names = [s.name.trim()].concat(s.guests.slice(0, s.party).map(g => g.name.trim())).filter(Boolean);
     const diets = [];
-    if (s.myDiet === 'sim' && s.myDietText.trim()) diets.push(s.name.trim().split(' ')[0] + ': ' + s.myDietText.trim());
-    s.guests.slice(0, s.party).forEach(g => { if (g.diet === 'sim' && g.dietText.trim()) diets.push((g.name.trim().split(' ')[0] || 'acompanhante') + ': ' + g.dietText.trim()); });
+    if (s.myDiet === 'sim' && dietaTexto(s.myDietTags, s.myDietText)) diets.push(s.name.trim().split(' ')[0] + ': ' + dietaTexto(s.myDietTags, s.myDietText));
+    s.guests.slice(0, s.party).forEach(g => { const t = dietaTexto(g.dietTags, g.dietText); if (g.diet === 'sim' && t) diets.push((g.name.trim().split(' ')[0] || 'acompanhante') + ': ' + t); });
     const stepLabels = { 1: 'passo 1 de 5', 2: 'passo 2 de 5', 3: 'passo 3 de 5', 4: 'passo 4 de 5', 5: 'passo 5 de 5', 6: 'concluído' };
     return {
       vw: ({ 'Mobile': 'mobile', 'Desktop': 'desktop' })[this.props.viewMode] || 'auto',
       roadRef: this.roadRef, roadDoneRef: this.roadDoneRef, pinRef: this.pinRef, clipRef: this.clipRef,
       painelOn: !!this.props.mostrarPainel,
+      versaoOn: this.props.mostrarVersao ?? true,
+      versaoTxt: 'v' + VERSAO,
       temConvidados: !!(familiaDoLink() || this.props.paraDemo),
       paraQuem: familiaDoLink() ? paraTexto(familiaDoLink()) : (this.props.paraDemo || ''),
       envelopeOn: envOn,
@@ -1072,8 +1133,10 @@ class Component extends DCLogic {
       nameFieldStyle: field(s.badName),
       yesStyle: pill(s.going === 'sim'), noStyle: pill(s.going === 'nao'),
       myDietOn: s.myDiet === 'sim', myDietText: s.myDietText,
+      myDietOpts: DIETAS.map(d => ({ id: d.id, label: d.label, style: chip(s.myDietTags.indexOf(d.id) >= 0) })),
+      toggleMyTag: this.toggleMyTag, toggleGuestTag: this.toggleGuestTag,
       myDietYes: pill(s.myDiet === 'sim'), myDietNo: pill(s.myDiet === 'nao'),
-      myDietFieldStyle: field(s.error && s.myDiet === 'sim' && s.myDietText.trim().length < 3),
+      myDietFieldStyle: outroField(!!s.error && s.myDiet === 'sim' && !s.myDietTags.length && s.myDietText.trim().length < 3),
       g0: partyPill(0), g1: partyPill(1), g2: partyPill(2), g3: partyPill(3), g4: partyPill(4), g5: partyPill(5),
       guests: guests,
       setGuestAge: this.setGuestAge,
@@ -1095,14 +1158,14 @@ class Component extends DCLogic {
       openShot: this.openShot, closeShot: this.closeShot,
       shotSrc: SHOTS[s.shot] || SHOTS[0], shotRef: this.shotRef,
       shotBack: this.shotBack, shotFwd: this.shotFwd,
-      onShotTouchStart: this.onShotTouchStart, onShotTouchEnd: this.onShotTouchEnd,
+      onShotTouchStart: this.onShotTouchStart, onShotTouchMove: this.onShotTouchMove, onShotTouchEnd: this.onShotTouchEnd,
       shotHint: 'deslizem ou usem as setas · toque para fechar',
       railRef: this.railRef, onRail: this.onRail, shotPrev: this.shotPrev, shotNext: this.shotNext,
       arrowPrevStyle: 'position:absolute;left:0;top:0;bottom:24px;z-index:3;display:flex;align-items:center;justify-content:flex-start;width:58px;padding:0 0 0 4px;border:0;background:linear-gradient(90deg, rgba(251,241,231,.75), rgba(251,241,231,0));cursor:pointer;transition:opacity .25s ease;'
         + ((s.railStart ?? true) ? 'opacity:0;pointer-events:none;' : 'opacity:1;'),
       arrowNextStyle: 'position:absolute;right:0;top:0;bottom:24px;z-index:3;display:flex;align-items:center;justify-content:flex-end;width:58px;padding:0 4px 0 0;border:0;background:linear-gradient(270deg, rgba(251,241,231,.75), rgba(251,241,231,0));cursor:pointer;transition:opacity .25s ease;'
         + ((s.railEnd ?? false) ? 'opacity:0;pointer-events:none;' : 'opacity:1;'),
-      lightboxStyle: 'position:fixed;inset:0;z-index:900;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(40,36,30,.86);cursor:zoom-out;transition:opacity .28s ease;' + (s.shot >= 0 ? 'opacity:1;' : 'opacity:0;pointer-events:none;'),
+      lightboxStyle: 'position:fixed;inset:0;z-index:900;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(40,36,30,.86);cursor:zoom-out;touch-action:none;overscroll-behavior:contain;transition:opacity .28s ease;' + (s.shot >= 0 ? 'opacity:1;' : 'opacity:0;pointer-events:none;'),
       calStyle: 'position:fixed;inset:0;z-index:950;display:flex;align-items:center;justify-content:center;transition:opacity .25s ease;' + (s.cal ? 'opacity:1;' : 'opacity:0;pointer-events:none;'),
       openCal: this.openCal, closeCal: this.closeCal,
       openMap: this.openMap, closeMap: this.closeMap,

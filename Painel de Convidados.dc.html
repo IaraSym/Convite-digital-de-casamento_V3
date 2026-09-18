@@ -19,151 +19,221 @@ input,button,textarea{font-family:'Work Sans',system-ui,sans-serif}
 </style>
 </helmet>
 
-<div style="min-height:100vh;padding:clamp(20px,4vw,44px) clamp(14px,3vw,28px) 60px">
+<div style="min-height:100vh;padding:clamp(18px,4vw,44px) clamp(14px,3vw,28px) 70px">
   <div style="max-width:1080px;margin:0 auto">
 
-    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;border-bottom:1px solid rgba(62,58,47,.14);padding-bottom:18px">
-      <div>
-        <div style="font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:#6E7A61">confirmações de presença</div>
-        <h1 style="margin:2px 0 0;font-family:'Amatic SC',cursive;font-weight:700;font-size:clamp(40px,8vw,62px);line-height:1;color:#AE4B32">Quem vem ao casamento</h1>
-      </div>
-      <button type="button" onClick="{{ reload }}" style="padding:11px 20px;background:#AE4B32;border:none;border-radius:999px;color:#FFF6EA;font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">{{ reloadLabel }}</button>
-    </div>
-
-    <sc-if value="{{ needsUrl }}" hint-placeholder-val="{{ true }}">
-      <div style="margin-top:26px;padding:22px;background:#FFF9F0;border:1px solid rgba(62,58,47,.12)">
-        <div style="font-family:'Fraunces',serif;font-weight:600;font-size:18px;color:#AE4B32">Ligar à folha do Google</div>
-        <p style="margin:8px 0 14px;font-size:14.5px;line-height:1.7;color:#6b6252;max-width:62ch">Na folha, abre <strong>Partilhar</strong> e põe "Qualquer pessoa com o link" como <strong>Visualizador</strong>. Depois copia o link e cola aqui — fica guardado neste navegador.</p>
-        <div style="display:flex;flex-wrap:wrap;gap:9px">
-          <input value="{{ urlDraft }}" onInput="{{ onUrl }}" placeholder="https://docs.google.com/spreadsheets/d/..." style="flex:1 1 320px;min-width:0;padding:13px 14px;background:#FBF1E7;border:1px solid rgba(62,58,47,.2);border-radius:10px;font-size:14.5px;color:#3E3A2F"/>
-          <button type="button" onClick="{{ saveUrl }}" style="padding:13px 22px;background:#6E7A61;border:none;border-radius:10px;color:#FFF6EA;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">Ligar</button>
-        </div>
-        <div style="margin-top:12px;font-size:13px;color:#6b6252">{{ urlNote }}</div>
+    <sc-if value="{{ locked }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:420px;margin:12vh auto 0;padding:26px;background:#FFF9F0;border:1px solid rgba(62,58,47,.12);text-align:center">
+        <div style="font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:#6E7A61">área reservada</div>
+        <h1 style="margin:6px 0 0;font-family:'Amatic SC',cursive;font-weight:700;font-size:clamp(34px,8vw,46px);line-height:1;color:#AE4B32">Painel dos noivos</h1>
+        <p style="margin:12px 0 18px;font-size:14.5px;line-height:1.7;color:#6b6252">Escrevam o código para ver as respostas.</p>
+        <input value="{{ pinDraft }}" onInput="{{ onPin }}" onKeyDown="{{ pinKey }}" type="password" inputmode="numeric" placeholder="código" style="width:100%;padding:14px;background:#FBF1E7;border:1px solid rgba(62,58,47,.2);border-radius:10px;font-size:16px;text-align:center;letter-spacing:.3em;color:#3E3A2F"/>
+        <div style="min-height:18px;margin-top:8px;font-size:13px;color:#AE4B32">{{ pinError }}</div>
+        <button type="button" onClick="{{ tryPin }}" style="width:100%;padding:14px;background:#AE4B32;border:none;border-radius:999px;color:#FFF6EA;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer">Entrar</button>
       </div>
     </sc-if>
 
-    <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
-      <div style="margin-top:22px;padding:16px 18px;background:#F6E3D2;border:1px solid #D9A57F;border-radius:12px;font-size:14.5px;line-height:1.6;color:#8E3A24">{{ errorMsg }}</div>
-    </sc-if>
-
-    <sc-if value="{{ hasData }}" hint-placeholder-val="{{ true }}">
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:12px;margin-top:24px">
-        <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
-          <div style="padding:18px 18px 16px;background:#FFF9F0;border:1px solid rgba(62,58,47,.12)">
-            <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6E7A61">{{ k.label }}</div>
-            <div style="margin-top:6px;font-family:'Fraunces',serif;font-weight:700;font-size:clamp(30px,6vw,40px);line-height:1;color:{{ k.color }}">{{ k.value }}</div>
-            <div style="margin-top:4px;font-size:12.5px;color:#6b6252">{{ k.note }}</div>
-          </div>
-        </sc-for>
-      </div>
-
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px;margin-top:14px">
-        <div style="padding:20px;background:#FFF9F0;border:1px solid rgba(62,58,47,.12)">
-          <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6E7A61">quem vai à festa</div>
-          <div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
-            <sc-for list="{{ ages }}" as="a" hint-placeholder-count="3">
-              <div>
-                <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:14px;color:#3E3A2F">
-                  <span>{{ a.label }}</span>
-                  <span style="font-family:'Fraunces',serif;font-weight:700;font-size:17px;color:#AE4B32">{{ a.n }}</span>
-                </div>
-                <div style="margin-top:5px;height:8px;border-radius:999px;background:#EFE3D4;overflow:hidden">
-                  <div style="height:100%;border-radius:999px;background:{{ a.color }};width:{{ a.pct }}"></div>
-                </div>
-              </div>
-            </sc-for>
-          </div>
+    <sc-if value="{{ unlocked }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px;border-bottom:1px solid rgba(62,58,47,.14);padding-bottom:18px">
+        <div>
+          <div style="font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:#6E7A61">confirmações de presença</div>
+          <h1 style="margin:2px 0 0;font-family:'Amatic SC',cursive;font-weight:700;font-size:clamp(36px,8vw,62px);line-height:1;color:#AE4B32">Quem vem ao casamento</h1>
         </div>
-
-        <div style="padding:20px;background:#FFF9F0;border:1px solid rgba(62,58,47,.12)">
-          <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6E7A61">restrições alimentares</div>
-          <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
-            <sc-for list="{{ diets }}" as="d" hint-placeholder-count="3">
-              <div style="display:flex;gap:10px;align-items:baseline;font-size:14px;line-height:1.5;color:#3E3A2F">
-                <span style="flex:0 0 auto;width:7px;height:7px;margin-top:6px;border-radius:50%;background:#D3684B"></span>
-                <span><strong style="font-weight:600">{{ d.nome }}</strong> — {{ d.texto }}</span>
-              </div>
-            </sc-for>
-          </div>
-          <div style="margin-top:12px;font-size:13px;color:#6b6252">{{ dietsNote }}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <button type="button" onClick="{{ reload }}" style="padding:11px 18px;background:#AE4B32;border:none;border-radius:999px;color:#FFF6EA;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">{{ reloadLabel }}</button>
+          <button type="button" onClick="{{ exportPdf }}" style="padding:11px 18px;background:#F6E3D2;border:1px solid #D9A57F;border-radius:999px;color:#8E3A24;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">PDF p/ a quinta</button>
+          <button type="button" onClick="{{ exportPdfTudo }}" style="padding:11px 18px;background:none;border:1px solid rgba(110,122,97,.4);border-radius:999px;color:#6E7A61;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">PDF completo</button>
         </div>
       </div>
 
-      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:34px">
-        <h2 style="margin:0;font-family:'Fraunces',serif;font-weight:600;font-size:clamp(20px,4.4vw,25px);color:#AE4B32">Respostas</h2>
-        <div style="display:flex;gap:8px">
-          <sc-for list="{{ filters }}" as="fl" hint-placeholder-count="3">
-            <button type="button" data-f="{{ fl.id }}" onClick="{{ setFilter }}" style="{{ fl.style }}">{{ fl.label }}</button>
+      <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:22px;padding:16px 18px;background:#F6E3D2;border:1px solid #D9A57F;border-radius:12px;font-size:14.5px;line-height:1.6;color:#8E3A24">{{ errorMsg }}</div>
+      </sc-if>
+
+      <sc-if value="{{ hasData }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:12px;margin-top:22px">
+          <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+            <div style="padding:18px;background:#FFF9F0;border:1px solid rgba(62,58,47,.12)">
+              <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6E7A61">{{ k.label }}</div>
+              <div style="margin-top:6px;font-family:'Fraunces',serif;font-weight:700;font-size:clamp(28px,6vw,40px);line-height:1;color:{{ k.color }}">{{ k.value }}</div>
+              <div style="margin-top:4px;font-size:12.5px;color:#6b6252">{{ k.note }}</div>
+            </div>
           </sc-for>
         </div>
-      </div>
 
-      <div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
-        <sc-for list="{{ rows }}" as="r" hint-placeholder-count="4">
-          <div style="padding:16px 18px;background:#FFF9F0;border:1px solid rgba(62,58,47,.12);border-left:4px solid {{ r.accent }}">
-            <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:10px">
-              <div style="font-family:'Fraunces',serif;font-weight:600;font-size:17.5px;color:#3E3A2F">{{ r.nome }}</div>
-              <span style="padding:4px 11px;border-radius:999px;background:{{ r.badgeBg }};color:{{ r.badgeFg }};font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase">{{ r.estado }}</span>
-              <span style="font-size:12.5px;color:#6b6252">{{ r.quando }}</span>
-              <sc-if value="{{ r.repetida }}" hint-placeholder-val="{{ false }}">
-                <span style="padding:3px 9px;border:1px dashed rgba(110,122,97,.5);border-radius:999px;font-size:11px;color:#6E7A61">{{ r.repetidaTxt }}</span>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:14px;margin-top:14px">
+          <div style="padding:20px;background:#FFF9F0;border:1px solid rgba(62,58,47,.12)">
+            <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6E7A61">quem vai à festa</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
+              <sc-for list="{{ ages }}" as="a" hint-placeholder-count="3">
+                <div>
+                  <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:14px;color:#3E3A2F">
+                    <span>{{ a.label }}</span>
+                    <span style="font-family:'Fraunces',serif;font-weight:700;font-size:17px;color:#AE4B32">{{ a.n }}</span>
+                  </div>
+                  <div style="margin-top:5px;height:8px;border-radius:999px;background:#EFE3D4;overflow:hidden">
+                    <div style="height:100%;border-radius:999px;background:{{ a.color }};width:{{ a.pct }}"></div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="padding:20px;background:#FFF9F0;border:1px solid rgba(62,58,47,.12)">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+              <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6E7A61">restrições alimentares</div>
+              <button type="button" onClick="{{ exportPdf }}" style="background:none;border:none;padding:0;font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#AE4B32;cursor:pointer">exportar</button>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+              <sc-for list="{{ diets }}" as="d" hint-placeholder-count="3">
+                <div style="display:flex;gap:10px;align-items:baseline;font-size:14px;line-height:1.5;color:#3E3A2F">
+                  <span style="flex:0 0 auto;width:7px;height:7px;margin-top:6px;border-radius:50%;background:#D3684B"></span>
+                  <span><strong style="font-weight:600">{{ d.nome }}</strong> — {{ d.texto }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top:12px;font-size:13px;color:#6b6252">{{ dietsNote }}</div>
+          </div>
+        </div>
+
+        <sc-if value="{{ temDuplicados }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:22px;padding:20px;background:#FFF9F0;border:1px solid #D9A57F;border-left:4px solid #D3684B">
+            <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8E3A24">possíveis duplicados</div>
+            <p style="margin:6px 0 14px;font-size:14px;line-height:1.65;color:#6b6252">Nomes parecidos que <strong style="font-weight:600">não</strong> juntei. Vê se é a mesma pessoa.</p>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ duplicados }}" as="d" hint-placeholder-count="1">
+                <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:14px;background:#FBF1E7;border:1px solid rgba(62,58,47,.12)">
+                  <div style="flex:1 1 180px;min-width:0">
+                    <div style="font-family:'Fraunces',serif;font-weight:600;font-size:15.5px;color:#3E3A2F">{{ d.aNome }}</div>
+                    <div style="font-size:12.5px;color:#6b6252">{{ d.aEstado }} · {{ d.aQuando }}</div>
+                  </div>
+                  <div style="flex:1 1 180px;min-width:0">
+                    <div style="font-family:'Fraunces',serif;font-weight:600;font-size:15.5px;color:#3E3A2F">{{ d.bNome }}</div>
+                    <div style="font-size:12.5px;color:#6b6252">{{ d.bEstado }} · {{ d.bQuando }}</div>
+                  </div>
+                  <div style="display:flex;gap:8px;flex:0 0 auto">
+                    <button type="button" data-p="{{ d.p }}" onClick="{{ unir }}" style="padding:10px 16px;background:#AE4B32;border:none;border-radius:999px;color:#FFF6EA;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">É a mesma</button>
+                    <button type="button" data-p="{{ d.p }}" onClick="{{ separar }}" style="padding:10px 16px;background:none;border:1px solid rgba(110,122,97,.4);border-radius:999px;color:#6E7A61;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">São diferentes</button>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ temMensagens }}" hint-placeholder-val="{{ true }}">
+          <div style="margin-top:34px">
+            <h2 style="margin:0 0 14px;font-family:'Fraunces',serif;font-weight:600;font-size:clamp(20px,4.4vw,25px);color:#AE4B32">Mensagens que nos deixaram</h2>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px">
+              <sc-for list="{{ mensagens }}" as="m" hint-placeholder-count="2">
+                <div style="padding:20px;background:#FFF9F0;border:1px solid rgba(62,58,47,.12);border-top:3px solid #E0B894">
+                  <p style="margin:0;font-family:'Fraunces',serif;font-size:15.5px;line-height:1.75;color:#3E3A2F;font-style:italic;text-wrap:pretty">{{ m.texto }}</p>
+                  <div style="margin-top:12px;font-size:12.5px;letter-spacing:.06em;color:#6E7A61">{{ m.autor }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:34px">
+          <h2 style="margin:0;font-family:'Fraunces',serif;font-weight:600;font-size:clamp(20px,4.4vw,25px);color:#AE4B32">Respostas</h2>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+            <input value="{{ busca }}" onInput="{{ onBusca }}" placeholder="procurar nome…" style="padding:10px 14px;min-width:0;width:clamp(140px,40vw,200px);background:#FFF9F0;border:1px solid rgba(62,58,47,.18);border-radius:999px;font-size:13.5px;color:#3E3A2F"/>
+            <sc-for list="{{ filters }}" as="fl" hint-placeholder-count="3">
+              <button type="button" data-f="{{ fl.id }}" onClick="{{ setFilter }}" style="{{ fl.style }}">{{ fl.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
+          <sc-for list="{{ rows }}" as="r" hint-placeholder-count="4">
+            <div style="padding:16px 18px;background:#FFF9F0;border:1px solid rgba(62,58,47,.12);border-left:4px solid {{ r.accent }}">
+              <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:10px">
+                <div style="font-family:'Fraunces',serif;font-weight:600;font-size:17.5px;color:#3E3A2F">{{ r.nome }}</div>
+                <span style="padding:4px 11px;border-radius:999px;background:{{ r.badgeBg }};color:{{ r.badgeFg }};font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase">{{ r.estado }}</span>
+                <span style="font-size:12.5px;color:#6b6252">{{ r.quando }}</span>
+                <sc-if value="{{ r.repetida }}" hint-placeholder-val="{{ false }}">
+                  <span style="padding:3px 9px;border:1px dashed rgba(110,122,97,.5);border-radius:999px;font-size:11px;color:#6E7A61">{{ r.repetidaTxt }}</span>
+                </sc-if>
+              </div>
+              <sc-if value="{{ r.temPessoas }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:11px">
+                  <sc-for list="{{ r.pessoas }}" as="p" hint-placeholder-count="2">
+                    <span style="padding:6px 11px;border-radius:999px;background:{{ p.bg }};border:1px solid {{ p.border }};font-size:13px;color:#3E3A2F">{{ p.txt }}</span>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ r.temMensagem }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:11px;padding-left:12px;border-left:2px solid rgba(110,122,97,.35);font-size:14px;line-height:1.65;color:#6b6252;font-style:italic">{{ r.mensagem }}</div>
               </sc-if>
             </div>
-            <sc-if value="{{ r.temPessoas }}" hint-placeholder-val="{{ true }}">
-              <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:11px">
-                <sc-for list="{{ r.pessoas }}" as="p" hint-placeholder-count="2">
-                  <span style="padding:6px 11px;border-radius:999px;background:{{ p.bg }};border:1px solid {{ p.border }};font-size:13px;color:#3E3A2F">{{ p.txt }}</span>
-                </sc-for>
-              </div>
-            </sc-if>
-            <sc-if value="{{ r.temMensagem }}" hint-placeholder-val="{{ false }}">
-              <div style="margin-top:11px;padding-left:12px;border-left:2px solid rgba(110,122,97,.35);font-size:14px;line-height:1.65;color:#6b6252;font-style:italic">{{ r.mensagem }}</div>
-            </sc-if>
-          </div>
-        </sc-for>
-      </div>
+          </sc-for>
+        </div>
 
-      <div style="margin-top:20px;font-size:12.5px;color:#6b6252">{{ footer }}</div>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-top:20px;font-size:12.5px;color:#6b6252">
+          <span>{{ footer }}</span>
+          <sc-if value="{{ temUnioes }}" hint-placeholder-val="{{ false }}">
+            <button type="button" onClick="{{ desfazerUnioes }}" style="background:none;border:none;padding:0;font-size:12.5px;color:#AE4B32;text-decoration:underline;text-underline-offset:3px;cursor:pointer">anular as minhas uniões</button>
+          </sc-if>
+        </div>
+      </sc-if>
     </sc-if>
 
   </div>
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1040,&quot;height&quot;:900},&quot;sheetUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Dados&quot;},&quot;sheetName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Convidados&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Dados&quot;}}">
-const KEY = 'iaj-painel-sheet';
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1040,&quot;height&quot;:900},&quot;codigo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;0210&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Acesso&quot;},&quot;sheetUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://docs.google.com/spreadsheets/d/1lp0MNbJgo4k9wQzLmmzajxxuzQ09zbLrHzXurQ0j_tg/edit&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Dados&quot;},&quot;sheetName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Convidados&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Dados&quot;}}">
+const SHEET = 'https://docs.google.com/spreadsheets/d/1lp0MNbJgo4k9wQzLmmzajxxuzQ09zbLrHzXurQ0j_tg/edit';
+const OK = 'iaj-painel-ok';
+const UNIR = 'iaj-painel-unir';
+const SEP = 'iaj-painel-separados';
+const ler = (k) => { try { return JSON.parse(localStorage.getItem(k) || '[]'); } catch (e) { return []; } };
+const gravar = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+const par = (a, b) => [a, b].sort().join('||');
 
 class Component extends DCLogic {
-  state = { url: '', urlDraft: '', raw: null, err: '', loading: false, filter: 'todos' };
+  state = { raw: null, err: '', loading: false, filter: 'todos', busca: '', open: false, pinDraft: '', pinError: '', unidos: ler(UNIR), separados: ler(SEP) };
 
   componentDidMount() {
+    const code = String(this.props.codigo ?? '0210');
+    let url = '';
+    try { url = new URLSearchParams(window.location.search).get('k') || ''; } catch (e) {}
     let saved = '';
-    try { saved = localStorage.getItem(KEY) || ''; } catch (e) {}
-    const url = saved || (this.props.sheetUrl || '');
-    if (url) { this.setState({ url, urlDraft: url }); this.fetch(url); }
+    try { saved = sessionStorage.getItem(OK) || ''; } catch (e) {}
+    const open = url === code || saved === code;
+    if (open) { try { sessionStorage.setItem(OK, code); } catch (e) {} }
+    this.setState({ open });
+    if (open) this.fetch();
   }
 
-  sheetId = (u) => { const m = /\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/.exec(u || ''); return m ? m[1] : ''; };
+  tryPin = () => {
+    const code = String(this.props.codigo ?? '0210');
+    if (this.state.pinDraft.trim() === code) {
+      try { sessionStorage.setItem(OK, code); } catch (e) {}
+      this.setState({ open: true, pinError: '' });
+      this.fetch();
+    } else this.setState({ pinError: 'Código errado.' });
+  };
+  onPin = (e) => this.setState({ pinDraft: e.target.value, pinError: '' });
+  pinKey = (e) => { if (e.key === 'Enter') this.tryPin(); };
 
-  fetch = async (u) => {
-    const id = this.sheetId(u);
-    if (!id) { this.setState({ err: 'Esse link não parece ser de uma folha do Google.' }); return; }
+  fetch = async () => {
+    const id = (/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/.exec(this.props.sheetUrl || SHEET) || [])[1];
     const sheet = this.props.sheetName || 'Convidados';
+    if (!id) { this.setState({ err: 'Folha não configurada.' }); return; }
     this.setState({ loading: true, err: '' });
-    const url = 'https://docs.google.com/spreadsheets/d/' + id + '/gviz/tq?tqx=out:csv&sheet=' + encodeURIComponent(sheet);
     try {
-      const r = await fetch(url);
+      const r = await fetch('https://docs.google.com/spreadsheets/d/' + id + '/gviz/tq?tqx=out:csv&sheet=' + encodeURIComponent(sheet));
       if (!r.ok) throw new Error(String(r.status));
       const txt = await r.text();
       if (/^\s*</.test(txt)) throw new Error('privada');
       this.setState({ raw: this.parseCsv(txt), loading: false });
     } catch (e) {
-      this.setState({
-        loading: false,
-        err: 'Não consegui ler a folha. Confirma que em Partilhar está "Qualquer pessoa com o link · Visualizador" e que existe uma folha chamada "' + sheet + '".'
-      });
+      this.setState({ loading: false, err: 'Não consegui ler a folha. Confirma que em Partilhar está "Qualquer pessoa com o link · Visualizador" e que existe uma folha chamada "' + sheet + '".' });
     }
   };
+  reload = () => this.fetch();
 
   parseCsv = (t) => {
     const rows = []; let row = [], cell = '', q = false;
@@ -193,8 +263,7 @@ class Component extends DCLogic {
 
   ordem = (d) => {
     const m = /(\d{2})-(\d{2})-(\d{4})[ T](\d{2}):(\d{2})/.exec(String(d || ''));
-    if (!m) return 0;
-    return new Date(+m[3], +m[2] - 1, +m[1], +m[4], +m[5]).getTime();
+    return m ? new Date(+m[3], +m[2] - 1, +m[1], +m[4], +m[5]).getTime() : 0;
   };
 
   respostas = () => {
@@ -204,40 +273,266 @@ class Component extends DCLogic {
     const at = (r, ...names) => { for (const n of names) { const i = head.indexOf(this.norm(n)); if (i >= 0 && r[i] != null) return r[i]; } return ''; };
     const all = raw.slice(1).map((r, i) => {
       const nome = String(at(r, 'nome')).trim();
-      const detalhe = at(r, 'convidadosdetalhe', 'convidados detalhe', 'convidados');
       return {
-        i,
-        nome,
-        chave: this.norm(nome),
+        i, nome, chave: this.norm(nome),
         confirma: this.norm(at(r, 'confirma', 'confirmacao')),
-        num: Number(at(r, 'numacompanhantes', 'acompanhantes')) || 0,
         quando: String(at(r, 'enviado', 'data')).trim(),
         ts: this.ordem(at(r, 'enviado', 'data')),
         mensagem: String(at(r, 'mensagem')).trim(),
-        pessoas: this.parsePessoas(detalhe)
+        pessoas: this.parsePessoas(at(r, 'convidadosdetalhe', 'convidados detalhe', 'convidados'))
       };
     }).filter(r => r.nome);
     const grupos = new Map();
     all.forEach(r => { const g = grupos.get(r.chave) || []; g.push(r); grupos.set(r.chave, g); });
+
+    // junta grafias diferentes da mesma pessoa (ex. "Iara Simões" e "Iara simoed")
+    const blocos = [];
+    grupos.forEach((g, chave) => blocos.push({ chave, itens: g }));
+    const unidos = this.state.unidos || [];
+    const ligado = (x, y) => unidos.indexOf(par(x, y)) >= 0;
+    const fundidos = [];
+    blocos.forEach(b => {
+      const alvo = fundidos.find(f => f.chaves.some(c => this.mesmaPessoa(c, b.chave) || ligado(c, b.chave)));
+      if (alvo) { alvo.itens = alvo.itens.concat(b.itens); alvo.chaves.push(b.chave); }
+      else fundidos.push({ chave: b.chave, chaves: [b.chave], itens: b.itens.slice() });
+    });
+
     const out = [];
-    grupos.forEach(g => {
-      g.sort((a, b) => (a.ts - b.ts) || (a.i - b.i));
-      const last = g[g.length - 1];
-      out.push(Object.assign({}, last, { versoes: g.length }));
+    fundidos.forEach(f => {
+      const g = f.itens.slice().sort((a, b) => (a.ts - b.ts) || (a.i - b.i));
+      const nomes = [];
+      g.forEach(r => { if (nomes.indexOf(r.nome) < 0) nomes.push(r.nome); });
+      out.push(Object.assign({}, g[g.length - 1], { versoes: g.length, grafias: nomes, chaves: f.chaves }));
     });
     return out.sort((a, b) => b.ts - a.ts);
   };
 
-  reload = () => { if (this.state.url) this.fetch(this.state.url); };
-  onUrl = (e) => this.setState({ urlDraft: e.target.value });
-  saveUrl = () => {
-    const u = this.state.urlDraft.trim();
-    if (!u) return;
-    try { localStorage.setItem(KEY, u); } catch (e) {}
-    this.setState({ url: u });
-    this.fetch(u);
+  dist = (a, b) => {
+    if (a === b) return 0;
+    const m = a.length, n = b.length;
+    if (!m || !n) return m || n;
+    let prev = Array.from({ length: n + 1 }, (_, j) => j);
+    for (let i = 1; i <= m; i++) {
+      const cur = [i];
+      for (let j = 1; j <= n; j++) {
+        cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      }
+      prev = cur;
+    }
+    return prev[n];
   };
+  parecido = (a, b) => {
+    if (!a || !b) return false;
+    const d = this.dist(a, b), len = Math.max(a.length, b.length);
+    return 1 - d / len >= 0.8;
+  };
+  mesmaPessoa = (a, b) => {
+    if (a === b) return true;
+    const pa = a.split(' ').filter(Boolean), pb = b.split(' ').filter(Boolean);
+    if (!pa.length || !pb.length) return false;
+    // primeiro nome tem de bater exatamente (Maria/Mario são pessoas diferentes)
+    if (pa[0] !== pb[0]) return false;
+    if (pa.length === 1 || pb.length === 1) return true;
+    const resA = pa.slice(1), resB = pb.slice(1);
+    return resA.some(x => resB.some(y => this.parecido(x, y)));
+  };
+  vemList = () => this.respostas().filter(r => r.confirma === 'sim');
+
+  pessoasConfirmadas = () => {
+    const out = [];
+    this.vemList().forEach(r => r.pessoas.forEach(p => out.push(Object.assign({}, p, { de: r.nome }))));
+    return out;
+  };
+
+  baixar = (nome, linhas) => {
+    const csv = '\ufeff' + linhas.map(l => l.map(c => {
+      const s = String(c == null ? '' : c);
+      return /[";\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    }).join(';')).join('\r\n');
+    try {
+      const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+      const a = document.createElement('a');
+      a.href = url; a.download = nome;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+    } catch (e) {}
+  };
+
+  exportQuinta = () => {
+    const pessoas = this.pessoasConfirmadas();
+    const linhas = [['Nome', 'Idade', 'Restrição alimentar', 'Resposta de']];
+    pessoas.forEach(p => linhas.push([p.nome || p.de, p.idade || 'Adulto', p.diet || '—', p.de]));
+    linhas.push([]);
+    linhas.push(['Total de pessoas', pessoas.length]);
+    linhas.push(['Com restrições', pessoas.filter(p => p.diet).length]);
+    this.baixar('Confirmações de presença e restrições para quinta.csv', linhas);
+  };
+
+  esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  exportPdf = () => {
+    const reps = this.respostas();
+    const pessoas = this.pessoasConfirmadas();
+    const vem = reps.filter(r => r.confirma === 'sim');
+    const nao = reps.filter(r => r.confirma === 'nao' || r.confirma === 'não');
+    const k = (x) => this.norm(x);
+    const adultos = pessoas.filter(p => !p.idade || k(p.idade).indexOf('adulto') === 0).length;
+    const criancas = pessoas.filter(p => k(p.idade).indexOf('crianca') === 0).length;
+    const bebes = pessoas.filter(p => k(p.idade).indexOf('bebe') === 0).length;
+    const dietas = pessoas.filter(p => p.diet);
+    const e = this.esc;
+    const hoje = new Date().toLocaleDateString('pt-PT', { day: '2-digit', month: 'long', year: 'numeric' });
+
+    const linhas = pessoas.map(p => '<tr><td>' + e(p.nome || p.de) + '</td><td>' + e(p.idade || 'Adulto')
+      + '</td><td>' + (p.diet ? '<strong>' + e(p.diet) + '</strong>' : '—') + '</td><td class="nota">' + e(p.de) + '</td></tr>').join('');
+
+    const css = '@page{size:A4;margin:16mm}'
+      + '*{box-sizing:border-box}body{margin:0;font-family:"Work Sans",system-ui,sans-serif;color:#3E3A2F;font-size:10.5pt;line-height:1.5}'
+      + 'h1{font-family:"Amatic SC",cursive;font-size:32pt;line-height:1.05;color:#AE4B32;margin:0}'
+      + '.sub{font-size:8pt;letter-spacing:.2em;text-transform:uppercase;color:#6E7A61}'
+      + 'h2{font-family:"Fraunces",serif;font-size:13pt;color:#AE4B32;margin:22px 0 8px;page-break-after:avoid}'
+      + '.kpis{display:flex;gap:10px;margin-top:14px}'
+      + '.kpi{flex:1;padding:10px 12px;border:1px solid #E0D6C6;background:#FFF9F0}'
+      + '.kpi b{display:block;font-family:"Fraunces",serif;font-size:19pt;line-height:1.1;color:#AE4B32}'
+      + '.kpi span{font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:#6E7A61}'
+      + 'table{width:100%;border-collapse:collapse;margin-top:6px}'
+      + 'th{text-align:left;font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:#6E7A61;border-bottom:1px solid #D9CFBE;padding:6px 8px 6px 0}'
+      + 'td{vertical-align:top;padding:7px 8px 7px 0;border-bottom:1px solid #EFE6D8}'
+      + 'tr{page-break-inside:avoid}.nota{font-size:8.5pt;color:#6b6252}'
+      + 'ul{margin:4px 0 0;padding-left:16px}li{margin:3px 0}'
+      + '.pe{margin-top:26px;font-size:8pt;color:#6b6252}';
+
+    const corpo = '<div class="sub">casamento de 2 de outubro de 2027</div>'
+      + '<h1>Confirmações de presença<br/>e restrições alimentares</h1>'
+      + '<div class="kpis"><div class="kpi"><b>' + pessoas.length + '</b><span>pessoas à mesa</span></div>'
+      + '<div class="kpi"><b>' + adultos + '</b><span>adultos</span></div>'
+      + '<div class="kpi"><b>' + criancas + '</b><span>crianças 4-9</span></div>'
+      + '<div class="kpi"><b>' + bebes + '</b><span>bebés 0-3</span></div>'
+      + '<div class="kpi"><b>' + dietas.length + '</b><span>com restrições</span></div></div>'
+      + (dietas.length ? '<h2>Restrições alimentares</h2><ul>'
+          + dietas.map(p => '<li><strong>' + e(p.nome || p.de) + '</strong> (' + e(p.idade || 'Adulto') + ') — ' + e(p.diet) + '</li>').join('')
+          + '</ul>' : '<h2>Restrições alimentares</h2><p class="nota">Nenhum convidado indicou restrições.</p>')
+      + '<h2>Lista de pessoas confirmadas (' + pessoas.length + ')</h2>'
+      + '<table><thead><tr><th>Nome</th><th>Idade</th><th>Restrição alimentar</th><th>Resposta de</th></tr></thead><tbody>'
+      + linhas + '</tbody></table>'
+      + '<div class="pe">Documento gerado a ' + e(hoje) + ' · ' + vem.length + ' respostas afirmativas · ' + nao.length + ' não podem ir</div>';
+
+    this.imprimir('Confirmações de presença e restrições para quinta', corpo);
+  };
+
+  imprimir = (titulo, corpo) => {
+    const css = '@page{size:A4;margin:16mm}'
+      + '*{box-sizing:border-box}body{margin:0;font-family:"Work Sans",system-ui,sans-serif;color:#3E3A2F;font-size:10.5pt;line-height:1.5}'
+      + 'h1{font-family:"Amatic SC",cursive;font-size:32pt;line-height:1.05;color:#AE4B32;margin:0}'
+      + '.sub{font-size:8pt;letter-spacing:.2em;text-transform:uppercase;color:#6E7A61}'
+      + 'h2{font-family:"Fraunces",serif;font-size:13pt;color:#AE4B32;margin:22px 0 8px;page-break-after:avoid}'
+      + '.kpis{display:flex;gap:10px;margin-top:14px}'
+      + '.kpi{flex:1;padding:10px 12px;border:1px solid #E0D6C6;background:#FFF9F0}'
+      + '.kpi b{display:block;font-family:"Fraunces",serif;font-size:19pt;line-height:1.1;color:#AE4B32}'
+      + '.kpi span{font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:#6E7A61}'
+      + 'table{width:100%;border-collapse:collapse;margin-top:6px}'
+      + 'th{text-align:left;font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:#6E7A61;border-bottom:1px solid #D9CFBE;padding:6px 8px 6px 0}'
+      + 'td{vertical-align:top;padding:7px 8px 7px 0;border-bottom:1px solid #EFE6D8}'
+      + 'tr{page-break-inside:avoid}.nota{font-size:8.5pt;color:#6b6252}'
+      + 'ul{margin:4px 0 0;padding-left:16px}li{margin:3px 0}'
+      + 'blockquote{margin:6px 0 10px;padding-left:10px;border-left:2px solid #D9CFBE;font-family:"Fraunces",serif;font-style:italic;color:#3E3A2F}'
+      + '.pe{margin-top:26px;font-size:8pt;color:#6b6252}';
+    const w = window.open('', '_blank');
+    if (!w) return;
+    const d = w.document;
+    d.open();
+    d.write('<!DOCTYPE html><html lang="pt"><head><meta charset="utf-8"></head><body></body></html>');
+    d.close();
+    d.title = titulo;
+    const link = d.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Work+Sans:wght@300;400;600&display=swap';
+    d.head.appendChild(link);
+    const st = d.createElement('style');
+    st.textContent = css;
+    d.head.appendChild(st);
+    d.body.innerHTML = corpo;
+    setTimeout(() => { try { w.focus(); w.print(); } catch (err) {} }, 800);
+  };
+
+  exportPdfTudo = () => {
+    const reps = this.respostas();
+    const pessoas = this.pessoasConfirmadas();
+    const vem = reps.filter(r => r.confirma === 'sim');
+    const nao = reps.filter(r => r.confirma === 'nao' || r.confirma === 'não');
+    const outros = reps.filter(r => ['sim', 'nao', 'não'].indexOf(r.confirma) < 0);
+    const e = this.esc;
+    const hoje = new Date().toLocaleDateString('pt-PT', { day: '2-digit', month: 'long', year: 'numeric' });
+    const linhas = reps.map(r => {
+      const estado = r.confirma === 'sim' ? 'Vem' : (r.confirma === 'nao' || r.confirma === 'não') ? 'Não vem' : 'Sem resposta';
+      return '<tr><td>' + e(r.nome) + (r.versoes > 1 ? '<div class="nota">' + r.versoes + ' respostas · mostro a última</div>' : '')
+        + '</td><td>' + estado + '</td><td class="nota">' + e(r.quando) + '</td><td>'
+        + (r.pessoas.length ? r.pessoas.map(p => e(p.nome) + ' <span class="nota">' + e(p.idade || 'Adulto') + (p.diet ? ' · ' + e(p.diet) : '') + '</span>').join('<br/>') : '—')
+        + '</td><td>' + (r.mensagem ? '<em>' + e(r.mensagem) + '</em>' : '—') + '</td></tr>';
+    }).join('');
+    const msgs = reps.filter(r => r.mensagem);
+    const corpo = '<div class="sub">uso interno · Iara e João</div><h1>Confirmações de presença<br/>informação completa</h1>'
+      + '<div class="kpis"><div class="kpi"><b>' + pessoas.length + '</b><span>pessoas confirmadas</span></div>'
+      + '<div class="kpi"><b>' + vem.length + '</b><span>respostas sim</span></div>'
+      + '<div class="kpi"><b>' + nao.length + '</b><span>não vêm</span></div>'
+      + '<div class="kpi"><b>' + outros.length + '</b><span>por responder</span></div></div>'
+      + '<h2>Todas as respostas (' + reps.length + ')</h2>'
+      + '<table><thead><tr><th>Quem respondeu</th><th>Estado</th><th>Enviado</th><th>Pessoas</th><th>Mensagem</th></tr></thead><tbody>' + linhas + '</tbody></table>'
+      + (msgs.length ? '<h2>Mensagens</h2>' + msgs.map(r => '<blockquote>' + e(r.mensagem) + '</blockquote><div class="nota">— ' + e(r.nome) + '</div>').join('') : '')
+      + '<div class="pe">Documento gerado a ' + e(hoje) + '</div>';
+    this.imprimir('Confirmações de presença_totalInfo', corpo);
+  };
+
+  exportTudo = () => {
+    const linhas = [['Nome de quem respondeu', 'Vem?', 'Enviado', 'Pessoas', 'Idades', 'Restrições', 'Mensagem', 'Nº de respostas']];
+    this.respostas().forEach(r => linhas.push([
+      r.nome,
+      r.confirma === 'sim' ? 'Sim' : (r.confirma === 'nao' || r.confirma === 'não') ? 'Não' : (r.confirma || 'sem resposta'),
+      r.quando,
+      r.pessoas.map(p => p.nome).join(' | '),
+      r.pessoas.map(p => p.idade || 'Adulto').join(' | '),
+      r.pessoas.filter(p => p.diet).map(p => p.nome + ': ' + p.diet).join(' | '),
+      r.mensagem, r.versoes
+    ]));
+    this.baixar('Confirmações de presença_totalInfo.csv', linhas);
+  };
+
+  duplicados = () => {
+    const reps = this.respostas();
+    const sep = this.state.separados || [];
+    const out = [];
+    for (let i = 0; i < reps.length; i++) {
+      for (let j = i + 1; j < reps.length; j++) {
+        const a = reps[i], b = reps[j];
+        const p = par(a.chave, b.chave);
+        if (sep.indexOf(p) >= 0) continue;
+        const pa = a.chave.split(' ').filter(Boolean), pb = b.chave.split(' ').filter(Boolean);
+        const mesmoApelido = pa.length > 1 && pb.length > 1
+          && pa.slice(1).some(x => pb.slice(1).some(y => this.parecido(x, y)));
+        const perto = this.parecido(a.chave, b.chave)
+          || (mesmoApelido && this.parecido(pa[0], pb[0]))
+          || (pa[0] === pb[0] && (pa.length === 1 || pb.length === 1));
+        if (perto) out.push({ p, a, b });
+      }
+    }
+    return out;
+  };
+  unir = (e) => {
+    const p = e.currentTarget.dataset.p;
+    const [a, b] = p.split('||');
+    const unidos = (this.state.unidos || []).concat([par(a, b)]);
+    gravar(UNIR, unidos);
+    this.setState({ unidos });
+  };
+  separar = (e) => {
+    const p = e.currentTarget.dataset.p;
+    const separados = (this.state.separados || []).concat([p]);
+    gravar(SEP, separados);
+    this.setState({ separados });
+  };
+  desfazerUnioes = () => { gravar(UNIR, []); gravar(SEP, []); this.setState({ unidos: [], separados: [] }); };
+
   setFilter = (e) => this.setState({ filter: e.currentTarget.dataset.f });
+  onBusca = (e) => this.setState({ busca: e.target.value });
 
   pill = (on) => 'padding:9px 15px;border-radius:999px;border:1px solid ' + (on ? '#AE4B32' : 'rgba(110,122,97,.35)')
     + ';background:' + (on ? '#AE4B32' : '#FFF9F0') + ';color:' + (on ? '#FFF6EA' : '#6b6252')
@@ -250,26 +545,25 @@ class Component extends DCLogic {
     const nao = reps.filter(r => r.confirma === 'nao' || r.confirma === 'não');
     const outros = reps.filter(r => !['sim', 'nao', 'não'].includes(r.confirma));
 
-    const pessoas = [];
-    vem.forEach(r => r.pessoas.forEach(p => pessoas.push(Object.assign({}, p, { de: r.nome }))));
+    const pessoas = this.pessoasConfirmadas();
     const conta = (k) => pessoas.filter(p => this.norm(p.idade).indexOf(k) === 0).length;
     const adultos = pessoas.filter(p => !p.idade || this.norm(p.idade).indexOf('adulto') === 0).length;
-    const criancas = conta('crianca');
-    const bebes = conta('bebe');
+    const criancas = conta('crianca'), bebes = conta('bebe');
     const total = pessoas.length || 1;
-    const cor = { adulto: '#6E7A61', crianca: '#E0B894', bebe: '#8CB4C4' };
-
     const dietas = pessoas.filter(p => p.diet).map(p => ({ nome: p.nome || p.de, texto: p.diet }));
+    const mensagens = reps.filter(r => r.mensagem).map(r => ({ texto: r.mensagem, autor: r.nome + (r.confirma === 'sim' ? ' · vem' : '') }));
+    const dups = this.duplicados();
 
-    const filtro = s.filter;
-    const lista = filtro === 'sim' ? vem : filtro === 'nao' ? nao : reps;
+    const q = this.norm(s.busca);
+    const base = s.filter === 'sim' ? vem : s.filter === 'nao' ? nao : reps;
+    const lista = q ? base.filter(r => r.chave.indexOf(q) >= 0 || r.pessoas.some(p => this.norm(p.nome).indexOf(q) >= 0)) : base;
 
     return {
-      needsUrl: !s.url || !!s.err,
-      urlDraft: s.urlDraft,
-      urlNote: 'Nada sai deste navegador — o link fica guardado só aqui.',
-      onUrl: this.onUrl, saveUrl: this.saveUrl, reload: this.reload,
-      reloadLabel: s.loading ? 'A carregar…' : 'Atualizar',
+      locked: !s.open, unlocked: s.open,
+      pinDraft: s.pinDraft, pinError: s.pinError,
+      onPin: this.onPin, pinKey: this.pinKey, tryPin: this.tryPin,
+      reload: this.reload, reloadLabel: s.loading ? 'A carregar…' : 'Atualizar',
+      exportQuinta: this.exportQuinta, exportTudo: this.exportTudo, exportPdf: this.exportPdf, exportPdfTudo: this.exportPdfTudo,
       hasError: !!s.err, errorMsg: s.err,
       hasData: !!s.raw && !s.err,
       kpis: [
@@ -279,16 +573,27 @@ class Component extends DCLogic {
         { label: 'restrições', value: dietas.length, note: dietas.length ? 'a avisar a quinta' : 'nenhuma até agora', color: '#D3684B' }
       ],
       ages: [
-        { label: 'Adultos', n: adultos, pct: Math.round(adultos / total * 100) + '%', color: cor.adulto },
-        { label: 'Crianças (4-9)', n: criancas, pct: Math.round(criancas / total * 100) + '%', color: cor.crianca },
-        { label: 'Bebés (0-3)', n: bebes, pct: Math.round(bebes / total * 100) + '%', color: cor.bebe }
+        { label: 'Adultos', n: adultos, pct: Math.round(adultos / total * 100) + '%', color: '#6E7A61' },
+        { label: 'Crianças (4-9)', n: criancas, pct: Math.round(criancas / total * 100) + '%', color: '#E0B894' },
+        { label: 'Bebés (0-3)', n: bebes, pct: Math.round(bebes / total * 100) + '%', color: '#8CB4C4' }
       ],
       diets: dietas,
       dietsNote: dietas.length ? '' : 'Nenhum convidado indicou restrições.',
+      temMensagens: mensagens.length > 0, mensagens,
+      temDuplicados: dups.length > 0,
+      duplicados: dups.map(d => ({
+        p: d.p,
+        aNome: d.a.nome, aEstado: d.a.confirma === 'sim' ? 'vem' : (d.a.confirma === 'nao' || d.a.confirma === 'não') ? 'não vem' : (d.a.confirma || 'sem resposta'), aQuando: d.a.quando,
+        bNome: d.b.nome, bEstado: d.b.confirma === 'sim' ? 'vem' : (d.b.confirma === 'nao' || d.b.confirma === 'não') ? 'não vem' : (d.b.confirma || 'sem resposta'), bQuando: d.b.quando
+      })),
+      unir: this.unir, separar: this.separar,
+      temUnioes: (s.unidos || []).length > 0 || (s.separados || []).length > 0,
+      desfazerUnioes: this.desfazerUnioes,
+      busca: s.busca, onBusca: this.onBusca,
       filters: [
-        { id: 'todos', label: 'Todas (' + reps.length + ')', style: this.pill(filtro === 'todos') },
-        { id: 'sim', label: 'Vêm (' + vem.length + ')', style: this.pill(filtro === 'sim') },
-        { id: 'nao', label: 'Não vêm (' + nao.length + ')', style: this.pill(filtro === 'nao') }
+        { id: 'todos', label: 'Todas (' + reps.length + ')', style: this.pill(s.filter === 'todos') },
+        { id: 'sim', label: 'Vêm (' + vem.length + ')', style: this.pill(s.filter === 'sim') },
+        { id: 'nao', label: 'Não vêm (' + nao.length + ')', style: this.pill(s.filter === 'nao') }
       ],
       setFilter: this.setFilter,
       rows: lista.map(r => {
@@ -301,7 +606,8 @@ class Component extends DCLogic {
           accent: sim ? '#6E7A61' : '#D9A57F',
           quando: r.quando,
           repetida: r.versoes > 1,
-          repetidaTxt: r.versoes + ' respostas · mostro a última',
+          repetidaTxt: r.versoes + ' respostas · mostro a última'
+            + (r.grafias && r.grafias.length > 1 ? ' (' + r.grafias.join(' / ') + ')' : ''),
           temPessoas: r.pessoas.length > 0,
           pessoas: r.pessoas.map(p => {
             const k = this.norm(p.idade);
@@ -312,11 +618,12 @@ class Component extends DCLogic {
               border: bebe ? '#8CB4C4' : crianca ? '#E0B894' : '#A9B79C'
             };
           }),
-          temMensagem: !!r.mensagem,
-          mensagem: r.mensagem
+          temMensagem: !!r.mensagem, mensagem: r.mensagem
         };
       }),
-      footer: reps.length ? reps.length + ' pessoas responderam · respostas repetidas agrupadas pela mais recente' : 'Ainda sem respostas.'
+      footer: reps.length
+        ? (lista.length === reps.length ? reps.length + ' pessoas responderam' : 'a mostrar ' + lista.length + ' de ' + reps.length) + ' · respostas repetidas agrupadas pela mais recente'
+        : 'Ainda sem respostas.'
     };
   }
 }
