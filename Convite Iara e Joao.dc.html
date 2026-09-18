@@ -665,6 +665,7 @@ class Component extends DCLogic {
       }, 80);
     };
     document.addEventListener('click', this.onAnchor);
+    if ((this.props.showEnvelope ?? true) && this.state.env === 'closed') this.lockScroll(true);
     window.addEventListener('scroll', this.onScroll, { passive: true });
     window.addEventListener('resize', this.onScroll);
     setTimeout(this.onScroll, 300);
@@ -710,6 +711,7 @@ class Component extends DCLogic {
     window.removeEventListener('scroll', this.onScroll);
     window.removeEventListener('resize', this.onScroll);
     document.removeEventListener('click', this.onAnchor);
+    this.lockScroll(false);
     clearInterval(this.anchorFix);
   }
 
@@ -728,8 +730,15 @@ class Component extends DCLogic {
     };
   }
 
+  lockScroll = (on) => {
+    const b = document.body;
+    if (!b) return;
+    if (on) { b.dataset.iajLock = '1'; b.style.overflow = 'hidden'; b.style.touchAction = 'none'; }
+    else if (b.dataset.iajLock) { delete b.dataset.iajLock; b.style.overflow = ''; b.style.touchAction = ''; }
+  };
   openEnvelope = () => {
     if (this.state.env !== 'closed') return;
+    this.lockScroll(false);
     this.setState({ env: 'opening' });
     try { localStorage.setItem('iaj-opened', '1'); } catch (e) {}
     setTimeout(() => this.setState({ env: 'gone' }), 1000);
@@ -810,6 +819,7 @@ class Component extends DCLogic {
     if (this.audio) { this.audio.pause(); this.audio.currentTime = 0; this.userPaused = false; }
     try { localStorage.setItem('iaj-opened', '0'); } catch (e) {}
     window.scrollTo({ top: 0, behavior: 'auto' });
+    this.lockScroll(true);
     this.setState({
       env: 'closed', menu: false, shot: -1, cal: false, step: 1, error: '',
       name: '', going: null, party: 0, note: '', myDiet: 'nao', myDietText: '',
@@ -1073,7 +1083,7 @@ class Component extends DCLogic {
       calStyle: 'position:fixed;inset:0;z-index:950;display:flex;align-items:center;justify-content:center;transition:opacity .25s ease;' + (s.cal ? 'opacity:1;' : 'opacity:0;pointer-events:none;'),
       openCal: this.openCal, closeCal: this.closeCal,
       openMap: this.openMap, closeMap: this.closeMap,
-      mapSrc: s.map ? 'mapa-destinos.html?v=pt' : 'about:blank',
+      mapSrc: s.map ? ('mapa-destinos.html' + ((typeof window !== 'undefined' && window.innerWidth < 860) ? '?v=pt' : '')) : 'about:blank',
       mapModalStyle: 'position:fixed;inset:0;z-index:940;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;transition:opacity .25s ease;' + (s.map ? 'opacity:1;' : 'opacity:0;pointer-events:none;'),
       copyIt: this.copyIt, copiedMsg: s.copied,
       toggleRemind: this.toggleRemind, openRemindIcs: this.openRemindIcs,
