@@ -50,7 +50,7 @@ section[id]{scroll-margin-top:86px}
 </style>
 </helmet>
 
-<div data-vw="{{ vw }}" style="position:relative;width:100%;min-height:100dvh;overflow:hidden;background:#FBF1E7">
+<div data-vw="{{ vw }}" style="position:relative;width:100%;min-height:100svh;overflow:hidden;background:#FBF1E7">
   <sc-if value="{{ gateLocked }}" hint-placeholder-val="{{ false }}">
   <div style="position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;background:#FBF1E7">
     <div style="width:100%;max-width:340px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
@@ -1290,7 +1290,7 @@ class Component extends DCLogic {
       temConvidados: !!(familiaDoLink() || this.props.paraDemo),
       paraQuem: familiaDoLink() ? paraTexto(familiaDoLink()) : (this.props.paraDemo || ''),
       envelopeOn: envOn,
-      envStyle: 'position:fixed;inset:0;height:100dvh;z-index:999;display:flex;align-items:center;justify-content:center;overflow:hidden;' + (opening ? 'pointer-events:none;' : ''),
+      envStyle: 'position:fixed;top:0;left:0;right:0;height:100lvh;padding-bottom:calc(100lvh - 100svh);box-sizing:border-box;z-index:999;display:flex;align-items:center;justify-content:center;overflow:hidden;' + (opening ? 'pointer-events:none;' : ''),
       envLeft: opening ? 'translateX(-100%)' : 'translateX(0)',
       envRight: opening ? 'translateX(100%)' : 'translateX(0)',
       envCardStyle: 'position:relative;z-index:1;cursor:pointer;text-align:center;transition:transform .8s cubic-bezier(.65,0,.35,1),opacity .6s ease;' + (opening ? 'transform:translateY(-50px) scale(.86);opacity:0;' : 'transform:none;opacity:1;'),
