@@ -286,7 +286,6 @@ section[id]{scroll-margin-top:86px}
         <div style="margin-top:2px;font-size:clamp(15.5px,4.2vw,16.5px);color:#6b6252">Fim</div>
       </div>
     </div>
-    <p style="max-width:34ch;margin:26px auto 0;text-align:center;font-size:clamp(14.5px,3.9vw,15px);line-height:1.7;color:#6b6252">Gostaríamos que chegassem com 15 minutos de antecedência.</p>
   </section>
 
   <section id="memorias" style="padding:66px 0 10px">
@@ -342,14 +341,13 @@ section[id]{scroll-margin-top:86px}
       <div style="display:flex;flex-direction:column;gap:16px">
         <div style="padding:22px;background:#FFF9F0;border:1px solid rgba(62,58,47,.12)">
           <h3 style="margin:0 0 8px;font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(20px,5.5vw,23px);color:#AE4B32">Como vestir</h3>
-          <p style="margin:0;font-size:clamp(15px,4vw,15.5px);line-height:1.7;color:#6b6252">Pedimos que evitem as do cortejo:</p>
+          <p style="margin:0;font-size:clamp(15px,4vw,15.5px);line-height:1.7;color:#6b6252">Pedimos que evitem as cores do cortejo: branco, bege e verde sage.</p>
           <div style="display:flex;align-items:center;gap:14px;margin-top:14px">
             <div style="display:flex;gap:8px">
               <span title="Branco" style="width:26px;height:26px;border-radius:50%;background:#FFFFFF;box-shadow:0 0 0 2px #FFF9F0,0 0 0 3px rgba(62,58,47,.2)"></span>
               <span title="Bege" style="width:26px;height:26px;border-radius:50%;background:#E4D6BE;box-shadow:0 0 0 2px #FFF9F0,0 0 0 3px rgba(62,58,47,.2)"></span>
               <span title="Verde sage" style="width:26px;height:26px;border-radius:50%;background:#A9B79C;box-shadow:0 0 0 2px #FFF9F0,0 0 0 3px rgba(62,58,47,.2)"></span>
-              <span title="Verde escuro" style="width:26px;height:26px;border-radius:50%;background:#4F6B52;box-shadow:0 0 0 2px #FFF9F0,0 0 0 3px rgba(62,58,47,.2)"></span>
-            </div>
+              </div>
           </div>
           <p style="margin:14px 0 0;font-size:clamp(15px,4vw,15.5px);line-height:1.7;color:#6b6252">Nos restantes tons, fiquem à vontade!</p>
         </div>
@@ -400,7 +398,7 @@ section[id]{scroll-margin-top:86px}
 
       <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ true }}">
         <div class="iaj-rise" style="padding-top:14px">
-          <label style="display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6252;margin-bottom:8px">O vosso primeiro e último nome</label>
+          <label style="display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6252;margin-bottom:8px">O teu primeiro e último nome</label>
           <input value="{{ name }}" onInput="{{ onName }}" onBlur="{{ blurName }}" placeholder="Primeiro e último nome" autocomplete="name" style="{{ nameFieldStyle }}"/>
           <div style="min-height:18px;margin-top:6px;font-size:13px;color:#AE4B32">{{ error }}</div>
           <button type="button" onClick="{{ next }}" style="width:100%;margin-top:6px;padding:15px;background:#AE4B32;border:none;color:#FFF6EA;font-family:'Work Sans',sans-serif;font-size:13.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border-radius:999px;cursor:pointer">Continuar</button>
@@ -426,11 +424,15 @@ section[id]{scroll-margin-top:86px}
 
       <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ false }}">
         <div class="iaj-rise" style="padding-top:14px">
-          <label style="display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6252;margin-bottom:10px">Vão comparecer?</label>
+          <label style="display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6252;margin-bottom:10px">Vais estar presente?</label>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <button type="button" data-v="sim" onClick="{{ setGoing }}" style="{{ yesStyle }}">Sim, contem connosco</button>
-            <button type="button" data-v="nao" onClick="{{ setGoing }}" style="{{ noStyle }}">Não vamos poder</button>
+            <button type="button" data-v="sim" onClick="{{ setGoing }}" style="{{ yesStyle }}">Sim</button>
+            <button type="button" data-v="nao" onClick="{{ setGoing }}" style="{{ noStyle }}">Não</button>
           </div>
+          <sc-if value="{{ goingNao }}" hint-placeholder-val="{{ false }}">
+            <label style="display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6252;margin:18px 0 8px">Mensagem para os noivos <span style="text-transform:none;letter-spacing:0;color:#8b8172">(opcional)</span></label>
+            <textarea value="{{ note }}" onInput="{{ onNote }}" rows="4" placeholder="Se quiseres, deixa-nos uma mensagem…" style="width:100%;padding:14px;background:#FBF1E7;border:1px solid rgba(62,58,47,.18);border-radius:12px;font-family:'Work Sans',sans-serif;font-size:16px;line-height:1.5;color:#3E3A2F;outline:none;resize:vertical"></textarea>
+          </sc-if>
           <div style="min-height:18px;margin-top:10px;font-size:13px;color:#AE4B32">{{ error }}</div>
           <div style="display:flex;gap:10px">
             <button type="button" onClick="{{ back }}" style="flex:0 0 auto;padding:15px 20px;background:none;border:1px solid rgba(62,58,47,.2);color:#6b6252;font-family:'Work Sans',sans-serif;font-size:13.5px;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;cursor:pointer">Voltar</button>
@@ -443,25 +445,25 @@ section[id]{scroll-margin-top:86px}
         <div class="iaj-rise" style="padding-top:14px">
           <div style="padding:16px;background:#FBF1E7;border:1px solid rgba(62,58,47,.1)">
             <div style="font-family:'Dancing Script',cursive;font-size:clamp(18px,4.9vw,20px);color:#6E7A61;margin-bottom:8px">Tu</div>
-            <label style="display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6252;margin-bottom:8px">Têm alguma restrição alimentar?</label>
+            <label style="display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6252;margin-bottom:8px">Tens alguma restrição alimentar?</label>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
               <button type="button" data-v="sim" onClick="{{ setMyDiet }}" style="{{ myDietYes }}">Sim</button>
               <button type="button" data-v="nao" onClick="{{ setMyDiet }}" style="{{ myDietNo }}">Não</button>
             </div>
             <sc-if value="{{ myDietOn }}" hint-placeholder-val="{{ false }}">
               <div style="margin-top:12px">
-                <div style="font-size:12.5px;line-height:1.6;color:#6b6252;margin-bottom:8px">O que não come:</div>
+                
                 <div style="display:flex;flex-wrap:wrap;gap:7px">
                   <sc-for list="{{ myDietOpts }}" as="o" hint-placeholder-count="6">
                     <button type="button" data-t="{{ o.id }}" onClick="{{ toggleMyTag }}" style="{{ o.style }}">{{ o.label }}</button>
                   </sc-for>
                 </div>
-                <input value="{{ myDietText }}" onInput="{{ onMyDietText }}" placeholder="outra, qual?" style="{{ myDietFieldStyle }}"/>
+                <input value="{{ myDietText }}" onInput="{{ onMyDietText }}" placeholder="Outra? Qual?" style="{{ myDietFieldStyle }}"/>
               </div>
             </sc-if>
           </div>
           <div style="margin-top:18px">
-            <label style="display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6252;margin-bottom:10px">Número de acompanhantes (máx. 5)</label>
+            <label style="display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6252;margin-bottom:10px">Número de acompanhantes</label>
             <div style="display:flex;gap:6px">
               <button type="button" data-n="0" onClick="{{ setParty }}" style="{{ g0 }}">0</button>
               <button type="button" data-n="1" onClick="{{ setParty }}" style="{{ g1 }}">1</button>
@@ -490,9 +492,12 @@ section[id]{scroll-margin-top:86px}
                 <label style="display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6252;margin:14px 0 8px">Idade</label>
                 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
                   <button type="button" data-i="{{ g.i }}" data-v="adulto" onClick="{{ setGuestAge }}" style="{{ g.ageAdulto }}">Adulto</button>
-                  <button type="button" data-i="{{ g.i }}" data-v="crianca" onClick="{{ setGuestAge }}" style="{{ g.ageCrianca }}">Criança<br/>4-9</button>
-                  <button type="button" data-i="{{ g.i }}" data-v="bebe" onClick="{{ setGuestAge }}" style="{{ g.ageBebe }}">Bebé<br/>0-3</button>
+                  <button type="button" data-i="{{ g.i }}" data-v="crianca" onClick="{{ setGuestAge }}" style="{{ g.ageCrianca }}">Criança</button>
+                  <button type="button" data-i="{{ g.i }}" data-v="bebe" onClick="{{ setGuestAge }}" style="{{ g.ageBebe }}">Bebé</button>
                 </div>
+                <sc-if value="{{ g.hasAgeHint }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:8px;font-size:13px;color:#6E7A61">{{ g.ageHint }}</div>
+                </sc-if>
                 <label style="display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6252;margin:14px 0 8px">Tem restrições alimentares?</label>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
                   <button type="button" data-i="{{ g.i }}" data-v="sim" onClick="{{ setGuestDiet }}" style="{{ g.yesStyle }}">Sim</button>
@@ -500,13 +505,13 @@ section[id]{scroll-margin-top:86px}
                 </div>
                 <sc-if value="{{ g.dietOn }}" hint-placeholder-val="{{ false }}">
                   <div style="margin-top:12px">
-                    <div style="font-size:12.5px;line-height:1.6;color:#6b6252;margin-bottom:8px">O que não come:</div>
+                    
                     <div style="display:flex;flex-wrap:wrap;gap:7px">
                       <sc-for list="{{ g.dietOpts }}" as="o" hint-placeholder-count="6">
                         <button type="button" data-i="{{ o.gi }}" data-t="{{ o.id }}" onClick="{{ toggleGuestTag }}" style="{{ o.style }}">{{ o.label }}</button>
                       </sc-for>
                     </div>
-                    <input value="{{ g.dietText }}" data-i="{{ g.i }}" onInput="{{ onGuestDietText }}" placeholder="outra, qual?" style="{{ g.dietFieldStyle }}"/>
+                    <input value="{{ g.dietText }}" data-i="{{ g.i }}" onInput="{{ onGuestDietText }}" placeholder="Outra? Qual?" style="{{ g.dietFieldStyle }}"/>
                   </div>
                 </sc-if>
               </div>
@@ -1218,7 +1223,7 @@ class Component extends DCLogic {
     };
     try { localStorage.setItem('iaj-rsvp-v2', JSON.stringify({ ...payload, party: payload.numAcompanhantes, going: s.going, name: payload.nome, note: payload.mensagem })); } catch (e) {}
     // Cola aqui o URL do Google Apps Script (termina em /exec) e o envio fica ativo.
-    const endpoint = this.props.sheetEndpoint ?? 'https://script.google.com/macros/s/AKfycbwowXQzlQ4Gslm1PFDI5qjuhoWL_V9hsgorNoqNHWqI_hOFnnmzfN0k2_BOTobjTfvTaw/exec';
+    const endpoint = this.props.sheetEndpoint ?? 'https://script.google.com/macros/s/AKfycbzSRvVdle5uP-w7ylzCEL0mZQqVHL8pAA1fKDhrNYexeDA38Ivldwhf_tmrDPlFasCSBw/exec';
     if (endpoint) {
       try {
         fetch(endpoint, {
@@ -1264,7 +1269,7 @@ class Component extends DCLogic {
       const g = s.guests[i];
       const bad = s.badGuests.indexOf(i) >= 0;
       guests.push({
-        i: i, label: 'Acompanhante ' + (i + 1), name: g.name,
+        i: i, label: (i + 1) + 'º Acompanhante', hasAgeHint: g.age === 'crianca' || g.age === 'bebe', ageHint: g.age === 'crianca' ? 'De 4 a 9 anos, inclusive.' : g.age === 'bebe' ? 'De 0 a 3 anos, inclusive.' : '', name: g.name,
         dietOn: g.diet === 'sim', dietText: g.dietText,
         dietOpts: DIETAS.map(d => ({ id: d.id, gi: i, label: d.label, style: chip((g.dietTags || []).indexOf(d.id) >= 0) })),
         fieldStyle: field(bad && !!this.fullName(g.name)),
@@ -1300,7 +1305,7 @@ class Component extends DCLogic {
       isStep4: s.step === 4, isStep5: s.step === 5, isDone: done,
       bar1: bar(s.step >= 1), bar2: bar(s.step >= 2), bar3: bar(s.step >= 3), bar4: bar(s.step >= 4), bar5: bar(s.step >= 5),
       stepLabel: stepLabels[s.step] || '',
-      step2Cta: s.going === 'nao' ? 'Enviar resposta' : 'Continuar',
+      step2Cta: s.going === 'nao' ? 'Enviar resposta' : 'Continuar', goingNao: s.going === 'nao',
       submitCta: 'Confirmar presença',
       name: s.name, note: s.note, error: s.error,
       nameFieldStyle: field(s.badName),
