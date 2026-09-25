@@ -23,15 +23,15 @@ body{margin:0;background:#FBF1E7;color:#3E3A2F;font-family:'Work Sans',system-ui
 a{color:#AE4B32;text-decoration:none}
 a:hover{color:#D3684B}
 ::selection{background:#F0C7A0;color:#3E3A2F}
-@keyframes iajSpin{to{transform:rotate(360deg)}}
+@keyframes iajSpin{from{transform:translateZ(0) rotate(0deg)}to{transform:translateZ(0) rotate(360deg)}}
 @keyframes iaj-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 @keyframes iaj-pulse{0%,100%{opacity:.55}50%{opacity:1}}
 @keyframes iaj-rise{0%{opacity:0;transform:translateY(14px)}100%{opacity:1;transform:translateY(0)}}
 @keyframes iaj-beat{0%,100%{transform:rotate(-45deg) scale(1)}50%{transform:rotate(-45deg) scale(1.12)}}
-@keyframes bawi-wag{0%,100%{transform:rotate(-5.5deg)}50%{transform:rotate(6.5deg)}}
-@keyframes bawi-earL{0%,100%{transform:rotate(0deg)}35%{transform:rotate(-3deg) translateY(-1px)}70%{transform:rotate(1.5deg)}}
-@keyframes bawi-earR{0%,100%{transform:rotate(0deg)}45%{transform:rotate(3deg) translateY(-1px)}80%{transform:rotate(-1.5deg)}}
-@keyframes bawi-blink{0%,92%,100%{transform:translateY(-102%)}95.5%,96.5%{transform:translateY(0%)}}
+@keyframes bawi-wag{0%,100%{transform:translateZ(0) rotate(-5.5deg)}50%{transform:translateZ(0) rotate(6.5deg)}}
+@keyframes bawi-earL{0%,100%{transform:translateZ(0) rotate(0deg)}35%{transform:translate3d(0,-1px,0) rotate(-3deg)}70%{transform:translateZ(0) rotate(1.5deg)}}
+@keyframes bawi-earR{0%,100%{transform:translateZ(0) rotate(0deg)}45%{transform:translate3d(0,-1px,0) rotate(3deg)}80%{transform:translateZ(0) rotate(-1.5deg)}}
+@keyframes bawi-blink{0%,92%,100%{transform:translate3d(0,-102%,0)}95.5%,96.5%{transform:translate3d(0,0,0)}}
 .iaj-scroll::-webkit-scrollbar{display:none}
 .iaj-scroll{scrollbar-width:none;touch-action:pan-x pan-y;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
 .iaj-rise{animation:iaj-rise .7s ease both}
@@ -106,11 +106,11 @@ section[id]{scroll-margin-top:86px}
     </div>
     <div style="position:relative;width:min(66vw,272px);aspect-ratio:1/1;margin:-10px auto 0">
       <img src="assets/bawi/part4.png" alt="O Bawi, o nosso cão, com um convite" style="position:absolute;inset:0;width:100%;height:100%;display:block"/>
-      <img src="assets/bawi/part3.png" alt="" style="position:absolute;left:79.59%;top:51.76%;width:18.07%;height:37.11%;transform-origin:0% 79%;animation:bawi-wag .34s ease-in-out infinite"/>
-      <img src="assets/bawi/part2.png" alt="" style="position:absolute;left:24.9%;top:1.46%;width:11.72%;height:14.16%;transform-origin:55% 100%;animation:bawi-earL 2.6s ease-in-out infinite"/>
-      <img src="assets/bawi/part1.png" alt="" style="position:absolute;left:55.18%;top:1.95%;width:19.53%;height:14.65%;transform-origin:42% 100%;animation:bawi-earR 3.1s ease-in-out infinite"/>
-      <div style="position:absolute;left:30.2%;top:25.4%;width:11.3%;height:11.3%;border-radius:50%;overflow:hidden"><div style="width:100%;height:100%;background:#23211f;animation:bawi-blink 5.2s linear infinite"></div></div>
-      <div style="position:absolute;left:48.9%;top:26.1%;width:12%;height:12%;border-radius:50%;overflow:hidden"><div style="width:100%;height:100%;background:#23211f;animation:bawi-blink 5.2s linear infinite"></div></div>
+      <img src="assets/bawi/part3.png" alt="" style="position:absolute;left:79.59%;top:51.76%;width:18.07%;height:37.11%;transform-origin:0% 79%;will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;animation:bawi-wag .34s ease-in-out infinite"/>
+      <img src="assets/bawi/part2.png" alt="" style="position:absolute;left:24.9%;top:1.46%;width:11.72%;height:14.16%;transform-origin:55% 100%;will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;animation:bawi-earL 2.6s ease-in-out infinite"/>
+      <img src="assets/bawi/part1.png" alt="" style="position:absolute;left:55.18%;top:1.95%;width:19.53%;height:14.65%;transform-origin:42% 100%;will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;animation:bawi-earR 3.1s ease-in-out infinite"/>
+      <div style="position:absolute;left:30.2%;top:25.4%;width:11.3%;height:11.3%;border-radius:50%;overflow:hidden"><div style="width:100%;height:100%;background:#23211f;will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;animation:bawi-blink 5.2s linear infinite"></div></div>
+      <div style="position:absolute;left:48.9%;top:26.1%;width:12%;height:12%;border-radius:50%;overflow:hidden"><div style="width:100%;height:100%;background:#23211f;will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;animation:bawi-blink 5.2s linear infinite"></div></div>
     </div>
   </div>
 </div>
@@ -595,7 +595,7 @@ section[id]{scroll-margin-top:86px}
     <span style="position:absolute;inset:0;border-radius:999px;background:conic-gradient(from -18deg, rgba(255,249,240,0) 0deg, rgba(255,249,240,.85) 16deg, rgba(255,249,240,.15) 40deg, rgba(255,249,240,0) 70deg, rgba(255,249,240,0) 180deg, rgba(255,249,240,.45) 196deg, rgba(255,249,240,0) 226deg, rgba(255,249,240,0) 360deg)"></span>
     <span style="position:absolute;inset:8px;border-radius:999px;border:1px solid rgba(255,249,240,.18)"></span>
     <span style="position:absolute;inset:13px;border-radius:999px;border:1px solid rgba(255,249,240,.12)"></span>
-    <img src="assets/bawi-disco-cartoon.png" alt="" style="position:absolute;top:50%;left:50%;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:999px;object-fit:cover;pointer-events:none;box-shadow:0 0 0 1.5px #AE4B32"/>
+    <img src="assets/bawi-disco.png" alt="" style="position:absolute;top:50%;left:50%;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:999px;object-fit:cover;pointer-events:none;box-shadow:0 0 0 1.5px #AE4B32"/>
   </button>
   <button type="button" onClick="{{ toTop }}" title="Voltar ao topo" aria-label="Voltar ao topo" style="display:flex;align-items:center;justify-content:center;width:42px;height:42px;padding:0;background:rgba(255,249,240,.94);border:1px solid rgba(174,75,50,.35);border-radius:999px;box-shadow:0 12px 26px -14px rgba(62,58,47,.5);font-size:clamp(17px,4.7vw,19px);line-height:1;color:#AE4B32;cursor:pointer;backdrop-filter:blur(6px)" style-hover="background:#FFF9F0;color:#D3684B">↑</button>
 </div>
@@ -1314,7 +1314,7 @@ class Component extends DCLogic {
       toggleMusic: this.toggleMusic, toTop: this.toTop,
       musicTitle: s.playing ? 'Pausar a música' : 'Tocar a música',
       vinylStyle: 'display:flex;position:relative;align-items:center;justify-content:center;width:46px;height:46px;padding:0;border:1px solid rgba(62,58,47,.45);border-radius:999px;cursor:pointer;box-shadow:0 12px 26px -14px rgba(62,58,47,.6);background:radial-gradient(circle at 50% 50%, #47423A 0 30%, #2B2822 30% 100%);overflow:hidden;'
-        + 'animation:iajSpin 3.4s linear infinite;animation-play-state:' + (s.playing ? 'running;opacity:1;' : 'paused;opacity:.62;'),
+        + 'will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;animation:iajSpin 6s linear infinite;animation-play-state:' + (s.playing ? 'running;' : 'paused;'),
       toggleMenu: this.toggleMenu, closeMenu: this.closeMenu,
       openShot: this.openShot, closeShot: this.closeShot,
       shotSrc: SHOTS[s.shot] || SHOTS[0], shotRef: this.shotRef,
