@@ -262,8 +262,8 @@ class Component extends DCLogic {
   });
 
   ordem = (d) => {
-    const m = /(\d{2})-(\d{2})-(\d{4})[ T](\d{2}):(\d{2})/.exec(String(d || ''));
-    return m ? new Date(+m[3], +m[2] - 1, +m[1], +m[4], +m[5]).getTime() : 0;
+    const m = /(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})(?:[ T](\d{1,2}):(\d{2}))?/.exec(String(d || ''));
+    return m ? new Date(+m[3], +m[2] - 1, +m[1], +(m[4] || 0), +(m[5] || 0)).getTime() : 0;
   };
 
   respostas = () => {
@@ -302,7 +302,8 @@ class Component extends DCLogic {
       const g = f.itens.slice().sort((a, b) => (a.ts - b.ts) || (a.i - b.i));
       const nomes = [];
       g.forEach(r => { if (nomes.indexOf(r.nome) < 0) nomes.push(r.nome); });
-      out.push(Object.assign({}, g[g.length - 1], { versoes: g.length, grafias: nomes, chaves: f.chaves }));
+      const ult = g.slice().sort((a, b) => (a.ts - b.ts) || (a.i - b.i))[g.length - 1];
+      out.push(Object.assign({}, ult, { versoes: g.length, grafias: nomes, chaves: f.chaves }));
     });
     return out.sort((a, b) => b.ts - a.ts);
   };
@@ -401,7 +402,7 @@ class Component extends DCLogic {
       + 'ul{margin:4px 0 0;padding-left:16px}li{margin:3px 0}'
       + '.pe{margin-top:26px;font-size:8pt;color:#6b6252}';
 
-    const corpo = '<div class="sub">casamento de 2 de outubro de 2027</div>'
+    const corpo = '<div class="sub">casamento de Iara &amp; João · 2 de outubro de 2027</div>'
       + '<h1>Confirmações de presença<br/>e restrições alimentares</h1>'
       + '<div class="kpis"><div class="kpi"><b>' + pessoas.length + '</b><span>pessoas à mesa</span></div>'
       + '<div class="kpi"><b>' + adultos + '</b><span>adultos</span></div>'

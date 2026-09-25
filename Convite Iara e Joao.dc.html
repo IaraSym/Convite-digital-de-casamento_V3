@@ -46,7 +46,6 @@ section[id]{scroll-margin-top:86px}
 [data-vw="desktop"]{min-width:1180px !important}
 [data-vw="desktop"] [data-nav-desktop]{display:flex !important}
 [data-vw="desktop"] [data-nav-burger]{display:none !important}
-@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
 </style>
 </helmet>
 
@@ -359,7 +358,7 @@ section[id]{scroll-margin-top:86px}
       </div>
       <div style="padding:22px;background:#FFF9F0;border:1px solid rgba(62,58,47,.12)">
         <h3 style="margin:0 0 8px;font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(20px,5.5vw,23px);color:#AE4B32">Presentes</h3>
-        <p style="margin:0;font-size:clamp(15px,4vw,15.5px);line-height:1.7;color:#6b6252"><strong style="color:#3E3A2F">O maior presente é celebrarem connosco!</strong><br/>A nossa viagem está a começar e temos muitos planos futuros. Se quiserem ajudar, podem fazê-lo desta forma:</p>
+        <p style="margin:0;font-size:clamp(15px,4vw,15.5px);line-height:1.7;color:#6b6252"><strong style="color:#3E3A2F">O maior presente é fazerem parte desta viagem connosco!</strong><br/>Mas, se quiserem pôr combustível nesta aventura, nós e o Bawi 🐾 temos ainda muita estrada e muitos planos pela frente:</p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:14px">
           <div role="button" tabindex="0" data-copy="915263673" data-label="MB Way da Iara" onClick="{{ copyIt }}" style="padding:11px 9px;background:#E1E9DE;border:1px dashed #6E7A61;cursor:pointer;user-select:none;-webkit-user-select:none" style-hover="background:#D7E2D2">
             <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#6E7A61;white-space:nowrap">Iara</div>
@@ -598,12 +597,13 @@ section[id]{scroll-margin-top:86px}
   <button type="button" onClick="{{ restart }}" title="Ver o convite desde o início" aria-label="Recomeçar" style="display:flex;align-items:center;justify-content:center;width:42px;height:42px;padding:0;background:rgba(255,249,240,.94);border:1px solid rgba(174,75,50,.35);border-radius:999px;box-shadow:0 12px 26px -14px rgba(62,58,47,.5);font-size:clamp(17px,4.7vw,19px);line-height:1;color:#AE4B32;cursor:pointer;backdrop-filter:blur(6px)" style-hover="background:#FFF9F0;color:#D3684B">↻</button>
   <button type="button" data-iaj-vinyl="1" onClick="{{ toggleMusic }}" title="{{ musicTitle }}" aria-label="{{ musicTitle }}" style="display:flex;position:relative;align-items:center;justify-content:center;width:46px;height:46px;padding:0;border:1px solid rgba(62,58,47,.45);border-radius:999px;cursor:pointer;box-shadow:0 12px 26px -14px rgba(62,58,47,.6);background:radial-gradient(circle at 50% 50%, #47423A 0 30%, #2B2822 30% 100%);overflow:hidden">
     <span ref="{{ discRef }}" style="position:absolute;inset:0;border-radius:999px;will-change:transform">
+      <span style="position:absolute;inset:0;border-radius:999px;pointer-events:none;background:conic-gradient(from -18deg, rgba(255,249,240,0) 0deg, rgba(255,249,240,.85) 16deg, rgba(255,249,240,.15) 40deg, rgba(255,249,240,0) 70deg, rgba(255,249,240,0) 180deg, rgba(255,249,240,.45) 196deg, rgba(255,249,240,0) 226deg, rgba(255,249,240,0) 360deg);-webkit-mask:radial-gradient(circle,transparent 0 13px,#000 13.5px);mask:radial-gradient(circle,transparent 0 13px,#000 13.5px)"></span>
       <span style="position:absolute;inset:8px;border-radius:999px;border:1px solid rgba(255,249,240,.18)"></span>
       <span style="position:absolute;inset:13px;border-radius:999px;border:1px solid rgba(255,249,240,.12)"></span>
       <img src="assets/bawi-disco.png" alt="" style="position:absolute;top:50%;left:50%;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:999px;object-fit:cover;pointer-events:none;box-shadow:0 0 0 1.5px #AE4B32"/>
     </span>
-    <span style="position:absolute;inset:0;border-radius:999px;pointer-events:none;background:conic-gradient(from -18deg, rgba(255,249,240,0) 0deg, rgba(255,249,240,.85) 16deg, rgba(255,249,240,.15) 40deg, rgba(255,249,240,0) 70deg, rgba(255,249,240,0) 180deg, rgba(255,249,240,.45) 196deg, rgba(255,249,240,0) 226deg, rgba(255,249,240,0) 360deg);-webkit-mask:radial-gradient(circle,transparent 0 13px,#000 13.5px);mask:radial-gradient(circle,transparent 0 13px,#000 13.5px)"></span>
-  </button>
+    
+</button>
   <button type="button" onClick="{{ toTop }}" title="Voltar ao topo" aria-label="Voltar ao topo" style="display:flex;align-items:center;justify-content:center;width:42px;height:42px;padding:0;background:rgba(255,249,240,.94);border:1px solid rgba(174,75,50,.35);border-radius:999px;box-shadow:0 12px 26px -14px rgba(62,58,47,.5);font-size:clamp(17px,4.7vw,19px);line-height:1;color:#AE4B32;cursor:pointer;backdrop-filter:blur(6px)" style-hover="background:#FFF9F0;color:#D3684B">↑</button>
 </div>
 
@@ -746,9 +746,7 @@ class Component extends DCLogic {
 
   componentDidMount() {
     this.gateCheck();
-    let calmo = false;
-    try { calmo = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
-    if (!calmo) this.animRaf = requestAnimationFrame(this.animLoop);
+    this.animRaf = requestAnimationFrame(this.animLoop);
     this.timer = setInterval(() => this.setState({ now: Date.now() }), 30000);
     if (window.__iajAudio) { try { window.__iajAudio.pause(); } catch (e) {} }
     this.prepMusic();
@@ -907,7 +905,6 @@ class Component extends DCLogic {
   };
   openEnvelope = () => {
     if (this.state.env !== 'closed') return;
-    if (!this.userPaused) { if (!this.audio) this.prepMusic(); if (this.audio && this.audio.paused) this.playMusic(); }
     this.lockScroll(false);
     this.setState({ env: 'opening' });
     try { localStorage.setItem('iaj-opened', '1'); } catch (e) {}
@@ -1295,7 +1292,7 @@ class Component extends DCLogic {
       temConvidados: !!(familiaDoLink() || this.props.paraDemo),
       paraQuem: familiaDoLink() ? paraTexto(familiaDoLink()) : (this.props.paraDemo || ''),
       envelopeOn: envOn,
-      envStyle: 'position:fixed;top:0;left:0;right:0;height:100lvh;padding-bottom:calc(100lvh - 100svh);box-sizing:border-box;z-index:999;display:flex;align-items:center;justify-content:center;overflow:hidden;' + (opening ? 'pointer-events:none;' : ''),
+      envStyle: 'position:fixed;top:0;left:0;right:0;height:calc(100lvh + 160px);padding-bottom:calc(100lvh - 100svh + 160px);box-sizing:border-box;z-index:999;display:flex;align-items:center;justify-content:center;overflow:hidden;' + (opening ? 'pointer-events:none;' : ''),
       envLeft: opening ? 'translateX(-100%)' : 'translateX(0)',
       envRight: opening ? 'translateX(100%)' : 'translateX(0)',
       envCardStyle: 'position:relative;z-index:1;cursor:pointer;text-align:center;transition:transform .8s cubic-bezier(.65,0,.35,1),opacity .6s ease;' + (opening ? 'transform:translateY(-50px) scale(.86);opacity:0;' : 'transform:none;opacity:1;'),
