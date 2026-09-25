@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
 </head>
@@ -50,11 +51,23 @@ section[id]{scroll-margin-top:86px}
 </helmet>
 
 <div data-vw="{{ vw }}" style="position:relative;width:100%;min-height:100dvh;overflow:hidden;background:#FBF1E7">
+  <sc-if value="{{ gateLocked }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;background:#FBF1E7">
+    <div style="width:100%;max-width:340px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
+      <div style="font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:#6E7A61">em preparação</div>
+      <div style="font-family:'Playfair Display',Georgia,serif;font-size:30px;line-height:1.15;color:#AE4B32">Iara &amp; João</div>
+      <p style="margin:0;font-size:14.5px;line-height:1.7;color:#6b6252">O convite ainda não está pronto. Voltem em breve.</p>
+      <input value="{{ gateDraft }}" onInput="{{ gateInput }}" onKeyDown="{{ gateKey }}" type="password" autocomplete="off" placeholder="código" style="width:100%;margin-top:6px;padding:14px;background:#FFF9F0;border:1px solid rgba(62,58,47,.18);border-radius:12px;font-size:16px;text-align:center;color:#3E3A2F;outline:none"/>
+      <div style="min-height:18px;font-size:13px;color:#AE4B32">{{ gateError }}</div>
+      <button type="button" onClick="{{ gateTry }}" style="width:100%;padding:14px;background:#AE4B32;border:none;border-radius:999px;color:#FFF6EA;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer">Entrar</button>
+    </div>
+  </div>
+  </sc-if>
 
 <div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(60% 40% at 8% 6%,rgba(110,122,97,.16),transparent 70%),radial-gradient(55% 45% at 96% 30%,rgba(140,180,196,.20),transparent 72%),radial-gradient(50% 35% at 4% 62%,rgba(240,199,160,.22),transparent 70%),radial-gradient(70% 45% at 92% 92%,rgba(140,180,196,.18),transparent 72%),radial-gradient(45% 30% at 18% 98%,rgba(110,122,97,.14),transparent 70%)"></div>
 
-<svg aria-hidden="true" viewBox="0 0 100 1000" preserveAspectRatio="none" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.62">
-<path ref="{{ roadRef }}" d="M50,0 C8,58 92,108 50,168 C14,224 90,272 50,332 C10,392 92,438 50,498 C8,556 90,606 50,666 C12,726 92,776 50,836 C14,896 84,948 50,1000" fill="none" stroke="#CFC6B6" stroke-width="13" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
+<svg ref="{{ svgRef }}" aria-hidden="true" viewBox="0 0 100 1000" preserveAspectRatio="none" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.62">
+<path ref="{{ roadRef }}" d="M50,0 C8,58 92,108 50,168 C14,224 90,272 50,332 C10,392 92,438 50,498 C8,556 90,606 50,666 C12,726 92,776 50,836 C14,896 84,948 50,1000" fill="none" stroke="#E2DACB" stroke-width="13" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
 <path d="M50,0 C8,58 92,108 50,168 C14,224 90,272 50,332 C10,392 92,438 50,498 C8,556 90,606 50,666 C12,726 92,776 50,836 C14,896 84,948 50,1000" fill="none" stroke="#FBF3E7" stroke-width="11" stroke-linecap="round" vector-effect="non-scaling-stroke" opacity="0.5"></path>
 <path d="M50,0 C8,58 92,108 50,168 C14,224 90,272 50,332 C10,392 92,438 50,498 C8,556 90,606 50,666 C12,726 92,776 50,836 C14,896 84,948 50,1000" fill="none" stroke="#FFF9F0" stroke-width="1.3" stroke-linecap="round" stroke-dasharray="5 9" vector-effect="non-scaling-stroke" opacity="0.95"></path>
 <defs>
@@ -63,8 +76,8 @@ section[id]{scroll-margin-top:86px}
 </clipPath>
 </defs>
 <g clip-path="url(#iaj-road-clip)">
-<path ref="{{ roadDoneRef }}" d="M50,0 C8,58 92,108 50,168 C14,224 90,272 50,332 C10,392 92,438 50,498 C8,556 90,606 50,666 C12,726 92,776 50,836 C14,896 84,948 50,1000" fill="none" stroke="#E0B894" stroke-width="13" stroke-linecap="round" vector-effect="non-scaling-stroke" opacity="0.55"></path>
-<path d="M50,0 C8,58 92,108 50,168 C14,224 90,272 50,332 C10,392 92,438 50,498 C8,556 90,606 50,666 C12,726 92,776 50,836 C14,896 84,948 50,1000" fill="none" stroke="#D3684B" stroke-width="1.3" stroke-linecap="round" stroke-dasharray="5 9" vector-effect="non-scaling-stroke" opacity="0.8"></path>
+<path ref="{{ roadDoneRef }}" d="M50,0 C8,58 92,108 50,168 C14,224 90,272 50,332 C10,392 92,438 50,498 C8,556 90,606 50,666 C12,726 92,776 50,836 C14,896 84,948 50,1000" fill="none" stroke="#C79063" stroke-width="13" stroke-linecap="round" vector-effect="non-scaling-stroke" opacity="0.95"></path>
+<path d="M50,0 C8,58 92,108 50,168 C14,224 90,272 50,332 C10,392 92,438 50,498 C8,556 90,606 50,666 C12,726 92,776 50,836 C14,896 84,948 50,1000" fill="none" stroke="#A8482C" stroke-width="1.3" stroke-linecap="round" stroke-dasharray="5 9" vector-effect="non-scaling-stroke" opacity="0.95"></path>
 </g>
 </svg>
 
@@ -284,7 +297,7 @@ section[id]{scroll-margin-top:86px}
     <div style="position:relative">
       <button type="button" onClick="{{ shotPrev }}" aria-label="Ver fotografias anteriores" style="{{ arrowPrevStyle }}"><span style="pointer-events:auto;display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:999px;background:rgba(255,249,240,.85);border:1px solid rgba(174,75,50,.25);font-size:clamp(24px,7vw,31px);line-height:1;color:#AE4B32">‹</span></button>
       <button type="button" onClick="{{ shotNext }}" aria-label="Ver mais fotografias" style="{{ arrowNextStyle }}"><span style="pointer-events:auto;display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:999px;background:rgba(255,249,240,.85);border:1px solid rgba(174,75,50,.25);font-size:clamp(24px,7vw,31px);line-height:1;color:#AE4B32">›</span></button>
-    <div class="iaj-scroll" ref="{{ railRef }}" onScroll="{{ onRail }}" style="display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 4px 20px">
+    <div class="iaj-scroll" ref="{{ railRef }}" onScroll="{{ onRail }}" onTouchStart="{{ onRailTouchStart }}" onTouchMove="{{ onRailTouchMove }}" onTouchEnd="{{ onRailTouchEnd }}" onTouchCancel="{{ onRailTouchEnd }}" style="display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;touch-action:pan-y;padding:10px 4px 20px">
       <figure data-i="1" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(-1.4deg);cursor:pointer">
         <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-5deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
         <img src="assets/foto02.jpg" alt="A caminho da praia" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
@@ -385,8 +398,8 @@ section[id]{scroll-margin-top:86px}
 
       <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ true }}">
         <div class="iaj-rise" style="padding-top:14px">
-          <label style="display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6252;margin-bottom:8px">O vosso nome completo</label>
-          <input value="{{ name }}" onInput="{{ onName }}" onBlur="{{ blurName }}" placeholder="Nome e apelido" autocomplete="name" style="{{ nameFieldStyle }}"/>
+          <label style="display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6252;margin-bottom:8px">O vosso primeiro e último nome</label>
+          <input value="{{ name }}" onInput="{{ onName }}" onBlur="{{ blurName }}" placeholder="Primeiro e último nome" autocomplete="name" style="{{ nameFieldStyle }}"/>
           <div style="min-height:18px;margin-top:6px;font-size:13px;color:#AE4B32">{{ error }}</div>
           <button type="button" onClick="{{ next }}" style="width:100%;margin-top:6px;padding:15px;background:#AE4B32;border:none;color:#FFF6EA;font-family:'Work Sans',sans-serif;font-size:13.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border-radius:999px;cursor:pointer">Continuar</button>
           <div style="margin-top:18px;padding-top:16px;border-top:1px solid rgba(62,58,47,.1)">
@@ -471,7 +484,7 @@ section[id]{scroll-margin-top:86px}
             <sc-for list="{{ guests }}" as="g" hint-placeholder-count="2">
               <div style="padding:16px;background:#FBF1E7;border:1px solid rgba(62,58,47,.1)">
                 <div style="font-family:'Dancing Script',cursive;font-size:clamp(18px,4.9vw,20px);color:#6E7A61;margin-bottom:8px">{{ g.label }}</div>
-                <input value="{{ g.name }}" data-i="{{ g.i }}" onInput="{{ onGuestName }}" placeholder="Nome completo" style="{{ g.fieldStyle }}"/>
+                <input value="{{ g.name }}" data-i="{{ g.i }}" onInput="{{ onGuestName }}" placeholder="Primeiro e último nome" style="{{ g.fieldStyle }}"/>
                 <label style="display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6252;margin:14px 0 8px">Idade</label>
                 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
                   <button type="button" data-i="{{ g.i }}" data-v="adulto" onClick="{{ setGuestAge }}" style="{{ g.ageAdulto }}">Adulto</button>
@@ -647,6 +660,7 @@ const PILL = 'padding:14px 10px;border-radius:14px;font-family:\'Work Sans\',san
 
 class Component extends DCLogic {
   state = {
+    gate: 'checking', gateDraft: '', gateError: '',
     env: 'closed', menu: false, now: Date.now(),
     railStart: true, railEnd: false,
     step: 1, name: '', going: null, party: 0, note: '', error: '',
@@ -662,9 +676,38 @@ class Component extends DCLogic {
     this.roadDoneRef = React.createRef();
     this.pinRef = React.createRef();
     this.clipRef = React.createRef();
+    this.svgRef = React.createRef();
   }
 
+  gateHash = async (t) => {
+    try {
+      const h = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(String(t).trim().toLowerCase()));
+      return [...new Uint8Array(h)].map(x => x.toString(16).padStart(2, '0')).join('');
+    } catch (e) { return ''; }
+  };
+  gateCheck = async () => {
+    let saved = '', k = '';
+    try { saved = localStorage.getItem('iaj-acesso') || ''; } catch (e) {}
+    try { k = new URLSearchParams(location.search).get('k') || ''; } catch (e) {}
+    if (saved === 'f4c7e987f78ae924e077c43a80dad8fbc0f68dd75e39bfe30e6e09e8bf99e13e') { this.setState({ gate: 'open' }); return; }
+    if (k && (await this.gateHash(k)) === 'f4c7e987f78ae924e077c43a80dad8fbc0f68dd75e39bfe30e6e09e8bf99e13e') {
+      try { localStorage.setItem('iaj-acesso', 'f4c7e987f78ae924e077c43a80dad8fbc0f68dd75e39bfe30e6e09e8bf99e13e'); } catch (e) {}
+      this.setState({ gate: 'open' }); return;
+    }
+    this.setState({ gate: 'locked' });
+  };
+  gateTry = async () => {
+    const h = await this.gateHash(this.state.gateDraft);
+    if (h === 'f4c7e987f78ae924e077c43a80dad8fbc0f68dd75e39bfe30e6e09e8bf99e13e') {
+      try { localStorage.setItem('iaj-acesso', h); } catch (e) {}
+      this.setState({ gate: 'open', gateError: '' });
+    } else this.setState({ gateError: 'Código errado.' });
+  };
+  gateInput = (e) => this.setState({ gateDraft: e.target.value, gateError: '' });
+  gateKey = (e) => { if (e.key === 'Enter') this.gateTry(); };
+
   componentDidMount() {
+    this.gateCheck();
     this.timer = setInterval(() => this.setState({ now: Date.now() }), 30000);
     if (window.__iajAudio) { try { window.__iajAudio.pause(); } catch (e) {} }
     setTimeout(() => {
@@ -695,16 +738,19 @@ class Component extends DCLogic {
         const step = Math.round(f * 160) / 160;
         if (this.clipRef.current && step !== this.lastStep) { this.lastStep = step; this.clipRef.current.setAttribute('height', String(step)); }
         const pin = this.pinRef.current;
-        if (pin && this.samples.length) {
+        const svg = this.svgRef.current;
+        if (pin && svg && this.samples.length) {
           const host = pin.parentElement;
+          const sr = svg.getBoundingClientRect(), hr = host.getBoundingClientRect();
+          const ox = sr.left - hr.left, oy = sr.top - hr.top, sw = sr.width, sh = sr.height;
           let minI = 0;
           const minTop = (document.querySelector('nav') ? document.querySelector('nav').getBoundingClientRect().height : 56) + 34;
-          while (minI < this.samples.length - 1 && this.samples[minI].y / 1000 * host.scrollHeight < minTop) minI++;
+          while (minI < this.samples.length - 1 && oy + this.samples[minI].y / 1000 * sh < minTop) minI++;
           const idx = Math.max(minI, Math.round(f * (this.samples.length - 1)));
           const s = this.samples[idx];
-          const px = s.x / 100 * host.clientWidth, py = s.y / 1000 * host.scrollHeight;
+          const px = ox + s.x / 100 * sw, py = oy + s.y / 1000 * sh;
           const a = this.samples[Math.max(0, idx - 2)], b = this.samples[Math.min(this.samples.length - 1, idx + 2)];
-          const dx = (b.x - a.x) / 100 * host.clientWidth, dy = (b.y - a.y) / 1000 * host.scrollHeight;
+          const dx = (b.x - a.x) / 100 * sw, dy = (b.y - a.y) / 1000 * sh;
           const ang = (dx || dy) ? Math.atan2(dy, dx) * 180 / Math.PI : this.pinAng || 0;
           this.pinAng = ang;
           pin.style.transform = 'translate3d(' + px + 'px,' + py + 'px,0) rotate(' + ang + 'deg)';
@@ -779,6 +825,42 @@ class Component extends DCLogic {
   };
   shotPrev = () => { const el = this.railRef.current; if (el) el.scrollBy({ left: -el.clientWidth * .8, behavior: 'smooth' }); };
   shotNext = () => { const el = this.railRef.current; if (el) el.scrollBy({ left: el.clientWidth * .8, behavior: 'smooth' }); };
+  onRailTouchStart = (e) => {
+    const el = this.railRef.current;
+    if (!el || e.touches.length !== 1) return;
+    this.rx = e.touches[0].clientX; this.ry = e.touches[0].clientY;
+    this.rLeft = el.scrollLeft; this.rAxis = null; this.rDragged = false;
+    el.style.scrollSnapType = 'none';
+  };
+  onRailTouchMove = (e) => {
+    const el = this.railRef.current;
+    if (!el || this.rx == null) return;
+    const dx = e.touches[0].clientX - this.rx, dy = e.touches[0].clientY - this.ry;
+    if (!this.rAxis) {
+      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+      this.rAxis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+    }
+    if (this.rAxis !== 'x') return;
+    if (e.cancelable) e.preventDefault();
+    this.rDragged = true;
+    el.scrollLeft = this.rLeft - dx;
+    this.onRail();
+  };
+  onRailTouchEnd = () => {
+    const el = this.railRef.current;
+    this.rx = null;
+    if (!el) return;
+    el.style.scrollSnapType = '';
+    if (!this.rDragged) return;
+    let best = null, bestD = Infinity;
+    const mid = el.scrollLeft + el.clientWidth / 2;
+    Array.from(el.children).forEach(c => {
+      const cm = c.offsetLeft + c.offsetWidth / 2, d = Math.abs(cm - mid);
+      if (d < bestD) { bestD = d; best = cm; }
+    });
+    if (best != null) el.scrollTo({ left: Math.max(0, best - el.clientWidth / 2), behavior: 'smooth' });
+    setTimeout(() => { this.rDragged = false; }, 80);
+  };
   componentDidUpdate() {
     const el = this.shotRef.current;
     if (el) { const w = SHOTS[this.state.shot] || SHOTS[0]; if (!el.src.endsWith(w)) el.src = w; }
@@ -911,7 +993,7 @@ class Component extends DCLogic {
   envKey = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.openEnvelope(); } };
   toggleMenu = () => this.setState(s => ({ menu: !s.menu }));
   closeMenu = () => this.setState({ menu: false });
-  openShot = (e) => { this.lockScroll(true); this.setState({ shot: Number(e.currentTarget.dataset.i) - 1 }); };
+  openShot = (e) => { if (this.rDragged) return; this.lockScroll(true); this.setState({ shot: Number(e.currentTarget.dataset.i) - 1 }); };
   closeShot = () => { this.lockScroll(false); this.setState({ shot: -1 }); };
   openMap = () => this.setState({ map: true });
   closeMap = () => this.setState({ map: false });
@@ -972,7 +1054,7 @@ class Component extends DCLogic {
 
   fullName(v) {
     const t = (v || '').trim().replace(/\s+/g, ' ');
-    if (t.length < 4) return 'Escrevam o nome completo (nome e apelido).';
+    if (t.length < 4) return 'Escrevam o primeiro e o último nome.';
     if (t.split(' ').length < 2) return 'Falta o apelido.';
     if (!/^[A-Za-zÀ-ÖØ-öø-ÿ' .-]+$/.test(t)) return 'O nome só deve ter letras.';
     return '';
@@ -1035,7 +1117,7 @@ class Component extends DCLogic {
         const g = s.guests[i];
         const err = this.fullName(g.name);
         const key = g.name.trim().toLowerCase().replace(/\s+/g, ' ');
-        if (err) { bad.push(i); msg = msg || 'Falta o nome completo de cada acompanhante.'; }
+        if (err) { bad.push(i); msg = msg || 'Falta o primeiro e o último nome de cada acompanhante.'; }
         else if (seen.indexOf(key) >= 0) { bad.push(i); msg = msg || 'Há nomes repetidos na lista.'; }
         else seen.push(key);
         if (!err && !g.age) { bad.push(i); msg = msg || 'Escolham a idade de cada acompanhante.'; }
@@ -1068,7 +1150,7 @@ class Component extends DCLogic {
     };
     try { localStorage.setItem('iaj-rsvp-v2', JSON.stringify({ ...payload, party: payload.numAcompanhantes, going: s.going, name: payload.nome, note: payload.mensagem })); } catch (e) {}
     // Cola aqui o URL do Google Apps Script (termina em /exec) e o envio fica ativo.
-    const endpoint = this.props.sheetEndpoint ?? 'https://script.google.com/macros/s/AKfycbwcZpyxCVSeFXpFp83vY7GBa19BK4IRsFi7vk6K3qQR9cwqL3vIe9-X7g95S94pEHOZHg/exec';
+    const endpoint = this.props.sheetEndpoint ?? 'https://script.google.com/macros/s/AKfycbwowXQzlQ4Gslm1PFDI5qjuhoWL_V9hsgorNoqNHWqI_hOFnnmzfN0k2_BOTobjTfvTaw/exec';
     if (endpoint) {
       try {
         fetch(endpoint, {
@@ -1130,8 +1212,10 @@ class Component extends DCLogic {
     s.guests.slice(0, s.party).forEach(g => { const t = dietaTexto(g.dietTags, g.dietText); if (g.diet === 'sim' && t) diets.push((g.name.trim().split(' ')[0] || 'acompanhante') + ': ' + t); });
     const stepLabels = { 1: 'passo 1 de 5', 2: 'passo 2 de 5', 3: 'passo 3 de 5', 4: 'passo 4 de 5', 5: 'passo 5 de 5', 6: 'concluído' };
     return {
+      gateLocked: this.state.gate !== 'open', gateDraft: this.state.gateDraft, gateError: this.state.gateError,
+      gateInput: this.gateInput, gateKey: this.gateKey, gateTry: this.gateTry,
       vw: ({ 'Mobile': 'mobile', 'Desktop': 'desktop' })[this.props.viewMode] || 'auto',
-      roadRef: this.roadRef, roadDoneRef: this.roadDoneRef, pinRef: this.pinRef, clipRef: this.clipRef,
+      roadRef: this.roadRef, roadDoneRef: this.roadDoneRef, pinRef: this.pinRef, clipRef: this.clipRef, svgRef: this.svgRef,
       painelOn: !!this.props.mostrarPainel,
       versaoOn: this.props.mostrarVersao ?? true,
       versaoTxt: 'v' + VERSAO,
@@ -1201,6 +1285,7 @@ class Component extends DCLogic {
       onShotTouchStart: this.onShotTouchStart, onShotTouchMove: this.onShotTouchMove, onShotTouchEnd: this.onShotTouchEnd,
       shotHint: 'deslizem ou usem as setas · toque para fechar',
       railRef: this.railRef, onRail: this.onRail, shotPrev: this.shotPrev, shotNext: this.shotNext,
+      onRailTouchStart: this.onRailTouchStart, onRailTouchMove: this.onRailTouchMove, onRailTouchEnd: this.onRailTouchEnd,
       arrowPrevStyle: 'position:absolute;left:0;top:0;bottom:24px;z-index:3;pointer-events:none;display:flex;align-items:center;justify-content:flex-start;width:58px;padding:0 0 0 4px;border:0;background:linear-gradient(90deg, rgba(251,241,231,.75), rgba(251,241,231,0));cursor:pointer;transition:opacity .25s ease;'
         + ((s.railStart ?? true) ? 'opacity:0;pointer-events:none;' : 'opacity:1;'),
       arrowNextStyle: 'position:absolute;right:0;top:0;bottom:24px;z-index:3;pointer-events:none;display:flex;align-items:center;justify-content:flex-end;width:58px;padding:0 4px 0 0;border:0;background:linear-gradient(270deg, rgba(251,241,231,.75), rgba(251,241,231,0));cursor:pointer;transition:opacity .25s ease;'

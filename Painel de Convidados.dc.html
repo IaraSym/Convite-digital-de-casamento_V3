@@ -8,6 +8,7 @@
 <body>
 <x-dc>
 <helmet>
+<meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
 <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -184,9 +185,10 @@ input,button,textarea{font-family:'Work Sans',system-ui,sans-serif}
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1040,&quot;height&quot;:900},&quot;codigo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;0910&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Acesso&quot;},&quot;sheetUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://docs.google.com/spreadsheets/d/1lp0MNbJgo4k9wQzLmmzajxxuzQ09zbLrHzXurQ0j_tg/edit&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Dados&quot;},&quot;sheetName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Convidados&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Dados&quot;}}">
-const SHEET = 'https://docs.google.com/spreadsheets/d/1lp0MNbJgo4k9wQzLmmzajxxuzQ09zbLrHzXurQ0j_tg/edit';
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1040,&quot;height&quot;:900},&quot;sheetUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://docs.google.com/spreadsheets/d/1_c0q_mMYouyxFBSvhDONzaiUv6UZYnU44NknLoea328/edit&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Dados&quot;},&quot;sheetName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;RSVP&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Dados&quot;}}">
+const SHEET = 'https://docs.google.com/spreadsheets/d/1_c0q_mMYouyxFBSvhDONzaiUv6UZYnU44NknLoea328/edit';
 const OK = 'iaj-painel-ok';
+const API = 'https://script.google.com/macros/s/AKfycbwowXQzlQ4Gslm1PFDI5qjuhoWL_V9hsgorNoqNHWqI_hOFnnmzfN0k2_BOTobjTfvTaw/exec';
 const UNIR = 'iaj-painel-unir';
 const SEP = 'iaj-painel-separados';
 const ler = (k) => { try { return JSON.parse(localStorage.getItem(k) || '[]'); } catch (e) { return []; } };
@@ -197,41 +199,38 @@ class Component extends DCLogic {
   state = { raw: null, err: '', loading: false, filter: 'todos', busca: '', open: false, pinDraft: '', pinError: '', unidos: ler(UNIR), separados: ler(SEP) };
 
   componentDidMount() {
-    const code = String(this.props.codigo ?? '0910');
     let url = '';
     try { url = new URLSearchParams(window.location.search).get('k') || ''; } catch (e) {}
     let saved = '';
     try { saved = sessionStorage.getItem(OK) || ''; } catch (e) {}
-    const open = url === code || saved === code;
-    if (open) { try { sessionStorage.setItem(OK, code); } catch (e) {} }
-    this.setState({ open });
-    if (open) this.fetch();
+    const code = url || saved;
+    if (code) this.fetch(code);
   }
 
   tryPin = () => {
-    const code = String(this.props.codigo ?? '0910');
-    if (this.state.pinDraft.trim() === code) {
-      try { sessionStorage.setItem(OK, code); } catch (e) {}
-      this.setState({ open: true, pinError: '' });
-      this.fetch();
-    } else this.setState({ pinError: 'Código errado.' });
+    const code = this.state.pinDraft.trim();
+    if (!code) return;
+    this.fetch(code);
   };
   onPin = (e) => this.setState({ pinDraft: e.target.value, pinError: '' });
   pinKey = (e) => { if (e.key === 'Enter') this.tryPin(); };
 
-  fetch = async () => {
-    const id = (/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/.exec(this.props.sheetUrl || SHEET) || [])[1];
-    const sheet = this.props.sheetName || 'Convidados';
-    if (!id) { this.setState({ err: 'Folha não configurada.' }); return; }
-    this.setState({ loading: true, err: '' });
+  fetch = async (codeArg) => {
+    const code = codeArg || this.state.code || '';
+    if (!code) return;
+    this.setState({ loading: true, err: '', pinError: '' });
     try {
-      const r = await fetch('https://docs.google.com/spreadsheets/d/' + id + '/gviz/tq?tqx=out:csv&sheet=' + encodeURIComponent(sheet));
-      if (!r.ok) throw new Error(String(r.status));
+      const r = await fetch(API + '?k=' + encodeURIComponent(code) + '&t=' + Date.now());
       const txt = await r.text();
-      if (/^\s*</.test(txt)) throw new Error('privada');
-      this.setState({ raw: this.parseCsv(txt), loading: false });
+      if (/^\s*ERRO/.test(txt) || /^\s*</.test(txt)) {
+        try { sessionStorage.removeItem(OK); } catch (e) {}
+        this.setState({ loading: false, open: false, code: '', pinError: 'Código errado.' });
+        return;
+      }
+      try { sessionStorage.setItem(OK, code); } catch (e) {}
+      this.setState({ raw: this.parseCsv(txt), loading: false, open: true, code });
     } catch (e) {
-      this.setState({ loading: false, err: 'Não consegui ler a folha. Confirma que em Partilhar está "Qualquer pessoa com o link · Visualizador" e que existe uma folha chamada "' + sheet + '".' });
+      this.setState({ loading: false, err: 'Não consegui ligar ao servidor. Tenta outra vez daqui a pouco.' });
     }
   };
   reload = () => this.fetch();
