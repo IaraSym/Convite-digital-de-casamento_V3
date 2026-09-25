@@ -106,11 +106,11 @@ section[id]{scroll-margin-top:86px}
     </div>
     <div style="position:relative;width:min(66vw,272px);aspect-ratio:1/1;margin:-10px auto 0">
       <img src="assets/bawi/part4.png" alt="O Bawi, o nosso cão, com um convite" style="position:absolute;inset:0;width:100%;height:100%;display:block"/>
-      <img src="assets/bawi/part3.png" alt="" style="position:absolute;left:79.59%;top:51.76%;width:18.07%;height:37.11%;transform-origin:0% 79%;will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;animation:bawi-wag .34s ease-in-out infinite"/>
-      <img src="assets/bawi/part2.png" alt="" style="position:absolute;left:24.9%;top:1.46%;width:11.72%;height:14.16%;transform-origin:55% 100%;will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;animation:bawi-earL 2.6s ease-in-out infinite"/>
-      <img src="assets/bawi/part1.png" alt="" style="position:absolute;left:55.18%;top:1.95%;width:19.53%;height:14.65%;transform-origin:42% 100%;will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;animation:bawi-earR 3.1s ease-in-out infinite"/>
-      <div style="position:absolute;left:30.2%;top:25.4%;width:11.3%;height:11.3%;border-radius:50%;overflow:hidden"><div style="width:100%;height:100%;background:#23211f;will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;animation:bawi-blink 5.2s linear infinite"></div></div>
-      <div style="position:absolute;left:48.9%;top:26.1%;width:12%;height:12%;border-radius:50%;overflow:hidden"><div style="width:100%;height:100%;background:#23211f;will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;animation:bawi-blink 5.2s linear infinite"></div></div>
+      <img src="assets/bawi/part3.png" alt="" ref="{{ wagRef }}" style="position:absolute;left:79.59%;top:51.76%;width:18.07%;height:37.11%;transform-origin:0% 79%;will-change:transform"/>
+      <img src="assets/bawi/part2.png" alt="" ref="{{ earLRef }}" style="position:absolute;left:24.9%;top:1.46%;width:11.72%;height:14.16%;transform-origin:55% 100%;will-change:transform"/>
+      <img src="assets/bawi/part1.png" alt="" ref="{{ earRRef }}" style="position:absolute;left:55.18%;top:1.95%;width:19.53%;height:14.65%;transform-origin:42% 100%;will-change:transform"/>
+      <div style="position:absolute;left:30.2%;top:25.4%;width:11.3%;height:11.3%;border-radius:50%;overflow:hidden"><div ref="{{ blinkLRef }}" style="width:100%;height:100%;background:#23211f;transform:translate3d(0,-102%,0);will-change:transform"></div></div>
+      <div style="position:absolute;left:48.9%;top:26.1%;width:12%;height:12%;border-radius:50%;overflow:hidden"><div ref="{{ blinkRRef }}" style="width:100%;height:100%;background:#23211f;transform:translate3d(0,-102%,0);will-change:transform"></div></div>
     </div>
   </div>
 </div>
@@ -591,11 +591,13 @@ section[id]{scroll-margin-top:86px}
 
 <div data-iaj-dock="1" style="position:fixed;right:18px;bottom:18px;z-index:800;display:flex;align-items:center;gap:11px">
   <button type="button" onClick="{{ restart }}" title="Ver o convite desde o início" aria-label="Recomeçar" style="display:flex;align-items:center;justify-content:center;width:42px;height:42px;padding:0;background:rgba(255,249,240,.94);border:1px solid rgba(174,75,50,.35);border-radius:999px;box-shadow:0 12px 26px -14px rgba(62,58,47,.5);font-size:clamp(17px,4.7vw,19px);line-height:1;color:#AE4B32;cursor:pointer;backdrop-filter:blur(6px)" style-hover="background:#FFF9F0;color:#D3684B">↻</button>
-  <button type="button" data-iaj-vinyl="1" onClick="{{ toggleMusic }}" title="{{ musicTitle }}" aria-label="{{ musicTitle }}" style="{{ vinylStyle }}">
-    <span style="position:absolute;inset:0;border-radius:999px;background:conic-gradient(from -18deg, rgba(255,249,240,0) 0deg, rgba(255,249,240,.85) 16deg, rgba(255,249,240,.15) 40deg, rgba(255,249,240,0) 70deg, rgba(255,249,240,0) 180deg, rgba(255,249,240,.45) 196deg, rgba(255,249,240,0) 226deg, rgba(255,249,240,0) 360deg)"></span>
-    <span style="position:absolute;inset:8px;border-radius:999px;border:1px solid rgba(255,249,240,.18)"></span>
-    <span style="position:absolute;inset:13px;border-radius:999px;border:1px solid rgba(255,249,240,.12)"></span>
-    <img src="assets/bawi-disco.png" alt="" style="position:absolute;top:50%;left:50%;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:999px;object-fit:cover;pointer-events:none;box-shadow:0 0 0 1.5px #AE4B32"/>
+  <button type="button" data-iaj-vinyl="1" onClick="{{ toggleMusic }}" title="{{ musicTitle }}" aria-label="{{ musicTitle }}" style="display:flex;position:relative;align-items:center;justify-content:center;width:46px;height:46px;padding:0;border:1px solid rgba(62,58,47,.45);border-radius:999px;cursor:pointer;box-shadow:0 12px 26px -14px rgba(62,58,47,.6);background:radial-gradient(circle at 50% 50%, #47423A 0 30%, #2B2822 30% 100%);overflow:hidden">
+    <span ref="{{ discRef }}" style="position:absolute;inset:0;border-radius:999px;will-change:transform">
+      <span style="position:absolute;inset:8px;border-radius:999px;border:1px solid rgba(255,249,240,.18)"></span>
+      <span style="position:absolute;inset:13px;border-radius:999px;border:1px solid rgba(255,249,240,.12)"></span>
+      <img src="assets/bawi-disco.png" alt="" style="position:absolute;top:50%;left:50%;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:999px;object-fit:cover;pointer-events:none;box-shadow:0 0 0 1.5px #AE4B32"/>
+    </span>
+    <span style="position:absolute;inset:0;border-radius:999px;pointer-events:none;background:conic-gradient(from -18deg, rgba(255,249,240,0) 0deg, rgba(255,249,240,.85) 16deg, rgba(255,249,240,.15) 40deg, rgba(255,249,240,0) 70deg, rgba(255,249,240,0) 180deg, rgba(255,249,240,.45) 196deg, rgba(255,249,240,0) 226deg, rgba(255,249,240,0) 360deg);-webkit-mask:radial-gradient(circle,transparent 0 13px,#000 13.5px);mask:radial-gradient(circle,transparent 0 13px,#000 13.5px)"></span>
   </button>
   <button type="button" onClick="{{ toTop }}" title="Voltar ao topo" aria-label="Voltar ao topo" style="display:flex;align-items:center;justify-content:center;width:42px;height:42px;padding:0;background:rgba(255,249,240,.94);border:1px solid rgba(174,75,50,.35);border-radius:999px;box-shadow:0 12px 26px -14px rgba(62,58,47,.5);font-size:clamp(17px,4.7vw,19px);line-height:1;color:#AE4B32;cursor:pointer;backdrop-filter:blur(6px)" style-hover="background:#FFF9F0;color:#D3684B">↑</button>
 </div>
@@ -683,6 +685,8 @@ class Component extends DCLogic {
     this.pinRef = React.createRef();
     this.clipRef = React.createRef();
     this.svgRef = React.createRef();
+    this.discRef = React.createRef(); this.wagRef = React.createRef(); this.earLRef = React.createRef();
+    this.earRRef = React.createRef(); this.blinkLRef = React.createRef(); this.blinkRRef = React.createRef();
   }
 
   gateHash = async (t) => {
@@ -712,8 +716,34 @@ class Component extends DCLogic {
   gateInput = (e) => this.setState({ gateDraft: e.target.value, gateError: '' });
   gateKey = (e) => { if (e.key === 'Enter') this.gateTry(); };
 
+  animLoop = (now) => {
+    const t = now / 1000, dt = this.animLast ? Math.min(0.1, t - this.animLast) : 0;
+    this.animLast = t;
+    const d = this.discRef.current;
+    if (d && this.state.playing) {
+      this.discAng = ((this.discAng || 0) + dt * 60) % 360;
+      d.style.transform = 'translateZ(0) rotate(' + this.discAng.toFixed(2) + 'deg)';
+    }
+    if (this.wagRef.current && this.state.env !== 'open') {
+      const TAU = Math.PI * 2;
+      this.wagRef.current.style.transform = 'translateZ(0) rotate(' + (0.5 + 6 * Math.sin(TAU * t / 0.34)).toFixed(2) + 'deg)';
+      const sl = Math.sin(TAU * t / 2.6), sr = Math.sin(TAU * t / 3.1);
+      if (this.earLRef.current) this.earLRef.current.style.transform = 'translate3d(0,' + (-Math.max(0, sl)).toFixed(2) + 'px,0) rotate(' + (-3 * Math.max(0, sl) + 1.5 * Math.max(0, -sl)).toFixed(2) + 'deg)';
+      if (this.earRRef.current) this.earRRef.current.style.transform = 'translate3d(0,' + (-Math.max(0, sr)).toFixed(2) + 'px,0) rotate(' + (3 * Math.max(0, sr) - 1.5 * Math.max(0, -sr)).toFixed(2) + 'deg)';
+      const p = (t % 5.2) / 5.2;
+      const y = p < 0.92 ? -102 : p < 0.955 ? -102 + 102 * (p - 0.92) / 0.035 : p < 0.965 ? 0 : -102 * (p - 0.965) / 0.035;
+      const bt = 'translate3d(0,' + y.toFixed(1) + '%,0)';
+      if (this.blinkLRef.current) this.blinkLRef.current.style.transform = bt;
+      if (this.blinkRRef.current) this.blinkRRef.current.style.transform = bt;
+    }
+    this.animRaf = requestAnimationFrame(this.animLoop);
+  };
+
   componentDidMount() {
     this.gateCheck();
+    let calmo = false;
+    try { calmo = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+    if (!calmo) this.animRaf = requestAnimationFrame(this.animLoop);
     this.timer = setInterval(() => this.setState({ now: Date.now() }), 30000);
     if (window.__iajAudio) { try { window.__iajAudio.pause(); } catch (e) {} }
     this.prepMusic();
@@ -952,6 +982,7 @@ class Component extends DCLogic {
     window.removeEventListener('keydown', this.onShotKey);
     if (this.railRef.current) this.railRef.current.removeEventListener('scroll', this.onRail);
     if (this.timer) clearInterval(this.timer);
+    if (this.animRaf) cancelAnimationFrame(this.animRaf);
     if (this.audio) this.audio.pause();
   }
   prepMusic = () => {
@@ -1252,7 +1283,7 @@ class Component extends DCLogic {
       gateLocked: this.state.gate !== 'open', gateDraft: this.state.gateDraft, gateError: this.state.gateError,
       gateInput: this.gateInput, gateKey: this.gateKey, gateTry: this.gateTry,
       vw: ({ 'Mobile': 'mobile', 'Desktop': 'desktop' })[this.props.viewMode] || 'auto',
-      roadRef: this.roadRef, roadDoneRef: this.roadDoneRef, pinRef: this.pinRef, clipRef: this.clipRef, svgRef: this.svgRef,
+      roadRef: this.roadRef, roadDoneRef: this.roadDoneRef, pinRef: this.pinRef, clipRef: this.clipRef, svgRef: this.svgRef, discRef: this.discRef, wagRef: this.wagRef, earLRef: this.earLRef, earRRef: this.earRRef, blinkLRef: this.blinkLRef, blinkRRef: this.blinkRRef,
       painelOn: !!this.props.mostrarPainel,
       versaoOn: this.props.mostrarVersao ?? true,
       versaoTxt: 'v' + VERSAO,
