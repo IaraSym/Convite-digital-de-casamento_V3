@@ -18,6 +18,9 @@
 <style>
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+p{text-align:justify !important;-webkit-hyphens:none;hyphens:none}
+p[style*="text-align: center"],p[style*="text-align:center"],[style*="text-align: center"] p,[style*="text-align:center"] p{text-align-last:center}
+
 body::before{content:'';position:fixed;inset:0;z-index:-1;background:#FBF1E7 url('assets/fundo-aquarela.png') repeat top left;background-size:860px auto;transform:translateZ(0);will-change:transform;pointer-events:none}
 body{margin:0;background:#FBF1E7;color:#3E3A2F;font-family:'Work Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:#AE4B32;text-decoration:none}
@@ -89,6 +92,7 @@ section[id]{scroll-margin-top:86px}
 </div>
 
 <sc-if value="{{ envelopeOn }}" hint-placeholder-val="{{ true }}">
+<div aria-hidden="true" style="{{ envFloorStyle }}"></div>
 <div style="{{ envStyle }}">
   <div style="position:absolute;top:0;bottom:0;left:0;width:50%;background:linear-gradient(170deg,#F5D6B4,#DE9F5E);transition:transform .9s cubic-bezier(.65,0,.35,1);transform:{{ envLeft }}"></div>
   <div style="position:absolute;top:0;bottom:0;right:0;width:50%;background:linear-gradient(190deg,#F5D6B4,#DE9F5E);transition:transform .9s cubic-bezier(.65,0,.35,1);transform:{{ envRight }}"></div>
@@ -172,6 +176,7 @@ section[id]{scroll-margin-top:86px}
       </span>
       <span style="width:clamp(26px,8vw,70px);height:1px;background:rgba(62,58,47,.22)"></span>
     </div>
+    <p style="max-width:40ch;margin:24px auto 0;font-size:clamp(15.5px,4.2vw,17px);line-height:1.8;color:#6b6252;text-wrap:pretty">Queremos que façam parte deste momento único e que se juntem a nós nesta grande paragem para celebrarmos com aqueles que caminharam connosco, que marcaram o nosso percurso e que têm um lugar especial na nossa história.</p>
     <div style="display:flex;justify-content:center;gap:8px;margin:24px auto 0;max-width:320px">
       <div style="flex:1;padding:11px 6px;background:rgba(255,249,240,.8);border:1px solid rgba(62,58,47,.1);border-radius:12px">
         <div style="font-family:'Playfair Display',serif;font-size:clamp(21px,5.9vw,25px);line-height:1;color:#AE4B32">{{ cdDays }}</div>
@@ -189,7 +194,6 @@ section[id]{scroll-margin-top:86px}
     <div style="position:relative;width:min(74vw,320px);margin:40px auto 0;padding:10px 10px 44px;background:#FFF9F0;box-shadow:0 22px 44px -22px rgba(62,58,47,.5);transform:rotate(-1.8deg)">
       <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%) rotate(-4deg);width:64px;height:22px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
       <img src="assets/foto01.jpg" alt="Iara e João na praia" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover"/>
-      <div style="position:absolute;left:0;right:0;bottom:12px;text-align:center;font-family:'Dancing Script',cursive;font-size:clamp(18px,4.9vw,20px);color:#6b6252">o nosso começo</div>
     </div>
   </header>
 
@@ -203,11 +207,10 @@ section[id]{scroll-margin-top:86px}
       <div style="position:relative;width:min(70vw,290px);margin:0 auto;padding:9px 9px 40px;background:#FFF9F0;box-shadow:0 20px 40px -22px rgba(62,58,47,.5);transform:rotate(1.6deg)">
         <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%) rotate(3deg);width:52px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
         <img src="assets/foto08.jpg" alt="Primeiras viagens" style="display:block;width:100%;aspect-ratio:5/6;object-fit:cover"/>
-        <div style="position:absolute;left:0;right:0;bottom:11px;text-align:center;font-family:'Dancing Script',cursive;font-size:clamp(17px,4.7vw,19px);color:#6b6252">primeiras aventuras</div>
       </div>
       <div>
         <p style="margin:0 0 14px;font-size:clamp(16px,4.4vw,17.5px);line-height:1.85;color:#6b6252;text-wrap:pretty">Todas as grandes aventuras acontecem aleatoriamente, e a nossa não fugiu à regra. Começou na praia onde nos conhecemos, no verão de 2019, um encontro simples que se transformou na história mais linda das nossas vidas. Desde esse dia caminhámos sempre lado a lado, partilhando risos, superando obstáculos e enchendo o nosso caminho de amor. A nossa família cresceu com o Bawi, que trouxe ainda mais alegria às nossas viagens, às nossas aventuras e a cada destino que descobrimos juntos.</p>
-        <p style="margin:0;font-size:clamp(16px,4.4vw,17.5px);line-height:1.85;color:#6b6252;text-wrap:pretty">Cada viagem aproximou-nos, cada paragem fortaleceu o que sentimos, até que no verão de 2025 decidimos embarcar na aventura mais especial das nossas vidas: o nosso casamento. Queremos que façam parte deste momento único e que se juntem a nós nesta grande paragem para celebrarmos com aqueles que caminharam connosco, que marcaram o nosso percurso e que têm um lugar especial na nossa história.</p>
+        <p style="margin:0;font-size:clamp(16px,4.4vw,17.5px);line-height:1.85;color:#6b6252;text-wrap:pretty">Cada viagem aproximou-nos, cada paragem fortaleceu o que sentimos, até que no verão de 2025 decidimos embarcar na aventura mais especial das nossas vidas: o nosso casamento.</p>
         <div style="margin-top:18px;font-family:'Dancing Script',cursive;font-size:clamp(19px,5.3vw,22px);color:#AE4B32">Com amor, Iara &amp; João (e o Bawi)</div>
       </div>
     </div>
@@ -298,33 +301,128 @@ section[id]{scroll-margin-top:86px}
     <div class="iaj-scroll" ref="{{ railRef }}" onScroll="{{ onRail }}" onTouchStart="{{ onRailTouchStart }}" onTouchMove="{{ onRailTouchMove }}" onTouchEnd="{{ onRailTouchEnd }}" onTouchCancel="{{ onRailTouchEnd }}" style="display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;touch-action:pan-y;padding:10px 4px 20px">
       <figure data-i="1" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(-1.4deg);cursor:pointer">
         <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-5deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
-        <img src="assets/foto02.jpg" alt="A caminho da praia" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
-        <figcaption style="margin-top:9px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);color:#6b6252;text-align:center">a três, sempre</figcaption>
+        <img src="assets/foto02.jpg" alt="A caminho da praia" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:44% 50%;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">a três, sempre</figcaption>
       </figure>
       <figure data-i="2" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(1.2deg);cursor:pointer">
         <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(4deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
         <img src="assets/foto03.jpg" alt="Com o Bawi na água" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
-        <figcaption style="margin-top:9px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);color:#6b6252;text-align:center">pés na água</figcaption>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">pés na água</figcaption>
       </figure>
       <figure data-i="3" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(-1deg);cursor:pointer">
         <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-3deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
         <img src="assets/foto04.jpg" alt="O Bawi" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
-        <figcaption style="margin-top:9px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);color:#6b6252;text-align:center">o copiloto</figcaption>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">o copiloto</figcaption>
       </figure>
       <figure data-i="4" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(1.5deg);cursor:pointer">
         <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(5deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
         <img src="assets/foto05.jpg" alt="Um beijo na mão" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
-        <figcaption style="margin-top:9px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);color:#6b6252;text-align:center">o pedido</figcaption>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">o pedido</figcaption>
       </figure>
       <figure data-i="5" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(-1.6deg);cursor:pointer">
         <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-4deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
         <img src="assets/foto06.jpg" alt="A rir entre rochas" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
-        <figcaption style="margin-top:9px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);color:#6b6252;text-align:center">o sim dela</figcaption>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">o sim dela</figcaption>
       </figure>
       <figure data-i="6" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(1.1deg);cursor:pointer">
         <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(3deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
         <img src="assets/foto07.jpg" alt="De frente um para o outro" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
-        <figcaption style="margin-top:9px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);color:#6b6252;text-align:center">para sempre</figcaption>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">para sempre</figcaption>
+      </figure>
+      <figure data-i="7" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(1.2deg);cursor:pointer">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(4deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
+        <img src="assets/memorias/m01.jpg" loading="lazy" alt="Le Gets, 2026" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">Le Gets, 2026</figcaption>
+      </figure>
+      <figure data-i="8" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(-0.8deg);cursor:pointer">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-3deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
+        <img src="assets/memorias/m02.jpg" loading="lazy" alt="julho 2025" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">julho 2025</figcaption>
+      </figure>
+      <figure data-i="9" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(1.6deg);cursor:pointer">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(5deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
+        <img src="assets/memorias/m03.jpg" loading="lazy" alt="La Manga, 2025" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">La Manga, 2025</figcaption>
+      </figure>
+      <figure data-i="10" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(-1.1deg);cursor:pointer">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-4deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
+        <img src="assets/memorias/m04.jpg" loading="lazy" alt="Valência, 2025" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">Valência, 2025</figcaption>
+      </figure>
+      <figure data-i="11" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(0.9deg);cursor:pointer">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(3deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
+        <img src="assets/memorias/m05.jpg" loading="lazy" alt="sessão de outono, 2024" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">sessão de outono, 2024</figcaption>
+      </figure>
+      <figure data-i="12" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(-1.4deg);cursor:pointer">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-5deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
+        <img src="assets/memorias/m07.jpg" loading="lazy" alt="Florença, 2024" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">Florença, 2024</figcaption>
+      </figure>
+      <figure data-i="13" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(1.2deg);cursor:pointer">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(4deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
+        <img src="assets/memorias/m08.jpg" loading="lazy" alt="Pisa, 2024" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">Pisa, 2024</figcaption>
+      </figure>
+      <figure data-i="14" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(-0.8deg);cursor:pointer">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-3deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
+        <img src="assets/memorias/m09.jpg" loading="lazy" alt="Aveiro, 2024" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">Aveiro, 2024</figcaption>
+      </figure>
+      <figure data-i="15" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(1.6deg);cursor:pointer">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(5deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
+        <img src="assets/memorias/m10.jpg" loading="lazy" alt="Suíça, 2024" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">Suíça, 2024</figcaption>
+      </figure>
+      <figure data-i="16" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(-1.1deg);cursor:pointer">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-4deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
+        <img src="assets/memorias/m11.jpg" loading="lazy" alt="sessão de Natal, 2023" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">sessão de Natal, 2023</figcaption>
+      </figure>
+      <figure data-i="17" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(0.9deg);cursor:pointer">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(3deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
+        <img src="assets/memorias/m12.jpg" loading="lazy" alt="Gerês, 2023" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">Gerês, 2023</figcaption>
+      </figure>
+      <figure data-i="18" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(-1.4deg);cursor:pointer">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-5deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
+        <img src="assets/memorias/m13.jpg" loading="lazy" alt="Annecy, 2023" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">Annecy, 2023</figcaption>
+      </figure>
+      <figure data-i="19" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(1.2deg);cursor:pointer">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(4deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
+        <img src="assets/memorias/m14.jpg" loading="lazy" alt="Paris, 2022" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">Paris, 2022</figcaption>
+      </figure>
+      <figure data-i="20" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(-0.8deg);cursor:pointer">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-3deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
+        <img src="assets/memorias/m15.jpg" loading="lazy" alt="Castelo Branco, 2022" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">Castelo Branco, 2022</figcaption>
+      </figure>
+      <figure data-i="21" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(1.6deg);cursor:pointer">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(5deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
+        <img src="assets/memorias/m16.jpg" loading="lazy" alt="Benagil, 2021" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">Benagil, 2021</figcaption>
+      </figure>
+      <figure data-i="22" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(-1.1deg);cursor:pointer">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-4deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
+        <img src="assets/memorias/m17.jpg" loading="lazy" alt="Açores, 2021" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">Açores, 2021</figcaption>
+      </figure>
+      <figure data-i="23" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(0.9deg);cursor:pointer">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(3deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
+        <img src="assets/memorias/m18.jpg" loading="lazy" alt="Gafanha da Boa Hora, 2020" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">Gafanha da Boa Hora, 2020</figcaption>
+      </figure>
+      <figure data-i="24" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(-1.4deg);cursor:pointer">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-5deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
+        <img src="assets/memorias/m19.jpg" loading="lazy" alt="setembro 2019" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">setembro 2019</figcaption>
+      </figure>
+      <figure data-i="25" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(1.2deg);cursor:pointer">
+        <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(4deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
+        <img src="assets/memorias/m20.jpg" loading="lazy" alt="agosto 2019" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;pointer-events:none"/>
+        <figcaption style="position:absolute;left:0;right:0;bottom:0;height:34px;display:flex;align-items:center;justify-content:center;padding:0 8px;font-family:'Dancing Script',cursive;font-size:clamp(16px,4.4vw,17.5px);line-height:1;color:#6b6252;text-align:center">agosto 2019</figcaption>
       </figure>
     </div>
     </div>
@@ -588,7 +686,7 @@ section[id]{scroll-margin-top:86px}
       <button type="button" onClick="{{ printSummary }}" title="Imprimir resumo" style="display:inline-flex;align-items:center;gap:8px;padding:10px 16px;background:transparent;border:1px dashed rgba(110,122,97,.55);border-radius:999px;font-family:'Work Sans',sans-serif;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#6E7A61;cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="#6E7A61" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:16px;height:16px"><path d="M6 9V3h12v6"></path><rect x="3" y="9" width="18" height="8" rx="2"></rect><path d="M7 14h10v7H7z"></path></svg>Imprimir</button>
       <button type="button" onClick="{{ saveSummaryJpg }}" title="Guardar resumo em JPEG" style="display:inline-flex;align-items:center;gap:8px;padding:10px 16px;background:transparent;border:1px dashed rgba(110,122,97,.55);border-radius:999px;font-family:'Work Sans',sans-serif;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#6E7A61;cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="#6E7A61" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:16px;height:16px"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-9 9"></path></svg>JPEG</button>
     </div>
-    <sc-if value="{{ versaoOn }}" hint-placeholder-val="{{ true }}">
+    <sc-if value="{{ versaoOn }}" hint-placeholder-val="{{ false }}">
       <div style="margin-top:22px;font-family:'Work Sans',sans-serif;font-size:11px;letter-spacing:.12em;color:#6b6252;opacity:.5">{{ versaoTxt }}</div>
     </sc-if>
     <sc-if value="{{ painelOn }}" hint-placeholder-val="{{ false }}">
@@ -644,7 +742,7 @@ section[id]{scroll-margin-top:86px}
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showEnvelope&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;viewMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Auto&quot;,&quot;Mobile&quot;,&quot;Desktop&quot;],&quot;default&quot;:&quot;Auto&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;paraDemo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;mostrarPainel&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;mostrarVersao&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Apresentação&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showEnvelope&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;viewMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Auto&quot;,&quot;Mobile&quot;,&quot;Desktop&quot;],&quot;default&quot;:&quot;Auto&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;paraDemo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;mostrarPainel&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;mostrarVersao&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Apresentação&quot;}}">
 const VERSAO = '1.12 · 18 set 2026';
 const DATE = new Date('2027-10-02T14:30:00');
 const MUSIC_START = 3.3;
@@ -659,7 +757,7 @@ const familiaDoLink = () => {
     return c && FAMILIAS[c.toLowerCase()] ? FAMILIAS[c.toLowerCase()] : null;
   } catch (e) { return null; }
 };
-const SHOTS = ['assets/foto02.jpg','assets/foto03.jpg','assets/foto04.jpg','assets/foto05.jpg','assets/foto06.jpg','assets/foto07.jpg'];
+const SHOTS = ['assets/foto02.jpg','assets/foto03.jpg','assets/foto04.jpg','assets/foto05.jpg','assets/foto06.jpg','assets/foto07.jpg','assets/memorias/m01.jpg','assets/memorias/m02.jpg','assets/memorias/m03.jpg','assets/memorias/m04.jpg','assets/memorias/m05.jpg','assets/memorias/m07.jpg','assets/memorias/m08.jpg','assets/memorias/m09.jpg','assets/memorias/m10.jpg','assets/memorias/m11.jpg','assets/memorias/m12.jpg','assets/memorias/m13.jpg','assets/memorias/m14.jpg','assets/memorias/m15.jpg','assets/memorias/m16.jpg','assets/memorias/m17.jpg','assets/memorias/m18.jpg','assets/memorias/m19.jpg','assets/memorias/m20.jpg'];
 const DIETAS = [
   { id: 'lactose', label: 'Lactose' },
   { id: 'gluten', label: 'Glúten' },
@@ -885,6 +983,7 @@ class Component extends DCLogic {
       const saved = JSON.parse(localStorage.getItem('iaj-rsvp-v2') || 'null');
       if (saved && saved.name && saved.confirma && saved.enviado) this.setState({ name: saved.name, going: saved.going, party: saved.party || 0, note: saved.note || '', step: 6 });
       if (localStorage.getItem('iaj-opened') === '1') this.setState({ env: 'gone' });
+      else this.envCanvas(true);
     } catch (e) {}
     this.samples = [];
     const p = this.roadRef.current;
@@ -1027,12 +1126,15 @@ class Component extends DCLogic {
     if (on) { b.dataset.iajLock = '1'; b.style.overflow = 'hidden'; b.style.touchAction = 'none'; }
     else if (b.dataset.iajLock) { delete b.dataset.iajLock; b.style.overflow = ''; b.style.touchAction = ''; }
   };
+  envCanvas = (on) => {
+    try { const v = on ? '#DE9F5E' : ''; document.documentElement.style.backgroundColor = v; document.body.style.backgroundColor = v; } catch (e) {}
+  };
   openEnvelope = () => {
     if (this.state.env !== 'closed') return;
     this.lockScroll(false);
     this.setState({ env: 'opening' });
     try { localStorage.setItem('iaj-opened', '1'); } catch (e) {}
-    setTimeout(() => this.setState({ env: 'gone' }), 1000);
+    setTimeout(() => { this.setState({ env: 'gone' }); this.envCanvas(false); }, 1000);
   };
   onShotTouchMove = (e) => { if (e.cancelable) e.preventDefault(); };
   shotRef = React.createRef();
@@ -1169,6 +1271,7 @@ class Component extends DCLogic {
   restart = () => {
     if (this.audio) { this.audio.pause(); this.audio.currentTime = MUSIC_START; this.userPaused = false; }
     try { localStorage.setItem('iaj-opened', '0'); } catch (e) {}
+    this.envCanvas(true);
     window.scrollTo({ top: 0, behavior: 'auto' });
     this.lockScroll(true);
     this.setState({
@@ -1406,17 +1509,18 @@ class Component extends DCLogic {
     s.guests.slice(0, s.party).forEach(g => { const t = dietaTexto(g.dietTags, g.dietText); if (g.diet === 'sim' && t) diets.push((g.name.trim().split(' ')[0] || 'acompanhante') + ': ' + t); });
     const stepLabels = { 1: 'passo 1 de 5', 2: 'passo 2 de 5', 3: 'passo 3 de 5', 4: 'passo 4 de 5', 5: 'passo 5 de 5', 6: 'concluído' };
     return {
-      gateLocked: this.state.gate !== 'open', gateDraft: this.state.gateDraft, gateError: this.state.gateError,
+      gateLocked: false, gateDraft: this.state.gateDraft, gateError: this.state.gateError,
       gateInput: this.gateInput, gateKey: this.gateKey, gateTry: this.gateTry,
       vw: ({ 'Mobile': 'mobile', 'Desktop': 'desktop' })[this.props.viewMode] || 'auto',
       roadRef: this.roadRef, roadDoneRef: this.roadDoneRef, pinRef: this.pinRef, clipRef: this.clipRef, svgRef: this.svgRef, discRef: this.discRef, wagRef: this.wagRef, earLRef: this.earLRef, earRRef: this.earRRef, blinkLRef: this.blinkLRef, blinkRRef: this.blinkRRef,
       painelOn: !!this.props.mostrarPainel,
-      versaoOn: this.props.mostrarVersao ?? true,
+      versaoOn: this.props.mostrarVersao ?? false,
       versaoTxt: 'v' + VERSAO,
       temConvidados: !!(familiaDoLink() || this.props.paraDemo),
       paraQuem: familiaDoLink() ? paraTexto(familiaDoLink()) : (this.props.paraDemo || ''),
       envelopeOn: envOn,
       envStyle: 'position:fixed;top:0;left:0;right:0;height:calc(100lvh + 160px);padding-bottom:calc(100lvh - 100svh + 160px);box-sizing:border-box;z-index:999;display:flex;align-items:center;justify-content:center;overflow:hidden;' + (opening ? 'pointer-events:none;' : ''),
+      envFloorStyle: 'position:fixed;left:0;right:0;top:40vh;bottom:-400px;z-index:998;pointer-events:none;background:#DE9F5E;transition:opacity .5s ease;' + (opening ? 'opacity:0;' : 'opacity:1;'),
       envLeft: opening ? 'translateX(-100%)' : 'translateX(0)',
       envRight: opening ? 'translateX(100%)' : 'translateX(0)',
       envCardStyle: 'position:relative;z-index:1;cursor:pointer;text-align:center;transition:transform .8s cubic-bezier(.65,0,.35,1),opacity .6s ease;' + (opening ? 'transform:translateY(-50px) scale(.86);opacity:0;' : 'transform:none;opacity:1;'),
