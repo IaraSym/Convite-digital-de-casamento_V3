@@ -66,7 +66,7 @@ section[id]{scroll-margin-top:86px}
   </div>
   </sc-if>
 
-<div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(60% 40% at 8% 6%,rgba(110,122,97,.16),transparent 70%),radial-gradient(55% 45% at 96% 30%,rgba(140,180,196,.20),transparent 72%),radial-gradient(50% 35% at 4% 62%,rgba(240,199,160,.22),transparent 70%),radial-gradient(70% 45% at 92% 92%,rgba(140,180,196,.18),transparent 72%),radial-gradient(45% 30% at 18% 98%,rgba(110,122,97,.14),transparent 70%)"></div>
+<div aria-hidden="true" style="display:none"></div>
 
 <svg ref="{{ svgRef }}" aria-hidden="true" viewBox="0 0 100 1000" preserveAspectRatio="none" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.62">
 <path ref="{{ roadRef }}" d="M50,0 C8,58 92,108 50,168 C14,224 90,272 50,332 C10,392 92,438 50,498 C8,556 90,606 50,666 C12,726 92,776 50,836 C14,896 84,948 50,1000" fill="none" stroke="#E2DACB" stroke-width="13" stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
@@ -127,7 +127,7 @@ section[id]{scroll-margin-top:86px}
       <a href="#mapa" style="color:#3E3A2F;text-decoration:none;opacity:.78">mapa</a>
       <a href="#local" style="color:#3E3A2F;text-decoration:none;opacity:.78">onde</a>
       <a href="#percurso" style="color:#3E3A2F;text-decoration:none;opacity:.78">percurso</a>
-      <a href="#fotos" style="color:#3E3A2F;text-decoration:none;opacity:.78">álbum</a>
+      <sc-if value="{{ albumOn }}" hint-placeholder-val="{{ false }}"><a href="#fotos" style="color:#3E3A2F;text-decoration:none;opacity:.78">álbum</a></sc-if>
       <a href="#notas" style="color:#3E3A2F;text-decoration:none;opacity:.78">notas</a>
       <sc-if value="{{ painelOn }}" hint-placeholder-val="{{ false }}">
         <a href="/painel.html" style="color:#6E7A61;text-decoration:none;opacity:.78">painel</a>
@@ -148,7 +148,7 @@ section[id]{scroll-margin-top:86px}
       <a href="#local" onClick="{{ closeMenu }}" style="padding:13px 2px;border-bottom:1px solid rgba(62,58,47,.08);color:#3E3A2F;text-decoration:none;font-size:clamp(15px,4vw,15.5px)">Onde vai ser</a>
       <a href="#percurso" onClick="{{ closeMenu }}" style="padding:13px 2px;border-bottom:1px solid rgba(62,58,47,.08);color:#3E3A2F;text-decoration:none;font-size:clamp(15px,4vw,15.5px)">O percurso do dia</a>
       <a href="#memorias" onClick="{{ closeMenu }}" style="padding:13px 2px;border-bottom:1px solid rgba(62,58,47,.08);color:#3E3A2F;text-decoration:none;font-size:clamp(15px,4vw,15.5px)">Memórias</a>
-      <a href="#fotos" onClick="{{ closeMenu }}" style="padding:13px 2px;border-bottom:1px solid rgba(62,58,47,.08);color:#3E3A2F;text-decoration:none;font-size:clamp(15px,4vw,15.5px)">Álbum de fotos</a>
+      <sc-if value="{{ albumOn }}" hint-placeholder-val="{{ false }}"><a href="#fotos" onClick="{{ closeMenu }}" style="padding:13px 2px;border-bottom:1px solid rgba(62,58,47,.08);color:#3E3A2F;text-decoration:none;font-size:clamp(15px,4vw,15.5px)">Álbum de fotos</a></sc-if>
       <a href="#notas" onClick="{{ closeMenu }}" style="padding:13px 2px;border-bottom:1px solid rgba(62,58,47,.08);color:#3E3A2F;text-decoration:none;font-size:clamp(15px,4vw,15.5px)">Duas ou três notas</a>
       <a href="#rsvp" onClick="{{ closeMenu }}" style="padding:13px 2px;color:#AE4B32;text-decoration:none;font-size:clamp(15px,4vw,15.5px);font-weight:600">Confirmar presença</a>
       <sc-if value="{{ painelOn }}" hint-placeholder-val="{{ false }}">
@@ -298,7 +298,7 @@ section[id]{scroll-margin-top:86px}
     <div style="position:relative">
       <button type="button" onClick="{{ shotPrev }}" aria-label="Ver fotografias anteriores" style="{{ arrowPrevStyle }}"><span style="pointer-events:auto;display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:999px;background:rgba(255,249,240,.85);border:1px solid rgba(174,75,50,.25);font-size:clamp(24px,7vw,31px);line-height:1;color:#AE4B32">‹</span></button>
       <button type="button" onClick="{{ shotNext }}" aria-label="Ver mais fotografias" style="{{ arrowNextStyle }}"><span style="pointer-events:auto;display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:999px;background:rgba(255,249,240,.85);border:1px solid rgba(174,75,50,.25);font-size:clamp(24px,7vw,31px);line-height:1;color:#AE4B32">›</span></button>
-    <div class="iaj-scroll" ref="{{ railRef }}" onScroll="{{ onRail }}" onTouchStart="{{ onRailTouchStart }}" onTouchMove="{{ onRailTouchMove }}" onTouchEnd="{{ onRailTouchEnd }}" onTouchCancel="{{ onRailTouchEnd }}" style="display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;touch-action:pan-y;padding:10px 4px 20px">
+    <div class="iaj-scroll" ref="{{ railRef }}" onScroll="{{ onRail }}" onTouchStart="{{ onRailTouchStart }}" onTouchMove="{{ onRailTouchMove }}" onTouchEnd="{{ onRailTouchEnd }}" onTouchCancel="{{ onRailTouchEnd }}" style="display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;touch-action:pan-y;padding:14px 4px 44px;margin-bottom:-24px">
       <figure data-i="1" onClick="{{ openShot }}" style="position:relative;flex:0 0 auto;width:min(62vw,220px);scroll-snap-align:center;margin:0;padding:8px 8px 34px;background:#FFF9F0;box-shadow:0 18px 34px -20px rgba(62,58,47,.5);transform:rotate(-1.4deg);cursor:pointer">
         <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-5deg);width:54px;height:19px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
         <img src="assets/foto02.jpg" alt="A caminho da praia" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:44% 50%;pointer-events:none"/>
@@ -660,6 +660,7 @@ section[id]{scroll-margin-top:86px}
     </div>
   </section>
 
+  <sc-if value="{{ albumOn }}" hint-placeholder-val="{{ false }}">
   <section id="fotos" style="padding:66px 0 20px;text-align:center">
     <img src="assets/camara-flores.png" alt="" aria-hidden="true" width="760" height="493" style="display:block;aspect-ratio:760/493;width:min(72vw,300px);height:auto;margin:0 auto 6px"/>
     <div style="font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:#6E7A61">registem a vossa parte da viagem</div>
@@ -677,15 +678,12 @@ section[id]{scroll-margin-top:86px}
       </div>
     </div>
   </section>
+  </sc-if>
 
   <footer style="text-align:center;padding:40px 0 70px">
     <svg viewBox="0 0 24 24" fill="#6E7A61" aria-hidden="true" style="width:40px;opacity:.65"><circle cx="6" cy="9" r="2.1"></circle><circle cx="12" cy="6.5" r="2.1"></circle><circle cx="18" cy="9" r="2.1"></circle><path d="M12 11c-3.6 0-6.4 2.4-6.4 5.3 0 1.9 1.6 3 3.4 2.2.9-.4 1.9-.6 3-.6s2.1.2 3 .6c1.8.8 3.4-.3 3.4-2.2 0-2.9-2.8-5.3-6.4-5.3Z"></path></svg>
     <div style="margin-top:6px;font-family:'Dancing Script',cursive;font-size:clamp(20.5px,5.7vw,24px);color:#AE4B32">até 2 de outubro</div>
     <div style="margin-top:10px;font-family:'Chewy',cursive;font-size:clamp(16px,4.4vw,17.5px);letter-spacing:.04em;color:#6b6252;opacity:.85">Iara &amp; João</div>
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:20px">
-      <button type="button" onClick="{{ printSummary }}" title="Imprimir resumo" style="display:inline-flex;align-items:center;gap:8px;padding:10px 16px;background:transparent;border:1px dashed rgba(110,122,97,.55);border-radius:999px;font-family:'Work Sans',sans-serif;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#6E7A61;cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="#6E7A61" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:16px;height:16px"><path d="M6 9V3h12v6"></path><rect x="3" y="9" width="18" height="8" rx="2"></rect><path d="M7 14h10v7H7z"></path></svg>Imprimir</button>
-      <button type="button" onClick="{{ saveSummaryJpg }}" title="Guardar resumo em JPEG" style="display:inline-flex;align-items:center;gap:8px;padding:10px 16px;background:transparent;border:1px dashed rgba(110,122,97,.55);border-radius:999px;font-family:'Work Sans',sans-serif;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#6E7A61;cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="#6E7A61" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:16px;height:16px"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-9 9"></path></svg>JPEG</button>
-    </div>
     <sc-if value="{{ versaoOn }}" hint-placeholder-val="{{ false }}">
       <div style="margin-top:22px;font-family:'Work Sans',sans-serif;font-size:11px;letter-spacing:.12em;color:#6b6252;opacity:.5">{{ versaoTxt }}</div>
     </sc-if>
@@ -742,7 +740,7 @@ section[id]{scroll-margin-top:86px}
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showEnvelope&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;viewMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Auto&quot;,&quot;Mobile&quot;,&quot;Desktop&quot;],&quot;default&quot;:&quot;Auto&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;paraDemo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;mostrarPainel&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;mostrarVersao&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Apresentação&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showEnvelope&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;viewMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Auto&quot;,&quot;Mobile&quot;,&quot;Desktop&quot;],&quot;default&quot;:&quot;Auto&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;paraDemo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;mostrarPainel&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;mostrarVersao&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Apresentação&quot;},&quot;mostrarAlbum&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;label&quot;:&quot;Mostrar álbum antes de 30/09/2027&quot;}}">
 const VERSAO = '1.12 · 18 set 2026';
 const DATE = new Date('2027-10-02T14:30:00');
 const MUSIC_START = 3.3;
@@ -773,6 +771,7 @@ const dietaTexto = (tags, outro) => (tags || []).map(DIETA_LABEL).filter(Boolean
 const AGE_LABEL = { adulto: 'Adulto', crianca: 'Criança 4-9', bebe: 'Bebé 0-3' };
 const PILL = 'padding:14px 10px;border-radius:14px;font-family:\'Work Sans\',sans-serif;font-size:clamp(14.5px,3.9vw,15px);font-weight:600;cursor:pointer;transition:background .2s,color .2s;';
 
+const ALBUM_FROM = new Date('2027-09-30T00:00:00+01:00').getTime();
 class Component extends DCLogic {
   state = {
     gate: 'checking', gateDraft: '', gateError: '',
@@ -909,7 +908,7 @@ class Component extends DCLogic {
       + '<div class="c sage"><h2>Prazo</h2><p>Respondam o mais brevemente possível, com limite até dia <b style="color:#3E3A2F">31 de julho de 2027</b>, em iaraejoao.pt</p><div class="dash">e sim, o Bawi vai estar lá</div></div></div></div>'
       + '<div class="gift"><h2>Presentes</h2><p><b>O maior presente é fazerem parte desta viagem connosco!</b> Mas, se quiserem pôr combustível nesta aventura, nós e o Bawi ainda temos muita estrada e muitos planos pela frente.</p>'
       + '<div class="gg"><div class="bx"><small>Iara · MB Way</small><b>915 263 673</b></div><div class="bx"><small>João · MB Way</small><b>969 539 294</b></div><div class="bx"><small>IBAN</small><b>PT50 0023 0000 4563 7179 1529 4</b></div></div>'
-      + '<div class="al">Partilhem as vossas fotos no álbum com o código<b>PT76ef7cec</b></div></div>'
+      + (Date.now() >= ALBUM_FROM ? '<div class="al">Partilhem as vossas fotos no álbum com o código<b>PT76ef7cec</b></div>' : '') + '</div>'
       + '<div class="end"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="9" r="2.1"></circle><circle cx="12" cy="6.5" r="2.1"></circle><circle cx="18" cy="9" r="2.1"></circle><path d="M12 11.5c-3.2 0-6 2.9-6 5.3 0 1.6 1.3 2.4 2.8 2.4 1.2 0 2-.6 3.2-.6s2 .6 3.2.6c1.5 0 2.8-.8 2.8-2.4 0-2.4-2.8-5.3-6-5.3z"></path></svg><div>até 2 de outubro</div><span>Iara &amp; João</span></div></div></body></html>';
     return html;
   };
@@ -966,7 +965,24 @@ class Component extends DCLogic {
       .then(() => { setTimeout(() => fr.remove(), 1000); done(); });
   };
 
+  installPrint = () => {
+    try {
+      const html = this.summaryHtml();
+      const css = (html.match(/<style>([\s\S]*?)<\/style>/) || ['', ''])[1].replace(/@media screen\{[\s\S]*?\}\}/, '');
+      const body = (html.match(/<body>([\s\S]*?)<\/body>/) || ['', ''])[1];
+      const font = (html.match(/<link rel="stylesheet" href="([^"]+)"/) || ['', ''])[1];
+      let box = document.getElementById('iaj-print');
+      if (!box) { box = document.createElement('div'); box.id = 'iaj-print'; box.setAttribute('aria-hidden', 'true'); document.body.appendChild(box); }
+      box.innerHTML = body;
+      let st = document.getElementById('iaj-print-css');
+      if (!st) { st = document.createElement('style'); st.id = 'iaj-print-css'; document.head.appendChild(st); }
+      st.textContent = '#iaj-print{display:none}@media print{body>*:not(#iaj-print){display:none !important}body::before{display:none !important}#iaj-print{display:block !important}' + css + '}';
+      if (font && !document.getElementById('iaj-print-font')) { const l = document.createElement('link'); l.id = 'iaj-print-font'; l.rel = 'stylesheet'; l.href = font; document.head.appendChild(l); }
+    } catch (e) {}
+  };
+
   componentDidMount() {
+    this.installPrint();
     this.gateCheck();
     this.animRaf = requestAnimationFrame(this.animLoop);
     this.timer = setInterval(() => this.setState({ now: Date.now() }), 30000);
@@ -1513,6 +1529,7 @@ class Component extends DCLogic {
       gateInput: this.gateInput, gateKey: this.gateKey, gateTry: this.gateTry,
       vw: ({ 'Mobile': 'mobile', 'Desktop': 'desktop' })[this.props.viewMode] || 'auto',
       roadRef: this.roadRef, roadDoneRef: this.roadDoneRef, pinRef: this.pinRef, clipRef: this.clipRef, svgRef: this.svgRef, discRef: this.discRef, wagRef: this.wagRef, earLRef: this.earLRef, earRRef: this.earRRef, blinkLRef: this.blinkLRef, blinkRRef: this.blinkRRef,
+      albumOn: Date.now() >= ALBUM_FROM || this.props.mostrarAlbum === true,
       painelOn: !!this.props.mostrarPainel,
       versaoOn: this.props.mostrarVersao ?? false,
       versaoTxt: 'v' + VERSAO,
