@@ -21,7 +21,7 @@ html{scroll-behavior:smooth}
 p{text-align:justify !important;-webkit-hyphens:none;hyphens:none}
 p[style*="text-align: center"],p[style*="text-align:center"],[style*="text-align: center"] p,[style*="text-align:center"] p{text-align-last:center}
 
-body::before{content:'';position:fixed;inset:0;z-index:-1;background:#FBF1E7 url('assets/fundo-aquarela.png') repeat top left;background-size:860px auto;transform:translateZ(0);will-change:transform;pointer-events:none}
+body::before{content:'';position:fixed;top:0;left:0;right:0;height:calc(100lvh + 200px);z-index:-1;background:#FBF1E7 url('assets/fundo-aquarela.png') repeat top left;background-size:860px auto;transform:translateZ(0);will-change:transform;pointer-events:none}
 body{margin:0;background:#FBF1E7;color:#3E3A2F;font-family:'Work Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:#AE4B32;text-decoration:none}
 a:hover{color:#D3684B}
@@ -94,8 +94,8 @@ section[id]{scroll-margin-top:86px}
 <sc-if value="{{ envelopeOn }}" hint-placeholder-val="{{ true }}">
 <div aria-hidden="true" style="{{ envFloorStyle }}"></div>
 <div style="{{ envStyle }}">
-  <div style="position:absolute;top:0;bottom:0;left:0;width:50%;background:linear-gradient(170deg,#F5D6B4,#DE9F5E);transition:transform .9s cubic-bezier(.65,0,.35,1);transform:{{ envLeft }}"></div>
-  <div style="position:absolute;top:0;bottom:0;right:0;width:50%;background:linear-gradient(190deg,#F5D6B4,#DE9F5E);transition:transform .9s cubic-bezier(.65,0,.35,1);transform:{{ envRight }}"></div>
+  <div style="position:absolute;top:0;bottom:0;left:0;width:50%;background:linear-gradient(180deg,#F5D6B4 0,#E3A86C 100svh,#E3A86C 100%);transition:transform .9s cubic-bezier(.65,0,.35,1);transform:{{ envLeft }}"></div>
+  <div style="position:absolute;top:0;bottom:0;right:0;width:50%;background:linear-gradient(180deg,#F5D6B4 0,#E3A86C 100svh,#E3A86C 100%);transition:transform .9s cubic-bezier(.65,0,.35,1);transform:{{ envRight }}"></div>
   <div role="button" tabindex="0" onClick="{{ openEnvelope }}" onKeyDown="{{ envKey }}" style="{{ envCardStyle }}">
     <div style="position:relative;width:min(72vw,272px);margin:0 auto;padding:20px 20px 18px;background:#FFF9F0;border:1px solid rgba(62,58,47,.14);box-shadow:0 26px 50px -24px rgba(62,58,47,.55);text-align:center;animation:iaj-float 5s ease-in-out infinite">
       <div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%) rotate(-3deg);width:58px;height:20px;background:rgba(205,217,199,.85);box-shadow:0 2px 6px rgba(62,58,47,.26);border-left:1px solid rgba(255,255,255,.45);border-right:1px solid rgba(255,255,255,.45)"></div>
@@ -1127,7 +1127,7 @@ class Component extends DCLogic {
     else if (b.dataset.iajLock) { delete b.dataset.iajLock; b.style.overflow = ''; b.style.touchAction = ''; }
   };
   envCanvas = (on) => {
-    try { const v = on ? '#DE9F5E' : ''; document.documentElement.style.backgroundColor = v; document.body.style.backgroundColor = v; } catch (e) {}
+    try { const v = on ? '#E3A86C' : ''; document.documentElement.style.backgroundColor = v; document.body.style.backgroundColor = v; } catch (e) {}
   };
   openEnvelope = () => {
     if (this.state.env !== 'closed') return;
@@ -1520,7 +1520,7 @@ class Component extends DCLogic {
       paraQuem: familiaDoLink() ? paraTexto(familiaDoLink()) : (this.props.paraDemo || ''),
       envelopeOn: envOn,
       envStyle: 'position:fixed;top:0;left:0;right:0;height:calc(100lvh + 160px);padding-bottom:calc(100lvh - 100svh + 160px);box-sizing:border-box;z-index:999;display:flex;align-items:center;justify-content:center;overflow:hidden;' + (opening ? 'pointer-events:none;' : ''),
-      envFloorStyle: 'position:fixed;left:0;right:0;top:40vh;bottom:-400px;z-index:998;pointer-events:none;background:#DE9F5E;transition:opacity .5s ease;' + (opening ? 'opacity:0;' : 'opacity:1;'),
+      envFloorStyle: 'position:fixed;left:0;right:0;top:40vh;bottom:-400px;z-index:998;pointer-events:none;background:#E3A86C;transition:opacity .5s ease;' + (opening ? 'opacity:0;' : 'opacity:1;'),
       envLeft: opening ? 'translateX(-100%)' : 'translateX(0)',
       envRight: opening ? 'translateX(100%)' : 'translateX(0)',
       envCardStyle: 'position:relative;z-index:1;cursor:pointer;text-align:center;transition:transform .8s cubic-bezier(.65,0,.35,1),opacity .6s ease;' + (opening ? 'transform:translateY(-50px) scale(.86);opacity:0;' : 'transform:none;opacity:1;'),
