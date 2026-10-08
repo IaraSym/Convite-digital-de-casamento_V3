@@ -664,6 +664,7 @@ class Component extends DCLogic {
       diets: dietas,
       dietsNote: dietas.length ? '' : 'Nenhum convidado indicou restrições.',
       temMensagens: mensagens.length > 0, mensagens,
+      ligarDuvida: this.ligarDuvida, ligarSelect: this.ligarSelect, novaDuvida: this.novaDuvida,
       temDuvidas: !!(s.duv && s.duv.duvidas && s.duv.duvidas.length),
       duvBusy: s.duvBusy,
       duvidas: ((s.duv && s.duv.duvidas) || []).map(d => ({ nome: d.nome, linha: d.linha, deTxt: d.de && this.norm(d.de) !== this.norm(d.nome) ? 'na resposta de ' + d.de : 'respondeu', sugestoes: d.sugestoes || [] })),
