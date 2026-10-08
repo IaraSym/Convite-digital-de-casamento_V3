@@ -303,9 +303,21 @@ class Component extends DCLogic {
       const nomes = [];
       g.forEach(r => { if (nomes.indexOf(r.nome) < 0) nomes.push(r.nome); });
       const ult = g.slice().sort((a, b) => (a.ts - b.ts) || (a.i - b.i))[g.length - 1];
-      out.push(Object.assign({}, ult, { versoes: g.length, grafias: nomes, chaves: f.chaves }));
+      out.push(Object.assign({}, ult, { versoes: g.length, grafias: nomes, chaves: f.chaves, juntou: [] }));
     });
-    return out.sort((a, b) => b.ts - a.ts);
+    // casal/família que respondeu em separado: se todas as pessoas de uma resposta já vêm noutra maior, junta-as
+    const chaveP = (p) => this.norm(p.nome);
+    const contem = (grande, pequena) => pequena.pessoas.length > 0 && pequena.pessoas.every(p => grande.pessoas.some(q => this.mesmaPessoa(chaveP(q), chaveP(p))));
+    const vivos = out.slice();
+    let mudou = true;
+    while (mudou) {
+      mudou = false;
+      for (const a of vivos) {
+        const b = vivos.find(x => x !== a && x.confirma === a.confirma && contem(x, a) && (x.pessoas.length > a.pessoas.length || (x.pessoas.length === a.pessoas.length && (x.ts > a.ts || (x.ts === a.ts && x.i > a.i)))));
+        if (b) { b.juntou = b.juntou.concat([a.nome], a.juntou); b.msgsExtra = (b.msgsExtra || []).concat(a.mensagem ? [{ texto: a.mensagem, autor: a.nome }] : [], a.msgsExtra || []); vivos.splice(vivos.indexOf(a), 1); mudou = true; break; }
+      }
+    }
+    return vivos.sort((a, b) => b.ts - a.ts);
   };
 
   dist = (a, b) => {
@@ -341,7 +353,10 @@ class Component extends DCLogic {
 
   pessoasConfirmadas = () => {
     const out = [];
-    this.vemList().forEach(r => r.pessoas.forEach(p => out.push(Object.assign({}, p, { de: r.nome }))));
+    this.vemList().forEach(r => r.pessoas.forEach(p => {
+      if (out.some(o => this.mesmaPessoa(this.norm(o.nome), this.norm(p.nome)))) return;
+      out.push(Object.assign({}, p, { de: r.nome }));
+    }));
     return out;
   };
 
@@ -475,12 +490,13 @@ class Component extends DCLogic {
     const hoje = new Date().toLocaleDateString('pt-PT', { day: '2-digit', month: 'long', year: 'numeric' });
     const linhas = reps.map(r => {
       const estado = r.confirma === 'sim' ? 'Vem' : (r.confirma === 'nao' || r.confirma === 'não') ? 'Não vem' : 'Sem resposta';
-      return '<tr><td>' + e(r.nome) + (r.versoes > 1 ? '<div class="nota">' + r.versoes + ' respostas · mostro a última</div>' : '')
+      return '<tr><td>' + e(r.nome) + (r.versoes > 1 ? '<div class="nota">' + r.versoes + ' respostas · mostro a última</div>' : '') + (r.juntou.length ? '<div class="nota">inclui a resposta de ' + e(r.juntou.join(', ')) + '</div>' : '')
         + '</td><td>' + estado + '</td><td class="nota">' + e(r.quando) + '</td><td>'
         + (r.pessoas.length ? r.pessoas.map(p => e(p.nome) + ' <span class="nota">' + e(p.idade || 'Adulto') + (p.diet ? ' · ' + e(p.diet) : '') + '</span>').join('<br/>') : '—')
         + '</td><td>' + (r.mensagem ? '<em>' + e(r.mensagem) + '</em>' : '—') + '</td></tr>';
     }).join('');
-    const msgs = reps.filter(r => r.mensagem);
+    const msgs = [];
+    reps.forEach(r => { if (r.mensagem) msgs.push({ mensagem: r.mensagem, nome: r.nome }); (r.msgsExtra || []).forEach(m => msgs.push({ mensagem: m.texto, nome: m.autor })); });
     const corpo = '<div class="sub">uso interno · Iara e João</div><h1>Confirmações de presença<br/>informação completa</h1>'
       + '<div class="kpis"><div class="kpi"><b>' + pessoas.length + '</b><span>pessoas confirmadas</span></div>'
       + '<div class="kpi"><b>' + vem.length + '</b><span>respostas sim</span></div>'
@@ -502,7 +518,7 @@ class Component extends DCLogic {
       r.pessoas.map(p => p.nome).join(' | '),
       r.pessoas.map(p => p.idade || 'Adulto').join(' | '),
       r.pessoas.filter(p => p.diet).map(p => p.nome + ': ' + p.diet).join(' | '),
-      r.mensagem, r.versoes
+      r.mensagem + (r.juntou.length ? (r.mensagem ? ' | ' : '') + 'inclui a resposta de ' + r.juntou.join(', ') : ''), r.versoes + r.juntou.length
     ]));
     this.baixar('Confirmações de presença_totalInfo.csv', linhas);
   };
@@ -562,7 +578,12 @@ class Component extends DCLogic {
     const criancas = conta('crianca'), bebes = conta('bebe');
     const total = pessoas.length || 1;
     const dietas = pessoas.filter(p => p.diet).map(p => ({ nome: p.nome || p.de, texto: p.diet }));
-    const mensagens = reps.filter(r => r.mensagem).map(r => ({ texto: r.mensagem, autor: r.nome + (r.confirma === 'sim' ? ' · vem' : '') }));
+    const mensagens = [];
+    reps.forEach(r => {
+      const v = r.confirma === 'sim' ? ' · vem' : '';
+      if (r.mensagem) mensagens.push({ texto: r.mensagem, autor: r.nome + v });
+      (r.msgsExtra || []).forEach(m => mensagens.push({ texto: m.texto, autor: m.autor + v }));
+    });
     const dups = this.duplicados();
 
     const q = this.norm(s.busca);
@@ -616,9 +637,11 @@ class Component extends DCLogic {
           badgeFg: sim ? '#41513E' : '#8E3A24',
           accent: sim ? '#6E7A61' : '#D9A57F',
           quando: r.quando,
-          repetida: r.versoes > 1,
-          repetidaTxt: r.versoes + ' respostas · mostro a última'
-            + (r.grafias && r.grafias.length > 1 ? ' (' + r.grafias.join(' / ') + ')' : ''),
+          repetida: r.versoes > 1 || r.juntou.length > 0,
+          repetidaTxt: [
+            r.versoes > 1 ? r.versoes + ' respostas · mostro a última' + (r.grafias && r.grafias.length > 1 ? ' (' + r.grafias.join(' / ') + ')' : '') : '',
+            r.juntou.length ? 'inclui a resposta de ' + r.juntou.join(', ') : ''
+          ].filter(Boolean).join(' · '),
           temPessoas: r.pessoas.length > 0,
           pessoas: r.pessoas.map(p => {
             const k = this.norm(p.idade);
@@ -629,7 +652,7 @@ class Component extends DCLogic {
               border: bebe ? '#8CB4C4' : crianca ? '#E0B894' : '#A9B79C'
             };
           }),
-          temMensagem: !!r.mensagem, mensagem: r.mensagem
+          temMensagem: !!r.mensagem || !!(r.msgsExtra && r.msgsExtra.length), mensagem: [r.mensagem].concat((r.msgsExtra || []).map(m => m.autor + ': ' + m.texto)).filter(Boolean).join('  ·  ')
         };
       }),
       footer: reps.length
