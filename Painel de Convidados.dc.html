@@ -98,6 +98,38 @@ input,button,textarea{font-family:'Work Sans',system-ui,sans-serif}
           </div>
         </div>
 
+        <sc-if value="{{ temDuvidas }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:22px;padding:20px;background:#FFF9F0;border:1px solid #D9A57F;border-left:4px solid #D3684B">
+            <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 14px">
+              <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8E3A24">dúvidas na lista de convidados</div>
+              <div style="font-size:12.5px;color:#6E7A61">{{ duvBusy }}</div>
+            </div>
+            <p style="margin:6px 0 14px;font-size:14px;line-height:1.65;color:#6b6252">Responderam com um nome que não está na folha. Quem é?</p>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ duvidas }}" as="d" hint-placeholder-count="1">
+                <div style="display:flex;flex-direction:column;gap:10px;padding:14px;background:#FBF1E7;border:1px solid rgba(62,58,47,.12)">
+                  <div>
+                    <span style="font-family:'Fraunces',serif;font-weight:600;font-size:15.5px;color:#3E3A2F">{{ d.nome }}</span>
+                    <span style="font-size:12.5px;color:#6b6252"> · {{ d.deTxt }}</span>
+                  </div>
+                  <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+                    <sc-for list="{{ d.sugestoes }}" as="s" hint-placeholder-count="2">
+                      <button type="button" data-novo="{{ d.linha }}" data-alvo="{{ s.linha }}" onClick="{{ ligarDuvida }}" title="{{ s.grupo }}" style="padding:9px 14px;background:#FFF9F0;border:1px solid rgba(110,122,97,.45);border-radius:999px;color:#3E3A2F;font-size:13px;cursor:pointer">É {{ s.nome }}</button>
+                    </sc-for>
+                    <select data-novo="{{ d.linha }}" onChange="{{ ligarSelect }}" style="padding:9px 12px;max-width:100%;background:#FFF9F0;border:1px solid rgba(62,58,47,.2);border-radius:999px;color:#6b6252;font-size:13px;font-family:inherit;cursor:pointer">
+                      <option value="">Outra pessoa da lista…</option>
+                      <sc-for list="{{ listaNomes }}" as="o" hint-placeholder-count="0">
+                        <option value="{{ o.linha }}">{{ o.nome }}</option>
+                      </sc-for>
+                    </select>
+                    <button type="button" data-linha="{{ d.linha }}" onClick="{{ novaDuvida }}" style="padding:9px 14px;background:#AE4B32;border:none;border-radius:999px;color:#FFF6EA;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">Pessoa nova</button>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
         <sc-if value="{{ temDuplicados }}" hint-placeholder-val="{{ false }}">
           <div style="margin-top:22px;padding:20px;background:#FFF9F0;border:1px solid #D9A57F;border-left:4px solid #D3684B">
             <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8E3A24">possíveis duplicados</div>
@@ -196,7 +228,7 @@ const gravar = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } c
 const par = (a, b) => [a, b].sort().join('||');
 
 class Component extends DCLogic {
-  state = { raw: null, err: '', loading: false, filter: 'todos', busca: '', open: false, pinDraft: '', pinError: '', unidos: ler(UNIR), separados: ler(SEP) };
+  state = { duv: null, duvBusy: '', raw: null, err: '', loading: false, filter: 'todos', busca: '', open: false, pinDraft: '', pinError: '', unidos: ler(UNIR), separados: ler(SEP) };
 
   componentDidMount() {
     let url = '';
@@ -229,11 +261,31 @@ class Component extends DCLogic {
       }
       try { sessionStorage.setItem(OK, code); } catch (e) {}
       this.setState({ raw: this.parseCsv(txt), loading: false, open: true, code });
+      this.acaoDuv('duvidas', {});
     } catch (e) {
       this.setState({ loading: false, err: 'Não consegui ligar ao servidor. Tenta outra vez daqui a pouco.' });
     }
   };
   reload = () => this.fetch();
+
+  acaoDuv = async (acao, params) => {
+    const code = this.state.code;
+    if (!code) return;
+    if (acao !== 'duvidas') this.setState({ duvBusy: 'a atualizar a folha…' });
+    try {
+      const q = Object.keys(params).map(k => '&' + k + '=' + encodeURIComponent(params[k])).join('');
+      const r = await fetch(API + '?k=' + encodeURIComponent(code) + '&acao=' + acao + q + '&t=' + Date.now());
+      const j = await r.json();
+      const d = j.d || j;
+      if (j.r && j.r !== 'OK') { this.setState({ duvBusy: 'não deu: ' + j.r }); return; }
+      this.setState({ duv: d.duvidas ? d : null, duvBusy: acao === 'duvidas' ? '' : 'folha atualizada ✓' });
+    } catch (e) {
+      this.setState({ duvBusy: acao === 'duvidas' ? '' : 'não consegui ligar à folha' });
+    }
+  };
+  ligarDuvida = (e) => this.acaoDuv('ligar', { novo: e.currentTarget.dataset.novo, alvo: e.currentTarget.dataset.alvo });
+  ligarSelect = (e) => { const v = e.target.value; if (v) this.acaoDuv('ligar', { novo: e.target.dataset.novo, alvo: v }); };
+  novaDuvida = (e) => this.acaoDuv('nova', { linha: e.currentTarget.dataset.linha });
 
   parseCsv = (t) => {
     const rows = []; let row = [], cell = '', q = false;
@@ -612,6 +664,10 @@ class Component extends DCLogic {
       diets: dietas,
       dietsNote: dietas.length ? '' : 'Nenhum convidado indicou restrições.',
       temMensagens: mensagens.length > 0, mensagens,
+      temDuvidas: !!(s.duv && s.duv.duvidas && s.duv.duvidas.length),
+      duvBusy: s.duvBusy,
+      duvidas: ((s.duv && s.duv.duvidas) || []).map(d => ({ nome: d.nome, linha: d.linha, deTxt: d.de && this.norm(d.de) !== this.norm(d.nome) ? 'na resposta de ' + d.de : 'respondeu', sugestoes: d.sugestoes || [] })),
+      listaNomes: (s.duv && s.duv.lista) || [],
       temDuplicados: dups.length > 0,
       duplicados: dups.map(d => ({
         p: d.p,
