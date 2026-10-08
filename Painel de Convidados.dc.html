@@ -102,30 +102,36 @@ input,button,textarea{font-family:'Work Sans',system-ui,sans-serif}
           <div style="margin-top:22px;padding:20px;background:#FFF9F0;border:1px solid #D9A57F;border-left:4px solid #D3684B">
             <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 14px">
               <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8E3A24">dúvidas na lista de convidados</div>
-              <div style="font-size:12.5px;color:#6E7A61">{{ duvBusy }}</div>
             </div>
             <p style="margin:6px 0 14px;font-size:14px;line-height:1.65;color:#6b6252">Responderam com um nome que não está na folha. Quem é?</p>
             <div style="display:flex;flex-direction:column;gap:12px">
               <sc-for list="{{ duvidas }}" as="d" hint-placeholder-count="1">
-                <div style="display:flex;flex-direction:column;gap:10px;padding:14px;background:#FBF1E7;border:1px solid rgba(62,58,47,.12)">
-                  <div>
-                    <span style="font-family:'Fraunces',serif;font-weight:600;font-size:15.5px;color:#3E3A2F">{{ d.nome }}</span>
-                    <span style="font-size:12.5px;color:#6b6252"> · {{ d.deTxt }}</span>
+                <div style="{{ d.cardStyle }}">
+                  <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 12px">
+                    <div>
+                      <span style="font-family:'Fraunces',serif;font-weight:600;font-size:15.5px;color:#3E3A2F">{{ d.nome }}</span>
+                      <span style="font-size:12.5px;color:#6b6252"> · {{ d.deTxt }}</span>
+                    </div>
+                    <div style="font-size:12.5px;font-weight:600;color:#6E7A61">{{ d.escolhaTxt }}</div>
                   </div>
                   <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
                     <sc-for list="{{ d.sugestoes }}" as="s" hint-placeholder-count="2">
-                      <button type="button" data-novo="{{ d.linha }}" data-alvo="{{ s.linha }}" onClick="{{ ligarDuvida }}" title="{{ s.grupo }}" style="padding:9px 14px;background:#FFF9F0;border:1px solid rgba(110,122,97,.45);border-radius:999px;color:#3E3A2F;font-size:13px;line-height:1.2;white-space:nowrap;flex:0 0 auto;max-width:100%;overflow:hidden;text-overflow:ellipsis;cursor:pointer">É {{ s.nome }}</button>
+                      <button type="button" data-novo="{{ d.linha }}" data-alvo="{{ s.linha }}" data-nome="{{ s.nome }}" onClick="{{ escolherSug }}" title="{{ s.grupo }}" style="{{ s.estilo }}">{{ s.txt }}</button>
                     </sc-for>
-                    <select data-novo="{{ d.linha }}" onChange="{{ ligarSelect }}" style="flex:0 1 220px;min-width:170px;padding:9px 12px;max-width:100%;background:#FFF9F0;border:1px solid rgba(62,58,47,.2);border-radius:999px;color:#6b6252;font-size:13px;font-family:inherit;cursor:pointer">
+                    <select data-novo="{{ d.linha }}" value="{{ d.selVal }}" onChange="{{ escolherSelect }}" style="{{ d.selStyle }}">
                       <option value="">Outra pessoa da lista…</option>
                       <sc-for list="{{ listaNomes }}" as="o" hint-placeholder-count="0">
                         <option value="{{ o.linha }}">{{ o.nome }}</option>
                       </sc-for>
                     </select>
-                    <button type="button" data-linha="{{ d.linha }}" onClick="{{ novaDuvida }}" style="flex:0 0 auto;white-space:nowrap;padding:9px 14px;background:#AE4B32;border:none;border-radius:999px;color:#FFF6EA;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">Pessoa nova</button>
+                    <button type="button" data-linha="{{ d.linha }}" onClick="{{ escolherNova }}" style="{{ d.novaStyle }}">{{ d.novaTxt }}</button>
                   </div>
                 </div>
               </sc-for>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:10px 14px;margin-top:16px">
+              <div style="font-size:13px;color:#6b6252">{{ duvResumo }}</div>
+              <button type="button" onClick="{{ guardarEscolhas }}" disabled="{{ semEscolhas }}" style="{{ guardarStyle }}">Guardar na folha</button>
             </div>
           </div>
         </sc-if>
@@ -228,7 +234,7 @@ const gravar = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } c
 const par = (a, b) => [a, b].sort().join('||');
 
 class Component extends DCLogic {
-  state = { duv: null, duvBusy: '', raw: null, err: '', loading: false, filter: 'todos', busca: '', open: false, pinDraft: '', pinError: '', unidos: ler(UNIR), separados: ler(SEP) };
+  state = { duv: null, duvBusy: '', escolhas: {}, duvSaving: false, raw: null, err: '', loading: false, filter: 'todos', busca: '', open: false, pinDraft: '', pinError: '', unidos: ler(UNIR), separados: ler(SEP) };
 
   componentDidMount() {
     let url = '';
@@ -283,9 +289,36 @@ class Component extends DCLogic {
       this.setState({ duvBusy: acao === 'duvidas' ? '' : 'não consegui ligar à folha' });
     }
   };
-  ligarDuvida = (e) => this.acaoDuv('ligar', { novo: e.currentTarget.dataset.novo, alvo: e.currentTarget.dataset.alvo });
-  ligarSelect = (e) => { const v = e.target.value; if (v) this.acaoDuv('ligar', { novo: e.target.dataset.novo, alvo: v }); };
-  novaDuvida = (e) => this.acaoDuv('nova', { linha: e.currentTarget.dataset.linha });
+  escolher = (linha, v) => this.setState(s => {
+    const esc = Object.assign({}, s.escolhas || {});
+    const atual = esc[linha];
+    if (atual && v && atual.t === v.t && String(atual.alvo || '') === String(v.alvo || '')) delete esc[linha];   // clicar outra vez desfaz
+    else if (v) esc[linha] = v; else delete esc[linha];
+    return { escolhas: esc, duvBusy: '' };
+  });
+  escolherSug = (e) => { const d = e.currentTarget.dataset; this.escolher(d.novo, { t: 'ligar', alvo: d.alvo, nome: d.nome }); };
+  escolherSelect = (e) => {
+    const el = e.target, v = el.value;
+    const nome = v ? (el.options[el.selectedIndex] || {}).text : '';
+    const linha = el.dataset.novo;
+    this.setState(s => { const esc = Object.assign({}, s.escolhas || {}); if (v) esc[linha] = { t: 'ligar', alvo: v, nome: nome }; else delete esc[linha]; return { escolhas: esc, duvBusy: '' }; });
+  };
+  escolherNova = (e) => this.escolher(e.currentTarget.dataset.linha, { t: 'nova' });
+  guardarEscolhas = async () => {
+    const esc = this.state.escolhas || {};
+    const itens = Object.keys(esc).map(l => esc[l].t === 'nova' ? { t: 'nova', linha: Number(l) } : { t: 'ligar', novo: Number(l), alvo: Number(esc[l].alvo) });
+    if (!itens.length || this.state.duvSaving) return;
+    this.setState({ duvSaving: true, duvBusy: 'a guardar na folha…' });
+    try {
+      const r = await fetch(API + '?k=' + encodeURIComponent(this.state.code) + '&acao=lote&itens=' + encodeURIComponent(JSON.stringify(itens)) + '&t=' + Date.now());
+      const j = await r.json();
+      if (j.r !== 'OK') { this.setState({ duvSaving: false, duvBusy: 'não deu: ' + (j.r || 'erro') }); return; }
+      this.setState({ duvSaving: false, escolhas: {}, duv: j.d, duvBusy: itens.length + (itens.length === 1 ? ' escolha guardada' : ' escolhas guardadas') + ' na folha ✓' });
+      this.fetch();
+    } catch (e) {
+      this.setState({ duvSaving: false, duvBusy: 'não consegui ligar à folha. Tenta outra vez.' });
+    }
+  };
 
   parseCsv = (t) => {
     const rows = []; let row = [], cell = '', q = false;
@@ -664,10 +697,32 @@ class Component extends DCLogic {
       diets: dietas,
       dietsNote: dietas.length ? '' : 'Nenhum convidado indicou restrições.',
       temMensagens: mensagens.length > 0, mensagens,
-      ligarDuvida: this.ligarDuvida, ligarSelect: this.ligarSelect, novaDuvida: this.novaDuvida,
       temDuvidas: !!(s.duv && s.duv.duvidas && s.duv.duvidas.length),
       duvBusy: s.duvBusy,
-      duvidas: ((s.duv && s.duv.duvidas) || []).map(d => ({ nome: d.nome, linha: d.linha, deTxt: d.de && this.norm(d.de) !== this.norm(d.nome) ? 'na resposta de ' + d.de : 'respondeu', sugestoes: d.sugestoes || [] })),
+      escolherSug: this.escolherSug, escolherSelect: this.escolherSelect, escolherNova: this.escolherNova, guardarEscolhas: this.guardarEscolhas,
+      duvidas: ((s.duv && s.duv.duvidas) || []).map(d => {
+        const esc = (s.escolhas || {})[d.linha];
+        const sugIds = (d.sugestoes || []).map(x => String(x.linha));
+        const naSel = esc && esc.t === 'ligar' && sugIds.indexOf(String(esc.alvo)) < 0;
+        return {
+          nome: d.nome, linha: d.linha,
+          deTxt: d.de && this.norm(d.de) !== this.norm(d.nome) ? 'na resposta de ' + d.de : 'respondeu',
+          escolhaTxt: !esc ? '' : esc.t === 'nova' ? '✓ pessoa nova' : '✓ é ' + esc.nome,
+          cardStyle: 'display:flex;flex-direction:column;gap:10px;padding:14px;background:' + (esc ? '#F1F3EC' : '#FBF1E7') + ';border:1px solid ' + (esc ? 'rgba(110,122,97,.55)' : 'rgba(62,58,47,.12)') + ';transition:background .2s,border-color .2s',
+          sugestoes: (d.sugestoes || []).map(x => {
+            const on = esc && esc.t === 'ligar' && String(esc.alvo) === String(x.linha);
+            return { linha: x.linha, nome: x.nome, grupo: x.grupo, txt: (on ? '✓ ' : '') + 'É ' + x.nome,
+              estilo: 'padding:9px 14px;border-radius:999px;font-size:13px;line-height:1.2;white-space:nowrap;flex:0 0 auto;max-width:100%;overflow:hidden;text-overflow:ellipsis;cursor:pointer;font-family:inherit;' + (on ? 'background:#6E7A61;border:1px solid #6E7A61;color:#FFF9F0;font-weight:600' : 'background:#FFF9F0;border:1px solid rgba(110,122,97,.45);color:#3E3A2F') };
+          }),
+          selVal: naSel ? String(esc.alvo) : '',
+          selStyle: 'flex:0 1 220px;min-width:170px;padding:9px 12px;max-width:100%;border-radius:999px;font-size:13px;font-family:inherit;cursor:pointer;' + (naSel ? 'background:#6E7A61;border:1px solid #6E7A61;color:#FFF9F0;font-weight:600' : 'background:#FFF9F0;border:1px solid rgba(62,58,47,.2);color:#6b6252'),
+          novaTxt: esc && esc.t === 'nova' ? '✓ Pessoa nova' : 'Pessoa nova',
+          novaStyle: 'flex:0 0 auto;white-space:nowrap;padding:9px 14px;border-radius:999px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;font-family:inherit;' + (esc && esc.t === 'nova' ? 'background:#6E7A61;border:1px solid #6E7A61;color:#FFF9F0' : 'background:none;border:1px solid #AE4B32;color:#AE4B32')
+        };
+      }),
+      duvResumo: (() => { const n = Object.keys(s.escolhas || {}).length, t = ((s.duv && s.duv.duvidas) || []).length; return s.duvBusy || (n ? n + ' de ' + t + ' escolhidas' : 'escolhe uma opção em cada nome'); })(),
+      semEscolhas: !Object.keys(s.escolhas || {}).length || !!s.duvSaving,
+      guardarStyle: 'padding:12px 22px;border:none;border-radius:999px;font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-family:inherit;' + (Object.keys(s.escolhas || {}).length && !s.duvSaving ? 'background:#AE4B32;color:#FFF6EA;cursor:pointer' : 'background:rgba(174,75,50,.25);color:#FFF6EA;cursor:default'),
       listaNomes: (s.duv && s.duv.lista) || [],
       temDuplicados: dups.length > 0,
       duplicados: dups.map(d => ({
