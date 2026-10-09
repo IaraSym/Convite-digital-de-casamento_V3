@@ -402,7 +402,7 @@ class Component extends DCLogic {
         if (b) { b.juntou = b.juntou.concat([a.nome], a.juntou); b.msgsExtra = (b.msgsExtra || []).concat(a.mensagem ? [{ texto: a.mensagem, autor: a.nome }] : [], a.msgsExtra || []); vivos.splice(vivos.indexOf(a), 1); mudou = true; break; }
       }
     }
-    return vivos.sort((a, b) => b.ts - a.ts);
+    return vivos.sort((a, b) => (b.ts - a.ts) || (b.i - a.i));   // mais recente primeiro; no mesmo dia, a que chegou depois
   };
 
   dist = (a, b) => {
