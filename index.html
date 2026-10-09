@@ -9,9 +9,9 @@
 <body>
 <x-dc>
 <helmet>
-<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
-<link rel="apple-touch-icon" href="favicon-180.png">
+<link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="assets/icons/favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="assets/icons/favicon-180.png">
 <title>Iara &amp; João · 2 de outubro de 2027</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
 <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Chewy&family=Dancing+Script:wght@500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -1161,9 +1161,9 @@ class Component extends DCLogic {
 
   cal() {
     const start = '20271002T133000Z', end = '20271003T030000Z';
-    const title = 'Casamento de Iara & João';
+    const title = 'Casamento I&J 💍';
     const loc = 'Quinta do Coração, Vila Franca de Xira';
-    const det = 'Cerimónia às 14:30 na Quinta do Coração. Vemo-nos lá!';
+    const det = 'Apertem os cintos 🚗 a viagem começa às 14:30 na Quinta do Coração. Tragam o coração cheio e energia para a pista. Não se atrasem que o Bawi não espera! 🐾';
     const ics = ['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT','UID:iaj-2027@convite','DTSTAMP:' + start,'DTSTART:' + start,'DTEND:' + end,'SUMMARY:' + title,'LOCATION:' + loc,'DESCRIPTION:' + det,'END:VEVENT','END:VCALENDAR'].join('\r\n');
     return {
       gcalHref: 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(title) + '&dates=' + start + '/' + end + '&details=' + encodeURIComponent(det) + '&location=' + encodeURIComponent(loc) + '&ctz=Europe/Lisbon',
